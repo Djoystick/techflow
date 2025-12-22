@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Админ Панель</title>
+    <title>TechFlow Admin Panel</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
-    <!-- Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,1457 +13,1035 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #0088cc;
-            --primary-dark: #0066aa;
-            --secondary: #1c1c1c;
-            --bg-light: #ffffff;
-            --bg-dark: #0f0f0f;
-            --text-light: #000000;
-            --text-dark: #ffffff;
-            --border-light: #e0e0e0;
-            --border-dark: #2a2a2a;
-            --success: #22c55e;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-light);
+            background: #f5f5f5;
+            color: #333;
         }
 
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-
-        #app {
-            min-height: 100vh;
-            padding-bottom: 20px;
-        }
-
-        /* Login Screen */
-        .login-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            padding: 20px;
-            position: relative;
-        }
-
-        .login-back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .login-back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateX(-3px);
-        }
-
-        .login-box {
-            background: var(--bg-light);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-        }
-
-        body.dark-mode .login-box {
-            background: var(--secondary);
-        }
-
-        .login-logo {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .login-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-light);
-        }
-
-        body.dark-mode .login-title {
-            color: var(--text-dark);
-        }
-
-        .login-subtitle {
-            font-size: 14px;
-            opacity: 0.6;
-            margin-bottom: 30px;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .login-input {
-            padding: 12px 16px;
-            border: 2px solid var(--border-light);
-            border-radius: 8px;
-            font-size: 16px;
-            background: var(--bg-light);
-            color: var(--text-light);
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .login-input {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
-        }
-
-        .login-btn {
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
-        }
-
-        .login-error {
-            color: var(--error);
-            font-size: 14px;
-            padding: 12px;
-            background: rgba(239, 68, 68, 0.1);
-            border-radius: 6px;
-            border: 1px solid var(--error);
-            display: none;
-        }
-
-        .login-error.show {
-            display: block;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1400px;
+        .admin-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        .admin-header {
+            background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%);
             color: white;
-            padding: 24px;
-            margin: -20px -20px 30px -20px;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .header h1 {
+        .admin-header h1 {
             font-size: 28px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 5px;
         }
 
-        .header-controls {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 8px;
+        .admin-header p {
+            opacity: 0.9;
             font-size: 14px;
-            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 13px;
+            transition: all 0.2s;
         }
 
-        .btn:focus {
-            outline: none;
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--border-light);
-            color: var(--text-light);
-        }
-
-        body.dark-mode .btn-secondary {
-            background: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .btn-secondary:hover {
-            opacity: 0.8;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-        }
-
-        .btn-error {
-            background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-error:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Tabs */
-        .tabs {
+        /* ============ ВКЛАДКИ ============ */
+        .tabs-container {
             display: flex;
-            gap: 0;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border-light);
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0;
             overflow-x: auto;
         }
 
-        body.dark-mode .tabs {
-            border-color: var(--border-dark);
-        }
-
         .tab-btn {
-            padding: 16px 24px;
+            padding: 12px 20px;
             background: none;
             border: none;
-            border-bottom: 3px solid transparent;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-light);
-            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
             white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        body.dark-mode .tab-btn {
-            color: var(--text-dark);
-        }
-
-        .tab-btn:hover {
-            color: var(--primary);
         }
 
         .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+            color: #0088cc;
+            border-bottom-color: #0088cc;
         }
 
-        /* Forms */
-        .form-group {
-            margin-bottom: 20px;
+        .tab-btn:hover {
+            color: #0088cc;
         }
 
-        .form-label {
+        /* ============ КОНТЕНТ ВКЛАДОК ============ */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
             display: block;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--text-light);
         }
 
-        body.dark-mode .form-label {
-            color: var(--text-dark);
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            font-size: 14px;
-            background: var(--bg-light);
-            color: var(--text-light);
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .form-input,
-        body.dark-mode .form-textarea,
-        body.dark-mode .form-select {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Card */
-        .card {
-            background: var(--bg-light);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .card {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-divider {
-            height: 1px;
-            background: var(--border-light);
-            margin: 20px 0;
-        }
-
-        body.dark-mode .card-divider {
-            background: var(--border-dark);
-        }
-
-        /* News List */
-        .news-grid {
-            display: grid;
-            gap: 16px;
-        }
-
-        .news-item {
-            display: grid;
-            grid-template-columns: 80px 1fr auto;
-            gap: 16px;
-            align-items: center;
-            padding: 16px;
-            background: var(--bg-light);
-            border: 1px solid var(--border-light);
+        /* ============ ФОРМА ============ */
+        .form-section {
+            background: white;
+            padding: 20px;
             border-radius: 10px;
-            transition: all 0.3s;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        body.dark-mode .news-item {
-            background: var(--secondary);
-            border-color: var(--border-dark);
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        .news-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-color: var(--primary);
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 13px;
         }
 
-        .news-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
         }
 
-        .news-content h3 {
-            font-size: 15px;
-            margin-bottom: 6px;
-            line-height: 1.3;
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
         }
 
-        .news-meta {
-            font-size: 12px;
-            opacity: 0.6;
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0088cc;
+            box-shadow: 0 0 0 3px rgba(0,136,204,0.1);
+        }
+
+        /* ============ КНОПКИ ============ */
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0088cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0066aa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,136,204,0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        .btn-danger {
+            background: #e63946;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d62828;
+        }
+
+        .btn-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .news-actions {
-            display: flex;
-            gap: 6px;
+        /* ============ ТАБЛИЦА НОВОСТЕЙ ============ */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* Stats */
-        .stats-grid {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+            color: #666;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* ============ РЕДАКТОР ДИЗАЙНА ============ */
+        .design-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, var(--bg-light) 0%, var(--border-light) 100%);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s;
+        .design-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        body.dark-mode .stat-card {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--border-dark) 100%);
-            border-color: var(--border-dark);
+        .design-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
         }
 
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .stat-icon {
-            font-size: 32px;
+        .color-picker-group {
             margin-bottom: 12px;
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 6px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            opacity: 0.6;
-            font-weight: 500;
-        }
-
-        /* Table */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--bg-light);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-        }
-
-        body.dark-mode .table {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .table thead {
-            background: var(--border-light);
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        body.dark-mode .table thead {
-            background: var(--border-dark);
-        }
-
-        .table th,
-        .table td {
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        body.dark-mode .table td {
-            border-color: var(--border-dark);
-        }
-
-        .table tr:hover {
-            background: var(--border-light);
-        }
-
-        body.dark-mode .table tr:hover {
-            background: var(--border-dark);
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 14px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+        .color-picker-group label {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 14px;
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 1px solid var(--error);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--bg-light);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .modal {
-            background: var(--secondary);
-        }
-
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: var(--bg-light);
-            z-index: 10;
-        }
-
-        body.dark-mode .modal-header {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid var(--border-light);
-            display: flex;
             gap: 10px;
-            justify-content: flex-end;
-            background: var(--bg-light);
-            sticky: bottom;
+            font-size: 13px;
+            margin-bottom: 6px;
+            cursor: pointer;
         }
 
-        body.dark-mode .modal-footer {
-            background: var(--secondary);
-            border-color: var(--border-dark);
+        .color-input {
+            width: 50px;
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            opacity: 0.5;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        /* Badge */
-        .badge {
+        .color-preview {
             display: inline-block;
-            padding: 4px 10px;
-            background: var(--border-light);
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
         }
 
-        body.dark-mode .badge {
-            background: var(--border-dark);
-        }
-
-        .badge-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--success);
-        }
-
-        .badge-error {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--error);
-        }
-
-        /* Search */
-        .search-box {
+        /* ============ ЛОГОТИП И ИКОНКА ============ */
+        .logo-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             margin-bottom: 20px;
         }
 
-        .search-box input {
-            width: 100%;
-        }
-
-        /* Icon Button */
-        .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            color: inherit;
-            padding: 8px;
+        .logo-preview {
             display: flex;
+            gap: 30px;
             align-items: center;
-            justify-content: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .logo-item {
+            text-align: center;
+        }
+
+        .logo-item img {
+            max-width: 120px;
+            max-height: 120px;
+            border: 1px solid #ddd;
             border-radius: 6px;
-            transition: all 0.3s;
+            padding: 10px;
+            background: #f5f5f5;
         }
 
-        .icon-btn:hover {
-            background: var(--border-light);
+        .logo-item p {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #666;
         }
 
-        body.dark-mode .icon-btn:hover {
-            background: var(--border-dark);
+        /* ============ УСПЕШНЫЕ СООБЩЕНИЯ ============ */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
         }
 
-        .icon-btn.primary:hover {
-            background: var(--primary);
-            color: white;
+        .alert.show {
+            display: block;
         }
 
-        .icon-btn.danger:hover {
-            background: var(--error);
-            color: white;
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* ============ СТАТИСТИКА ============ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 600;
+            color: #0088cc;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ============ АДАПТИВНОСТЬ ============ */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .design-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-container {
+                border-bottom: 1px solid #ddd;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+
+            .logo-preview {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- Login Screen -->
-        <div v-if="!isAuthenticated" class="login-container">
-            <a href="index.html" class="login-back-btn">
-                <i class="fas fa-arrow-left"></i>
-                Вернуться на сайт
-            </a>
-            
-            <div class="login-box">
-                <div class="login-logo">
-                    <i class="fas fa-cog"></i>
-                </div>
-                <h1 class="login-title">TechFlow Admin</h1>
-                <p class="login-subtitle">Защищённый доступ к админ-панели</p>
+    <div id="app" class="admin-container">
+        <!-- ШАПКА -->
+        <div class="admin-header">
+            <div>
+                <h1>⚙️ TechFlow Admin Panel</h1>
+                <p>Управление новостями, дизайном и параметрами</p>
+            </div>
+            <button class="logout-btn" @click="logout">🚪 Выход</button>
+        </div>
+
+        <!-- УСПЕШНОЕ СООБЩЕНИЕ -->
+        <div class="alert alert-success" :class="{ show: alertSuccess }">
+            ✅ {{ alertMessage }}
+        </div>
+
+        <!-- ВКЛАДКИ -->
+        <div class="tabs-container">
+            <button 
+                class="tab-btn" 
+                :class="{ active: activeTab === 'news' }"
+                @click="activeTab = 'news'"
+            >
+                📰 Новости
+            </button>
+            <button 
+                class="tab-btn" 
+                :class="{ active: activeTab === 'design' }"
+                @click="activeTab = 'design'"
+            >
+                🎨 Дизайн
+            </button>
+            <button 
+                class="tab-btn" 
+                :class="{ active: activeTab === 'branding' }"
+                @click="activeTab = 'branding'"
+            >
+                🏷️ Логотип и иконка
+            </button>
+            <button 
+                class="tab-btn" 
+                :class="{ active: activeTab === 'settings' }"
+                @click="activeTab = 'settings'"
+            >
+                ⚙️ Настройки
+            </button>
+            <button 
+                class="tab-btn" 
+                :class="{ active: activeTab === 'stats' }"
+                @click="activeTab = 'stats'"
+            >
+                📊 Статистика
+            </button>
+        </div>
+
+        <!-- ============ ВКЛАДКА 1: НОВОСТИ ============ -->
+        <div class="tab-content" :class="{ active: activeTab === 'news' }">
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">➕ Добавить новую новость</h2>
                 
-                <div class="login-error" :class="{ show: loginError }">
-                    <i class="fas fa-exclamation-circle"></i>
-                    {{ loginError }}
+                <div class="form-group">
+                    <label>📰 Заголовок</label>
+                    <input v-model="newNews.title" type="text" placeholder="Название новости">
                 </div>
 
-                <form class="login-form" @submit.prevent="login">
-                    <input 
-                        type="password" 
-                        class="login-input"
-                        placeholder="Введите пароль администратора"
-                        v-model="adminPassword"
-                        @keyup.enter="login"
-                    >
-                    <button type="submit" class="login-btn">
-                        <i class="fas fa-unlock"></i>
-                        Войти в админ-панель
-                    </button>
-                </form>
+                <div class="form-group">
+                    <label>📝 Краткое описание (Preview)</label>
+                    <input v-model="newNews.preview" type="text" placeholder="Краткое описание">
+                </div>
 
-                <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
-                    <p><i class="fas fa-info-circle"></i> Стандартный пароль: <strong>admin123</strong></p>
+                <div class="form-group">
+                    <label>📄 Полный текст</label>
+                    <textarea v-model="newNews.content" placeholder="Полное содержание новости"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🏷️ Категория</label>
+                    <input v-model="newNews.category" type="text" placeholder="Например: AI, Разработка, Мобильные">
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Автор</label>
+                    <input v-model="newNews.author" type="text" placeholder="Имя автора">
+                </div>
+
+                <div class="form-group">
+                    <label>🔗 URL изображения (полная ссылка)</label>
+                    <input v-model="newNews.image" type="text" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label>📅 Дата</label>
+                    <input v-model="newNews.date" type="date">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" @click="addNews">
+                        <i class="fas fa-plus"></i> Добавить новость
+                    </button>
+                    <button class="btn btn-secondary" @click="resetNews">
+                        <i class="fas fa-redo"></i> Очистить
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h2 style="margin-bottom: 20px;">📋 Список новостей</h2>
+                <table v-if="allNews.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Заголовок</th>
+                            <th>Категория</th>
+                            <th>Автор</th>
+                            <th>Дата</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, idx) in allNews" :key="idx">
+                            <td>{{ item.title.substring(0, 30) }}...</td>
+                            <td><span style="background: #e3f2fd; padding: 4px 8px; border-radius: 4px; font-size: 11px;">{{ item.category }}</span></td>
+                            <td>{{ item.author }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>
+                                <button class="btn btn-danger" style="font-size: 11px; padding: 6px 10px;" @click="deleteNews(idx)">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p v-else style="text-align: center; color: #999; padding: 20px;">
+                    Новостей ещё нет. Добавьте первую!
+                </p>
+            </div>
+        </div>
+
+        <!-- ============ ВКЛАДКА 2: ДИЗАЙН ============ -->
+        <div class="tab-content" :class="{ active: activeTab === 'design' }">
+            <div class="design-grid">
+                <!-- ЦВЕТА -->
+                <div class="design-card">
+                    <h3>🎨 Основные цвета</h3>
+                    
+                    <div class="color-picker-group">
+                        <label for="primary">
+                            Основной цвет
+                            <span class="color-preview" :style="{ backgroundColor: designSettings.primaryColor }"></span>
+                        </label>
+                        <input 
+                            id="primary"
+                            v-model="designSettings.primaryColor" 
+                            type="color" 
+                            class="color-input"
+                        >
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label for="secondary">
+                            Фон страницы
+                            <span class="color-preview" :style="{ backgroundColor: designSettings.bgColor }"></span>
+                        </label>
+                        <input 
+                            id="secondary"
+                            v-model="designSettings.bgColor" 
+                            type="color" 
+                            class="color-input"
+                        >
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label for="text">
+                            Цвет текста
+                            <span class="color-preview" :style="{ backgroundColor: designSettings.textColor }"></span>
+                        </label>
+                        <input 
+                            id="text"
+                            v-model="designSettings.textColor" 
+                            type="color" 
+                            class="color-input"
+                        >
+                    </div>
+                </div>
+
+                <!-- ТИПОГРАФИЯ -->
+                <div class="design-card">
+                    <h3>🔤 Типография</h3>
+                    
+                    <div class="form-group">
+                        <label>Основной шрифт</label>
+                        <select v-model="designSettings.fontFamily">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Georgia', serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Размер заголовка (px)</label>
+                        <input v-model="designSettings.headerSize" type="number" min="12" max="48">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Размер текста (px)</label>
+                        <input v-model="designSettings.textSize" type="number" min="10" max="18">
+                    </div>
+                </div>
+
+                <!-- СТИЛИ -->
+                <div class="design-card">
+                    <h3>🌀 Эффекты</h3>
+                    
+                    <div class="color-picker-group">
+                        <label>
+                            <input type="checkbox" v-model="designSettings.darkMode">
+                            Тёмный режим
+                        </label>
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label>
+                            <input type="checkbox" v-model="designSettings.roundedCorners">
+                            Скруглённые углы (10px)
+                        </label>
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label>
+                            <input type="checkbox" v-model="designSettings.shadows">
+                            Тени под карточками
+                        </label>
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label>
+                            <input type="checkbox" v-model="designSettings.animations">
+                            Анимации при наведении
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" @click="saveDesign">
+                    <i class="fas fa-save"></i> Сохранить дизайн
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ ВКЛАДКА 3: ЛОГОТИП И ИКОНКА ============ -->
+        <div class="tab-content" :class="{ active: activeTab === 'branding' }">
+            <div class="logo-section">
+                <h2>🏷️ Логотип и иконка</h2>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>📌 Текст логотипа</label>
+                    <input v-model="branding.logoText" type="text" placeholder="TechFlow">
+                </div>
+
+                <div class="form-group">
+                    <label>🎯 Иконка (emoji или текст)</label>
+                    <input v-model="branding.logoIcon" type="text" placeholder="🚀" maxlength="5">
+                </div>
+
+                <div class="form-group">
+                    <label>🖼️ URL логотипа (если используется картинка)</label>
+                    <input v-model="branding.logoUrl" type="text" placeholder="https://example.com/logo.png">
+                </div>
+
+                <div class="form-group">
+                    <label>🌐 Название сайта</label>
+                    <input v-model="branding.siteName" type="text" placeholder="TechFlow News">
+                </div>
+
+                <div class="form-group">
+                    <label>📝 Описание сайта</label>
+                    <textarea v-model="branding.siteDescription" placeholder="Новости о технологиях, AI и стартапах"></textarea>
+                </div>
+
+                <div class="logo-preview">
+                    <div class="logo-item">
+                        <div style="font-size: 60px;">{{ branding.logoIcon }}</div>
+                        <p>Emoji иконка</p>
+                    </div>
+                    <div class="logo-item" v-if="branding.logoUrl">
+                        <img :src="branding.logoUrl" :alt="branding.siteName">
+                        <p>Логотип картинка</p>
+                    </div>
+                    <div class="logo-item">
+                        <div style="font-size: 24px; font-weight: bold; color: #0088cc;">
+                            {{ branding.logoIcon }} {{ branding.siteName }}
+                        </div>
+                        <p>Предпросмотр</p>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" @click="saveBranding">
+                        <i class="fas fa-save"></i> Сохранить брендинг
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Panel -->
-        <div v-else>
-            <div class="header">
-                <h1>
-                    <i class="fas fa-sliders-h"></i>
-                    TechFlow - Админ Панель
-                </h1>
-                <div class="header-controls">
-                    <button class="btn btn-secondary btn-small" @click="toggleDarkMode" title="Тёмный режим">
-                        <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+        <!-- ============ ВКЛАДКА 4: НАСТРОЙКИ ============ -->
+        <div class="tab-content" :class="{ active: activeTab === 'settings' }">
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">⚙️ Настройки приложения</h2>
+
+                <div class="form-group">
+                    <label>🤖 ID Telegram бота</label>
+                    <input v-model="settings.botId" type="text" disabled placeholder="8516682333:AAFEkur...">
+                </div>
+
+                <div class="form-group">
+                    <label>🔗 URL Mini App</label>
+                    <input v-model="settings.miniAppUrl" type="text" placeholder="https://Djoystick.github.io/techflow/miniapp.html">
+                </div>
+
+                <div class="form-group">
+                    <label>📊 URL данных (JSON)</label>
+                    <input v-model="settings.dataUrl" type="text" placeholder="https://Djoystick.github.io/techflow/data/news.json">
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Ник админа (для логина)</label>
+                    <input v-model="settings.adminUsername" type="text" placeholder="admin">
+                </div>
+
+                <div class="form-group">
+                    <label>🔑 Пароль админа</label>
+                    <input v-model="settings.adminPassword" type="password" placeholder="••••••">
+                </div>
+
+                <div class="form-group">
+                    <label>🌍 Язык интерфейса</label>
+                    <select v-model="settings.language">
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="uk">🇺🇦 Українська</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" v-model="settings.enableNotifications">
+                        Включить уведомления
+                    </label>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" @click="saveSettings">
+                        <i class="fas fa-save"></i> Сохранить настройки
                     </button>
-                    <button class="btn btn-secondary btn-small" @click="goToMain" title="Просмотр сайта">
-                        <i class="fas fa-eye"></i>
-                        Просмотр
+                    <button class="btn btn-danger" @click="resetAllData">
+                        <i class="fas fa-exclamation-triangle"></i> Очистить всё
                     </button>
-                    <button class="btn btn-secondary btn-small" @click="logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Выход
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ ВКЛАДКА 5: СТАТИСТИКА ============ -->
+        <div class="tab-content" :class="{ active: activeTab === 'stats' }">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">{{ allNews.length }}</div>
+                    <div class="label">📰 Всего новостей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">{{ uniqueCategories }}</div>
+                    <div class="label">🏷️ Категорий</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">{{ uniqueAuthors }}</div>
+                    <div class="label">👤 Авторов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">{{ Math.round(totalChars / 100) / 10 }}K</div>
+                    <div class="label">📝 Всего символов</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">📤 Экспорт данных</h2>
+                <div class="btn-group">
+                    <button class="btn btn-primary" @click="exportJSON">
+                        <i class="fas fa-download"></i> Скачать JSON
+                    </button>
+                    <button class="btn btn-secondary" @click="exportCSV">
+                        <i class="fas fa-table"></i> Скачать CSV
                     </button>
                 </div>
             </div>
 
-            <div class="container">
-                <!-- Alerts -->
-                <div v-if="successMessage" class="alert alert-success">
-                    <span><i class="fas fa-check-circle"></i> {{ successMessage }}</span>
-                    <button class="close-btn" @click="successMessage = ''">✕</button>
-                </div>
-                <div v-if="errorMessage" class="alert alert-error">
-                    <span><i class="fas fa-times-circle"></i> {{ errorMessage }}</span>
-                    <button class="close-btn" @click="errorMessage = ''">✕</button>
-                </div>
-
-                <!-- Tabs -->
-                <div class="tabs">
-                    <button 
-                        class="tab-btn" 
-                        :class="{ active: activeTab === 'add' }" 
-                        @click="activeTab = 'add'"
-                    >
-                        <i class="fas fa-plus"></i>
-                        Добавить новость
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">📥 Резервная копия</h2>
+                <div class="btn-group">
+                    <button class="btn btn-primary" @click="createBackup">
+                        <i class="fas fa-cloud-upload-alt"></i> Создать резервную копию
                     </button>
-                    <button 
-                        class="tab-btn" 
-                        :class="{ active: activeTab === 'manage' }" 
-                        @click="activeTab = 'manage'"
-                    >
-                        <i class="fas fa-edit"></i>
-                        Управление
+                    <button class="btn btn-secondary" @click="restoreBackup">
+                        <i class="fas fa-cloud-download-alt"></i> Восстановить резервную копию
                     </button>
-                    <button 
-                        class="tab-btn" 
-                        :class="{ active: activeTab === 'stats' }" 
-                        @click="activeTab = 'stats'"
-                    >
-                        <i class="fas fa-chart-bar"></i>
-                        Статистика
-                    </button>
-                </div>
-
-                <!-- TAB 1: Add News -->
-                <div v-if="activeTab === 'add'">
-                    <div class="card">
-                        <h2 class="card-title">
-                            <i class="fas fa-newspaper"></i>
-                            Добавить новую новость
-                        </h2>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-heading"></i>
-                                Заголовок *
-                            </label>
-                            <input type="text" class="form-input" v-model="form.title" placeholder="Введите заголовок новости">
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-tag"></i>
-                                    Категория *
-                                </label>
-                                <select class="form-select" v-model="form.category">
-                                    <option>AI</option>
-                                    <option>Разработка</option>
-                                    <option>Мобильные</option>
-                                    <option>Кибербезопасность</option>
-                                    <option>Облако</option>
-                                    <option>Железо</option>
-                                    <option>Стартапы</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-user"></i>
-                                    Автор *
-                                </label>
-                                <input type="text" class="form-input" v-model="form.author" placeholder="Ваше имя">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-image"></i>
-                                URL изображения
-                            </label>
-                            <input type="url" class="form-input" v-model="form.image" placeholder="https://example.com/image.jpg">
-                            <small style="opacity: 0.6;"><i class="fas fa-info-circle"></i> Рекомендуемый размер: 400x200px</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-align-left"></i>
-                                Краткое описание * (макс 150 символов)
-                            </label>
-                            <input type="text" class="form-input" v-model="form.preview" placeholder="Краткое описание" maxlength="150">
-                            <small style="opacity: 0.6;">{{ form.preview.length }}/150</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-file-alt"></i>
-                                Полный текст новости *
-                            </label>
-                            <textarea class="form-textarea" v-model="form.content" placeholder="Полное описание новости..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-link"></i>
-                                Источник (ссылка)
-                            </label>
-                            <input type="url" class="form-input" v-model="form.source" placeholder="https://example.com">
-                        </div>
-
-                        <button class="btn btn-success" @click="addNews" style="width: 100%; padding: 12px;">
-                            <i class="fas fa-check"></i>
-                            Добавить новость
-                        </button>
-                    </div>
-
-                    <div class="card" style="border-color: var(--success); background: rgba(34, 197, 94, 0.05);">
-                        <h3 class="card-title">
-                            <i class="fas fa-code"></i>
-                            JSON Шаблон
-                        </h3>
-                        <p style="font-size: 12px; opacity: 0.7; margin-bottom: 12px;"><i class="fas fa-info-circle"></i> Копируйте и редактируйте этот JSON для быстрого добавления:</p>
-                        <pre style="background: var(--border-light); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 11px; line-height: 1.4;">{{ jsonTemplate }}</pre>
-                    </div>
-                </div>
-
-                <!-- TAB 2: Manage News -->
-                <div v-if="activeTab === 'manage'">
-                    <div class="card">
-                        <h2 class="card-title">
-                            <i class="fas fa-newspaper"></i>
-                            Управление новостями
-                        </h2>
-                        
-                        <div class="search-box">
-                            <input type="text" class="form-input" v-model="searchQuery" placeholder="🔍 Поиск по названию...">
-                        </div>
-
-                        <div v-if="filteredNews.length > 0" class="news-grid">
-                            <div class="news-item" v-for="item in filteredNews" :key="item.id">
-                                <img :src="item.image" :alt="item.title" class="news-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23ddd%22 width=%2280%22 height=%2280%22/%3E%3C/svg%3E'">
-                                <div class="news-content">
-                                    <h3>{{ item.title }}</h3>
-                                    <div class="news-meta">
-                                        <span>{{ item.category }}</span>
-                                        <span><i class="fas fa-calendar"></i> {{ formatDate(item.date) }}</span>
-                                        <span><i class="fas fa-comments"></i> <strong>{{ getCommentCount(item.id) }}</strong> комм.</span>
-                                    </div>
-                                </div>
-                                <div class="news-actions">
-                                    <button class="btn btn-secondary btn-small" @click="editNews(item)" title="Редактировать">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-error btn-small" @click="deleteNews(item.id)" title="Удалить">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else class="empty-state">
-                            <div class="empty-state-icon">
-                                <i class="fas fa-inbox"></i>
-                            </div>
-                            <p>Новости не найдены</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 3: Statistics -->
-                <div v-if="activeTab === 'stats'">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-newspaper"></i>
-                            </div>
-                            <div class="stat-value">{{ news.length }}</div>
-                            <div class="stat-label">Всего новостей</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <div class="stat-value">{{ totalComments }}</div>
-                            <div class="stat-label">Комментариев</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-tag"></i>
-                            </div>
-                            <div class="stat-value">{{ categories.size }}</div>
-                            <div class="stat-label">Категорий</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="stat-value">{{ uniqueAuthors.size }}</div>
-                            <div class="stat-label">Авторов</div>
-                        </div>
-                    </div>
-
-                    <!-- Categories -->
-                    <div class="card">
-                        <h3 class="card-title">
-                            <i class="fas fa-tag"></i>
-                            Категории
-                        </h3>
-                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                            <span v-for="cat in Array.from(categories)" :key="cat" class="badge">
-                                {{ cat }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Top Authors -->
-                    <div class="card">
-                        <h3 class="card-title">
-                            <i class="fas fa-pen"></i>
-                            Топ авторов
-                        </h3>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><i class="fas fa-user"></i> Автор</th>
-                                    <th><i class="fas fa-list"></i> Количество новостей</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(count, author) in authorStats" :key="author">
-                                    <td>{{ author }}</td>
-                                    <td>
-                                        <span class="badge" :class="count > 3 ? 'badge-success' : ''">
-                                            {{ count }}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Category Distribution -->
-                    <div class="card">
-                        <h3 class="card-title">
-                            <i class="fas fa-chart-pie"></i>
-                            Распределение по категориям
-                        </h3>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><i class="fas fa-tag"></i> Категория</th>
-                                    <th><i class="fas fa-list"></i> Количество</th>
-                                    <th><i class="fas fa-percent"></i> Процент</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(count, cat) in categoryStats" :key="cat">
-                                    <td>{{ cat }}</td>
-                                    <td>
-                                        <span class="badge">{{ count }}</span>
-                                    </td>
-                                    <td>{{ Math.round(count / news.length * 100) }}%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Import/Export -->
-                    <div class="card">
-                        <h3 class="card-title">
-                            <i class="fas fa-database"></i>
-                            Экспорт/Импорт
-                        </h3>
-                        <button class="btn btn-success" @click="exportData" style="width: 100%; margin-bottom: 10px; padding: 12px;">
-                            <i class="fas fa-download"></i>
-                            Скачать данные JSON
-                        </button>
-                        <button class="btn btn-primary" @click="triggerFileInput" style="width: 100%; padding: 12px;">
-                            <i class="fas fa-upload"></i>
-                            Загрузить JSON
-                        </button>
-                        <input type="file" ref="fileInput" @change="importData" accept=".json" style="display: none;">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Edit Modal -->
-            <div class="modal-overlay" :class="{ active: editingNews }">
-                <div class="modal">
-                    <div class="modal-header" v-if="editingNews">
-                        <h2>
-                            <i class="fas fa-edit"></i>
-                            Редактировать новость
-                        </h2>
-                        <button class="close-btn" @click="editingNews = null" style="background: none; border: none; font-size: 24px; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body" v-if="editingNews">
-                        <div class="form-group">
-                            <label class="form-label">Заголовок</label>
-                            <input type="text" class="form-input" v-model="editingNews.title">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Категория</label>
-                            <select class="form-select" v-model="editingNews.category">
-                                <option>AI</option>
-                                <option>Разработка</option>
-                                <option>Мобильные</option>
-                                <option>Кибербезопасность</option>
-                                <option>Облако</option>
-                                <option>Железо</option>
-                                <option>Стартапы</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Краткое описание</label>
-                            <input type="text" class="form-input" v-model="editingNews.preview" maxlength="150">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Полный текст</label>
-                            <textarea class="form-textarea" v-model="editingNews.content"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Источник</label>
-                            <input type="url" class="form-input" v-model="editingNews.source">
-                        </div>
-                    </div>
-                    <div class="modal-footer" v-if="editingNews">
-                        <button class="btn btn-secondary" @click="editingNews = null">
-                            <i class="fas fa-times"></i>
-                            Отмена
-                        </button>
-                        <button class="btn btn-success" @click="saveEditedNews">
-                            <i class="fas fa-check"></i>
-                            Сохранить
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted } = Vue;
+        const { createApp, ref, computed } = Vue;
 
         createApp({
             setup() {
-                // Auth
-                const isAuthenticated = ref(false);
-                const adminPassword = ref('');
-                const loginError = ref('');
-                const correctPassword = 'admin123';
+                const activeTab = ref('news');
+                const alertMessage = ref('');
+                const alertSuccess = ref(false);
 
-                const login = () => {
-                    if (adminPassword.value === correctPassword) {
-                        isAuthenticated.value = true;
-                        localStorage.setItem('techflow_admin_auth', 'true');
-                        loginError.value = '';
-                    } else {
-                        loginError.value = '❌ Неверный пароль!';
+                // Новости
+                const newNews = ref({
+                    title: '',
+                    preview: '',
+                    content: '',
+                    category: '',
+                    author: '',
+                    image: '',
+                    date: new Date().toISOString().split('T')
+                });
+
+                const allNews = ref([]);
+
+                // Дизайн
+                const designSettings = ref({
+                    primaryColor: '#0088cc',
+                    bgColor: '#ffffff',
+                    textColor: '#000000',
+                    fontFamily: 'Arial, sans-serif',
+                    headerSize: 16,
+                    textSize: 14,
+                    darkMode: false,
+                    roundedCorners: true,
+                    shadows: true,
+                    animations: true
+                });
+
+                // Брендинг
+                const branding = ref({
+                    logoIcon: '🚀',
+                    logoText: 'TechFlow',
+                    logoUrl: '',
+                    siteName: 'TechFlow News',
+                    siteDescription: 'Новости о технологиях, AI и стартапах'
+                });
+
+                // Настройки
+                const settings = ref({
+                    botId: '8516682333:AAFEkur7tqEz03XgUiPXQLGjsc1FsOcTB60',
+                    miniAppUrl: 'https://Djoystick.github.io/techflow/miniapp.html',
+                    dataUrl: 'https://Djoystick.github.io/techflow/data/news.json',
+                    adminUsername: 'admin',
+                    adminPassword: 'password',
+                    language: 'ru',
+                    enableNotifications: true
+                });
+
+                // Функции
+                const addNews = () => {
+                    if (!newNews.value.title || !newNews.value.content) {
+                        alert('Заполните заголовок и содержание!');
+                        return;
+                    }
+                    allNews.value.push({
+                        id: Date.now(),
+                        ...newNews.value
+                    });
+                    saveAllNews();
+                    resetNews();
+                    showAlert('Новость добавлена!');
+                };
+
+                const resetNews = () => {
+                    newNews.value = {
+                        title: '',
+                        preview: '',
+                        content: '',
+                        category: '',
+                        author: '',
+                        image: '',
+                        date: new Date().toISOString().split('T')
+                    };
+                };
+
+                const deleteNews = (idx) => {
+                    if (confirm('Удалить эту новость?')) {
+                        allNews.value.splice(idx, 1);
+                        saveAllNews();
+                        showAlert('Новость удалена!');
+                    }
+                };
+
+                const saveAllNews = () => {
+                    localStorage.setItem('techflow_news', JSON.stringify(allNews.value));
+                };
+
+                const loadAllNews = () => {
+                    const data = localStorage.getItem('techflow_news');
+                    if (data) {
+                        allNews.value = JSON.parse(data);
+                    }
+                };
+
+                const saveDesign = () => {
+                    localStorage.setItem('techflow_design', JSON.stringify(designSettings.value));
+                    showAlert('Дизайн сохранён!');
+                };
+
+                const saveBranding = () => {
+                    localStorage.setItem('techflow_branding', JSON.stringify(branding.value));
+                    showAlert('Брендинг сохранён!');
+                };
+
+                const saveSettings = () => {
+                    localStorage.setItem('techflow_settings', JSON.stringify(settings.value));
+                    showAlert('Настройки сохранены!');
+                };
+
+                const exportJSON = () => {
+                    const data = JSON.stringify({ news: allNews.value }, null, 2);
+                    downloadFile(data, 'techflow_news.json', 'application/json');
+                };
+
+                const exportCSV = () => {
+                    let csv = 'Заголовок,Категория,Автор,Дата\n';
+                    allNews.value.forEach(news => {
+                        csv += `"${news.title}","${news.category}","${news.author}","${news.date}"\n`;
+                    });
+                    downloadFile(csv, 'techflow_news.csv', 'text/csv');
+                };
+
+                const downloadFile = (content, filename, type) => {
+                    const blob = new Blob([content], { type });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.click();
+                };
+
+                const createBackup = () => {
+                    const backup = {
+                        news: allNews.value,
+                        design: designSettings.value,
+                        branding: branding.value,
+                        settings: settings.value,
+                        timestamp: new Date().toISOString()
+                    };
+                    downloadFile(JSON.stringify(backup, null, 2), 'techflow_backup.json', 'application/json');
+                    showAlert('Резервная копия создана!');
+                };
+
+                const restoreBackup = () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+                    input.onchange = e => {
+                        const file = e.target.files;
+                        const reader = new FileReader();
+                        reader.onload = event => {
+                            try {
+                                const backup = JSON.parse(event.target.result);
+                                allNews.value = backup.news || allNews.value;
+                                designSettings.value = backup.design || designSettings.value;
+                                branding.value = backup.branding || branding.value;
+                                settings.value = backup.settings || settings.value;
+                                saveAllNews();
+                                showAlert('Резервная копия восстановлена!');
+                            } catch (err) {
+                                alert('Ошибка при восстановлении!');
+                            }
+                        };
+                        reader.readAsText(file);
+                    };
+                    input.click();
+                };
+
+                const resetAllData = () => {
+                    if (confirm('⚠️ Это удалит ВСЕ данные! Вы уверены?')) {
+                        if (confirm('Последнее предупреждение! Удалить ВСЕ?')) {
+                            localStorage.clear();
+                            location.reload();
+                        }
                     }
                 };
 
                 const logout = () => {
-                    isAuthenticated.value = false;
-                    localStorage.removeItem('techflow_admin_auth');
-                    adminPassword.value = '';
+                    alert('Выход из админ-панели');
+                    localStorage.removeItem('admin_logged');
+                    location.href = '/';
                 };
 
-                // UI
-                const activeTab = ref('add');
-                const isDarkMode = ref(false);
-                const successMessage = ref('');
-                const errorMessage = ref('');
-                const editingNews = ref(null);
-                const searchQuery = ref('');
-                const fileInput = ref(null);
-
-                // Data
-                const news = ref([]);
-                const comments = ref([]);
-
-                // Form
-                const form = ref({
-                    title: '',
-                    category: 'AI',
-                    author: '',
-                    image: 'https://via.placeholder.com/400x200',
-                    preview: '',
-                    content: '',
-                    source: ''
-                });
-
-                // Computed
-                const filteredNews = computed(() => {
-                    return news.value.filter(n => 
-                        n.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-                    ).sort((a, b) => new Date(b.date) - new Date(a.date));
-                });
-
-                const categories = computed(() => {
-                    return new Set(news.value.map(n => n.category));
-                });
-
-                const uniqueAuthors = computed(() => {
-                    return new Set(news.value.map(n => n.author));
-                });
-
-                const totalComments = computed(() => {
-                    return comments.value.length;
-                });
-
-                const authorStats = computed(() => {
-                    const stats = {};
-                    news.value.forEach(n => {
-                        stats[n.author] = (stats[n.author] || 0) + 1;
-                    });
-                    return Object.fromEntries(
-                        Object.entries(stats).sort((a, b) => b[1] - a[1])
-                    );
-                });
-
-                const categoryStats = computed(() => {
-                    const stats = {};
-                    news.value.forEach(n => {
-                        stats[n.category] = (stats[n.category] || 0) + 1;
-                    });
-                    return Object.fromEntries(
-                        Object.entries(stats).sort((a, b) => b[1] - a[1])
-                    );
-                });
-
-                const jsonTemplate = computed(() => {
-                    return JSON.stringify({
-                        id: "news_" + Date.now(),
-                        title: "Пример заголовка",
-                        category: "AI",
-                        author: "Автор",
-                        date: new Date().toISOString(),
-                        image: "https://via.placeholder.com/400x200",
-                        preview: "Краткое описание...",
-                        content: "Полный текст новости...",
-                        source: "https://example.com"
-                    }, null, 2);
-                });
-
-                // Methods
-                const formatDate = (date) => {
-                    return new Date(date).toLocaleDateString('ru-RU');
-                };
-
-                const loadData = () => {
-                    fetch('data/news.json')
-                        .then(r => r.json())
-                        .then(data => {
-                            news.value = data.news || data;
-                        })
-                        .catch(() => {
-                            news.value = [];
-                        });
-
-                    fetch('data/comments.json')
-                        .then(r => r.json())
-                        .then(data => {
-                            comments.value = data;
-                        })
-                        .catch(() => {
-                            comments.value = [];
-                        });
-                };
-
-                const getCommentCount = (newsId) => {
-                    return comments.value.filter(c => c.newsId === newsId).length;
-                };
-
-                const addNews = () => {
-                    if (!form.value.title || !form.value.preview || !form.value.content || !form.value.author) {
-                        errorMessage.value = '❌ Заполните обязательные поля!';
-                        return;
-                    }
-
-                    const newItem = {
-                        id: 'news_' + Date.now(),
-                        title: form.value.title,
-                        category: form.value.category,
-                        author: form.value.author,
-                        date: new Date().toISOString(),
-                        image: form.value.image,
-                        preview: form.value.preview,
-                        content: form.value.content,
-                        source: form.value.source
-                    };
-
-                    news.value.unshift(newItem);
-                    saveToLocalStorage();
-                    successMessage.value = '✅ Новость добавлена!';
-                    
-                    form.value = {
-                        title: '',
-                        category: 'AI',
-                        author: '',
-                        image: 'https://via.placeholder.com/400x200',
-                        preview: '',
-                        content: '',
-                        source: ''
-                    };
-
+                const showAlert = (msg) => {
+                    alertMessage.value = msg;
+                    alertSuccess.value = true;
                     setTimeout(() => {
-                        successMessage.value = '';
+                        alertSuccess.value = false;
                     }, 3000);
                 };
 
-                const editNews = (item) => {
-                    editingNews.value = { ...item };
-                };
-
-                const saveEditedNews = () => {
-                    const index = news.value.findIndex(n => n.id === editingNews.value.id);
-                    if (index !== -1) {
-                        news.value[index] = editingNews.value;
-                        saveToLocalStorage();
-                        successMessage.value = '✅ Новость обновлена!';
-                        editingNews.value = null;
-                    }
-                };
-
-                const deleteNews = (id) => {
-                    if (confirm('Вы уверены? Это действие нельзя отменить!')) {
-                        news.value = news.value.filter(n => n.id !== id);
-                        comments.value = comments.value.filter(c => c.newsId !== id);
-                        saveToLocalStorage();
-                        successMessage.value = '✅ Новость удалена!';
-                    }
-                };
-
-                const saveToLocalStorage = () => {
-                    localStorage.setItem('techflow_news', JSON.stringify(news.value));
-                    localStorage.setItem('techflow_comments', JSON.stringify(comments.value));
-                };
-
-                const exportData = () => {
-                    const data = {
-                        news: news.value,
-                        comments: comments.value,
-                        exported: new Date().toISOString()
-                    };
-
-                    const json = JSON.stringify(data, null, 2);
-                    const blob = new Blob([json], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'techflow-backup-' + Date.now() + '.json';
-                    a.click();
-                    URL.revokeObjectURL(url);
-                };
-
-                const triggerFileInput = () => {
-                    fileInput.value.click();
-                };
-
-                const importData = (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        try {
-                            const data = JSON.parse(event.target.result);
-                            news.value = data.news || [];
-                            comments.value = data.comments || [];
-                            saveToLocalStorage();
-                            successMessage.value = '✅ Данные загружены!';
-                        } catch (err) {
-                            errorMessage.value = '❌ Ошибка при загрузке JSON!';
-                        }
-                    };
-                    reader.readAsText(file);
-                    e.target.value = '';
-                };
-
-                const toggleDarkMode = () => {
-                    isDarkMode.value = !isDarkMode.value;
-                    document.body.classList.toggle('dark-mode', isDarkMode.value);
-                    localStorage.setItem('techflow_darkmode', isDarkMode.value);
-                };
-
-                const goToMain = () => {
-                    window.location.href = 'index.html';
-                };
-
-                onMounted(() => {
-                    if (localStorage.getItem('techflow_admin_auth') === 'true') {
-                        isAuthenticated.value = true;
-                    }
-
-                    isDarkMode.value = localStorage.getItem('techflow_darkmode') === 'true';
-                    document.body.classList.toggle('dark-mode', isDarkMode.value);
-                    
-                    loadData();
-
-                    const saved = localStorage.getItem('techflow_news');
-                    if (saved) {
-                        news.value = JSON.parse(saved);
-                    }
-                    const savedComments = localStorage.getItem('techflow_comments');
-                    if (savedComments) {
-                        comments.value = JSON.parse(savedComments);
-                    }
+                const uniqueCategories = computed(() => {
+                    return new Set(allNews.value.map(n => n.category)).size;
                 });
 
+                const uniqueAuthors = computed(() => {
+                    return new Set(allNews.value.map(n => n.author)).size;
+                });
+
+                const totalChars = computed(() => {
+                    return allNews.value.reduce((sum, n) => sum + n.content.length, 0);
+                });
+
+                loadAllNews();
+
                 return {
-                    isAuthenticated,
-                    adminPassword,
-                    loginError,
-                    login,
-                    logout,
                     activeTab,
-                    isDarkMode,
-                    successMessage,
-                    errorMessage,
-                    editingNews,
-                    searchQuery,
-                    fileInput,
-                    news,
-                    comments,
-                    form,
-                    filteredNews,
-                    categories,
-                    uniqueAuthors,
-                    totalComments,
-                    authorStats,
-                    categoryStats,
-                    jsonTemplate,
-                    formatDate,
-                    getCommentCount,
+                    newNews,
+                    allNews,
+                    designSettings,
+                    branding,
+                    settings,
+                    alertMessage,
+                    alertSuccess,
                     addNews,
-                    editNews,
-                    saveEditedNews,
+                    resetNews,
                     deleteNews,
-                    exportData,
-                    triggerFileInput,
-                    importData,
-                    toggleDarkMode,
-                    goToMain
+                    saveDesign,
+                    saveBranding,
+                    saveSettings,
+                    exportJSON,
+                    exportCSV,
+                    createBackup,
+                    restoreBackup,
+                    resetAllData,
+                    logout,
+                    uniqueCategories,
+                    uniqueAuthors,
+                    totalChars
                 };
             }
         }).mount('#app');
