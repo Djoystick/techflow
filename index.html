@@ -516,26 +516,42 @@
         }
 
         /* Share Buttons */
+        .share-section {
+            margin-top: 20px;
+        }
+
+        .share-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .share-buttons {
             display: flex;
             gap: 8px;
-            margin-top: 16px;
+            flex-wrap: wrap;
         }
 
         .share-btn {
             flex: 1;
-            padding: 10px;
+            min-width: 120px;
+            padding: 12px 16px;
             border: 1px solid var(--border-light);
             background: var(--bg-light);
             color: var(--text-light);
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            font-weight: 500;
         }
 
         body.dark-mode .share-btn {
@@ -548,6 +564,7 @@
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -562,6 +579,14 @@
 
             .search-bar {
                 flex-direction: column;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+            }
+
+            .share-btn {
+                min-width: unset;
             }
         }
     </style>
@@ -708,20 +733,26 @@
                         </a>
                     </div>
 
-                    <!-- Share Buttons -->
-                    <div class="share-buttons">
-                        <button class="share-btn" @click="shareToTelegram">
-                            <i class="fab fa-telegram"></i>
-                            Telegram
-                        </button>
-                        <button class="share-btn" @click="shareToTwitter">
-                            <i class="fab fa-twitter"></i>
-                            Twitter
-                        </button>
-                        <button class="share-btn" @click="copyToClipboard">
-                            <i class="fas fa-copy"></i>
-                            Копировать
-                        </button>
+                    <!-- Share Buttons with Title -->
+                    <div class="share-section">
+                        <div class="share-title">
+                            <i class="fas fa-share-alt"></i>
+                            Поделиться
+                        </div>
+                        <div class="share-buttons">
+                            <button class="share-btn" @click="shareToTelegram">
+                                <i class="fab fa-telegram"></i>
+                                Telegram
+                            </button>
+                            <button class="share-btn" @click="shareToTwitter">
+                                <i class="fab fa-twitter"></i>
+                                Twitter
+                            </button>
+                            <button class="share-btn" @click="copyToClipboard">
+                                <i class="fas fa-copy"></i>
+                                Копировать
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Comments -->
