@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TechFlow Mini App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0088cc;
+            --primary-dark: #0066aa;
+            --bg: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text: #000000;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode {
+            --bg: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text: #ffffff;
+            --text-secondary: #cccccc;
+            --border: #444444;
+        }
+
+        #app {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mini-app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* ============ ШАПКА ============ */
+        .mini-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .mini-header h1 {
+            font-size: 20px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mini-header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn, .admin-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover, .admin-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* ============ ВКЛАДКИ ============ */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ============ КОНТЕНТ ============ */
+        .mini-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+        }
+
+        /* ============ НОВОСТИ СЕТКА ============ */
+        .news-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        body.dark-mode .news-item {
+            background: #2a2a2a;
+        }
+
+        .news-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .news-item-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: var(--bg-secondary);
+        }
+
+        .news-item-content {
+            padding: 12px 16px;
+        }
+
+        .news-item-category {
+            display: inline-block;
+            background: rgba(0,136,204,0.15);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .news-item-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .news-item-preview {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .news-item-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .news-item-bookmark {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 5;
+        }
+
+        body.dark-mode .news-item-bookmark {
+            background: #3a3a3a;
+        }
+
+        /* ============ ПУСТОЕ СОСТОЯНИЕ ============ */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* ============ АДМИН-ПАНЕЛЬ ============ */
+        .admin-panel {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .admin-form {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            background: white;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+
+        body.dark-mode .form-input,
+        body.dark-mode .form-textarea,
+        body.dark-mode .form-select {
+            background: #1a1a1a;
+            color: white;
+            border-color: #444444;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .admin-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .admin-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .admin-btn-secondary {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .admin-btn-danger {
+            background: #e63946;
+            color: white;
+        }
+
+        /* ============ ТАБЛИЦА НОВОСТЕЙ ============ */
+        .admin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-item {
+            background: var(--bg-secondary);
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        body.dark-mode .admin-item {
+            background: #2a2a2a;
+        }
+
+        .admin-item-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .admin-item-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .admin-item-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .admin-item-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-item-btn:active {
+            transform: scale(0.95);
+        }
+
+        .admin-item-btn-delete {
+            background: #e63946;
+        }
+
+        /* ============ МОДАЛЬНОЕ ОКНО ЧТЕНИЯ ============ */
+        .reader-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        body.dark-mode .reader-modal {
+            background: #1a1a1a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .reader-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reader-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .reader-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .reader-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        .reader-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .reader-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .reader-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* ============ УВЕДОМЛЕНИЯ ============ */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #31a24c;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 2000;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .notification.error {
+            background: #e63946;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ============ СКРОЛЛ ============ */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        const { createApp, ref, computed, onMounted, watch } = Vue;
+
+        createApp({
+            template: `
+                <div class="mini-app">
+                    <!-- ШАПКА -->
+                    <div class="mini-header">
+                        <h1>
+                            <span id="logo-icon">🚀</span>
+                            <span id="logo-text">TechFlow</span>
+                        </h1>
+                        <div class="mini-header-buttons">
+                            <button class="theme-btn" @click="toggleTheme" :title="isDarkMode ? 'Светлый режим' : 'Тёмный режим'">
+                                {{ isDarkMode ? '☀️' : '🌙' }}
+                            </button>
+                            <button class="admin-btn" @click="activeTab = (activeTab === 'news' ? 'admin' : 'news')">
+                                {{ activeTab === 'admin' ? '📰' : '⚙️' }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ВКЛАДКИ (для новостей) -->
+                    <div v-if="activeTab === 'news'" class="tabs">
+                        <button class="tab-btn" :class="{ active: newsTab === 'all' }" @click="newsTab = 'all'">📰 Все</button>
+                        <button class="tab-btn" :class="{ active: newsTab === 'bookmarks' }" @click="newsTab = 'bookmarks'">📌 Закладки</button>
+                        <button class="tab-btn" :class="{ active: newsTab === 'history' }" @click="newsTab = 'history'">🕒 История</button>
+                    </div>
+
+                    <!-- КОНТЕНТ -->
+                    <div class="mini-content">
+                        <!-- ВКЛАДКА: НОВОСТИ -->
+                        <div v-if="activeTab === 'news' && newsTab === 'all'">
+                            <div class="news-list">
+                                <div v-if="allNews.length === 0" class="empty-state">
+                                    <i class="fas fa-newspaper"></i>
+                                    <p>Новости ещё не добавлены</p>
+                                </div>
+                                <div v-for="(news, idx) in allNews" :key="news.id" class="news-item" @click="openReader(idx)" style="position: relative;">
+                                    <button class="news-item-bookmark" @click.stop="toggleBookmark(news.id)" :title="bookmarks.includes(news.id) ? 'Удалить закладку' : 'Добавить закладку'">
+                                        {{ bookmarks.includes(news.id) ? '⭐' : '☆' }}
+                                    </button>
+                                    <img :src="news.image || 'https://via.placeholder.com/300x180'" :alt="news.title" class="news-item-image">
+                                    <div class="news-item-content">
+                                        <span class="news-item-category">{{ news.category || 'Разное' }}</span>
+                                        <div class="news-item-title">{{ news.title }}</div>
+                                        <div class="news-item-preview">{{ news.preview }}</div>
+                                        <div class="news-item-meta">
+                                            <span>{{ formatDate(news.date) }}</span>
+                                            <span>👁️ {{ news.views || 0 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ВКЛАДКА: ЗАКЛАДКИ -->
+                        <div v-if="activeTab === 'news' && newsTab === 'bookmarks'">
+                            <div class="news-list">
+                                <div v-if="bookmarkedNews.length === 0" class="empty-state">
+                                    <i class="fas fa-bookmark"></i>
+                                    <p>Закладок нет. Добавьте интересующие вас новости!</p>
+                                </div>
+                                <div v-for="(news, idx) in bookmarkedNews" :key="news.id" class="news-item" @click="openReader(allNews.indexOf(news))" style="position: relative;">
+                                    <button class="news-item-bookmark" @click.stop="toggleBookmark(news.id)">⭐</button>
+                                    <img :src="news.image || 'https://via.placeholder.com/300x180'" :alt="news.title" class="news-item-image">
+                                    <div class="news-item-content">
+                                        <span class="news-item-category">{{ news.category || 'Разное' }}</span>
+                                        <div class="news-item-title">{{ news.title }}</div>
+                                        <div class="news-item-preview">{{ news.preview }}</div>
+                                        <div class="news-item-meta">
+                                            <span>{{ formatDate(news.date) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ВКЛАДКА: ИСТОРИЯ -->
+                        <div v-if="activeTab === 'news' && newsTab === 'history'">
+                            <div class="news-list">
+                                <div v-if="historyNews.length === 0" class="empty-state">
+                                    <i class="fas fa-history"></i>
+                                    <p>История просмотров пуста</p>
+                                </div>
+                                <div v-for="(news, idx) in historyNews" :key="news.id" class="news-item" @click="openReader(allNews.indexOf(news))">
+                                    <img :src="news.image || 'https://via.placeholder.com/300x180'" :alt="news.title" class="news-item-image">
+                                    <div class="news-item-content">
+                                        <span class="news-item-category">{{ news.category || 'Разное' }}</span>
+                                        <div class="news-item-title">{{ news.title }}</div>
+                                        <div class="news-item-preview">{{ news.preview }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- АДМИН-ПАНЕЛЬ -->
+                        <div v-if="activeTab === 'admin'" class="admin-panel">
+                            <!-- ФОРМА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ -->
+                            <div class="admin-form">
+                                <h3 style="margin-bottom: 12px; font-size: 15px;">{{ isEditing ? '✏️ Редактировать' : '➕ Новая новость' }}</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Заголовок</label>
+                                    <input v-model="newsForm.title" class="form-input" placeholder="Введите заголовок">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Категория</label>
+                                    <select v-model="newsForm.category" class="form-select">
+                                        <option value="">Выберите категорию</option>
+                                        <option value="AI">🤖 AI</option>
+                                        <option value="Разработка">💻 Разработка</option>
+                                        <option value="Стартапы">🚀 Стартапы</option>
+                                        <option value="Новости">📰 Новости</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Описание</label>
+                                    <textarea v-model="newsForm.preview" class="form-textarea" placeholder="Краткое описание новости"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Полный текст</label>
+                                    <textarea v-model="newsForm.content" class="form-textarea" placeholder="Полный текст новости"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Автор</label>
+                                    <input v-model="newsForm.author" class="form-input" placeholder="Имя автора">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Ссылка на изображение</label>
+                                    <input v-model="newsForm.image" class="form-input" placeholder="https://...">
+                                </div>
+
+                                <div class="admin-buttons">
+                                    <button class="admin-btn admin-btn-primary" @click="saveNews">
+                                        {{ isEditing ? '💾 Сохранить' : '➕ Добавить' }}
+                                    </button>
+                                    <button v-if="isEditing" class="admin-btn admin-btn-secondary" @click="cancelEdit">❌ Отмена</button>
+                                </div>
+                            </div>
+
+                            <!-- СПИСОК НОВОСТЕЙ -->
+                            <h3 style="margin-bottom: 12px; font-size: 15px;">📋 Ваши новости</h3>
+                            <div class="admin-list">
+                                <div v-if="allNews.length === 0" class="empty-state" style="height: auto; padding: 40px 0;">
+                                    <p>Новостей нет. Добавьте первую новость!</p>
+                                </div>
+                                <div v-for="(news, idx) in allNews" :key="news.id" class="admin-item">
+                                    <div class="admin-item-title">{{ news.title }}</div>
+                                    <div class="admin-item-meta">{{ news.category }} • {{ formatDate(news.date) }} • 👁️ {{ news.views || 0 }}</div>
+                                    <div class="admin-item-actions">
+                                        <button class="admin-item-btn" @click="editNews(idx)">
+                                            <i class="fas fa-edit"></i> Редакт.
+                                        </button>
+                                        <button class="admin-item-btn admin-item-btn-delete" @click="deleteNews(idx)">
+                                            <i class="fas fa-trash"></i> Удалить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- МОДАЛЬНОЕ ОКНО ЧТЕНИЯ -->
+                <div v-if="readerOpen" class="reader-modal">
+                    <div class="reader-header">
+                        <h2 style="font-size: 16px; flex: 1;">{{ currentNews.title }}</h2>
+                        <button @click="closeReader">✕</button>
+                    </div>
+                    <div class="reader-content">
+                        <img :src="currentNews.image || 'https://via.placeholder.com/300x180'" :alt="currentNews.title" class="reader-image">
+                        <h1 class="reader-title">{{ currentNews.title }}</h1>
+                        <div class="reader-meta">
+                            <span>{{ currentNews.category || 'Разное' }}</span>
+                            <span>{{ currentNews.author || 'Автор' }}</span>
+                            <span>{{ formatDate(currentNews.date) }}</span>
+                            <span>👁️ {{ currentNews.views || 0 }}</span>
+                        </div>
+                        <div class="reader-text">{{ currentNews.content || currentNews.preview }}</div>
+                    </div>
+                </div>
+            `,
+            setup() {
+                const activeTab = ref('news');
+                const newsTab = ref('all');
+                const allNews = ref([]);
+                const bookmarks = ref([]);
+                const history = ref([]);
+                const isDarkMode = ref(false);
+                const readerOpen = ref(false);
+                const currentNewsIndex = ref(-1);
+                const isEditing = ref(false);
+                const editingIndex = ref(-1);
+
+                const newsForm = ref({
+                    title: '',
+                    category: '',
+                    preview: '',
+                    content: '',
+                    author: '',
+                    image: '',
+                    date: new Date().toISOString().split('T')[0]
+                });
+
+                const currentNews = computed(() => {
+                    return allNews.value[currentNewsIndex.value] || {};
+                });
+
+                const bookmarkedNews = computed(() => {
+                    return allNews.value.filter(n => bookmarks.value.includes(n.id));
+                });
+
+                const historyNews = computed(() => {
+                    return history.value.map(id => allNews.value.find(n => n.id === id)).filter(Boolean);
+                });
+
+                const loadData = () => {
+                    const stored = localStorage.getItem('techflow_news');
+                    if (stored) {
+                        allNews.value = JSON.parse(stored).map((item, idx) => ({
+                            ...item,
+                            id: item.id || `news-${idx}`,
+                            views: item.views || 0,
+                            date: item.date || new Date().toISOString().split('T')[0]
+                        }));
+                    }
+
+                    const bmk = localStorage.getItem('techflow_bookmarks');
+                    bookmarks.value = bmk ? JSON.parse(bmk) : [];
+
+                    const hist = localStorage.getItem('techflow_history');
+                    history.value = hist ? JSON.parse(hist) : [];
+
+                    loadBranding();
+                    loadTheme();
+                };
+
+                const saveNews = () => {
+                    if (!newsForm.value.title) {
+                        showNotification('Укажите заголовок!', 'error');
+                        return;
+                    }
+
+                    if (isEditing.value) {
+                        allNews.value[editingIndex.value] = {
+                            ...allNews.value[editingIndex.value],
+                            ...newsForm.value
+                        };
+                    } else {
+                        allNews.value.push({
+                            ...newsForm.value,
+                            id: `news-${Date.now()}`,
+                            views: 0,
+                            rating: 0
+                        });
+                    }
+
+                    localStorage.setItem('techflow_news', JSON.stringify(allNews.value));
+                    resetForm();
+                    showNotification(isEditing.value ? '✅ Новость обновлена!' : '✅ Новость добавлена!');
+                };
+
+                const deleteNews = (idx) => {
+                    if (confirm('Вы уверены? Это действие невозможно отменить!')) {
+                        allNews.value.splice(idx, 1);
+                        localStorage.setItem('techflow_news', JSON.stringify(allNews.value));
+                        showNotification('🗑️ Новость удалена!');
+                    }
+                };
+
+                const editNews = (idx) => {
+                    const news = allNews.value[idx];
+                    newsForm.value = { ...news };
+                    isEditing.value = true;
+                    editingIndex.value = idx;
+                    window.scrollTo(0, 0);
+                };
+
+                const cancelEdit = () => {
+                    resetForm();
+                };
+
+                const resetForm = () => {
+                    newsForm.value = {
+                        title: '',
+                        category: '',
+                        preview: '',
+                        content: '',
+                        author: '',
+                        image: '',
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    isEditing.value = false;
+                    editingIndex.value = -1;
+                };
+
+                const openReader = (idx) => {
+                    currentNewsIndex.value = idx;
+                    const news = allNews.value[idx];
+                    
+                    // Увеличить просмотры
+                    news.views = (news.views || 0) + 1;
+                    localStorage.setItem('techflow_news', JSON.stringify(allNews.value));
+
+                    // Добавить в историю
+                    if (!history.value.includes(news.id)) {
+                        history.value.unshift(news.id);
+                        if (history.value.length > 20) {
+                            history.value.pop();
+                        }
+                        localStorage.setItem('techflow_history', JSON.stringify(history.value));
+                    }
+
+                    readerOpen.value = true;
+                    document.body.style.overflow = 'hidden';
+                };
+
+                const closeReader = () => {
+                    readerOpen.value = false;
+                    document.body.style.overflow = 'auto';
+                };
+
+                const toggleBookmark = (newsId) => {
+                    const idx = bookmarks.value.indexOf(newsId);
+                    if (idx > -1) {
+                        bookmarks.value.splice(idx, 1);
+                    } else {
+                        bookmarks.value.push(newsId);
+                    }
+                    localStorage.setItem('techflow_bookmarks', JSON.stringify(bookmarks.value));
+                };
+
+                const toggleTheme = () => {
+                    isDarkMode.value = !isDarkMode.value;
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('techflow_dark_mode', isDarkMode.value ? '1' : '0');
+                };
+
+                const loadTheme = () => {
+                    const isDark = localStorage.getItem('techflow_dark_mode') === '1';
+                    isDarkMode.value = isDark;
+                    if (isDark) {
+                        document.body.classList.add('dark-mode');
+                    }
+                };
+
+                const loadBranding = () => {
+                    const branding = localStorage.getItem('techflow_branding');
+                    if (branding) {
+                        const settings = JSON.parse(branding);
+                        document.getElementById('logo-icon').textContent = settings.logoIcon || '🚀';
+                        document.getElementById('logo-text').textContent = settings.siteName || 'TechFlow';
+                    }
+                };
+
+                const formatDate = (date) => {
+                    return new Date(date).toLocaleDateString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: '2-digit'
+                    });
+                };
+
+                const showNotification = (message, type = 'success') => {
+                    const notif = document.createElement('div');
+                    notif.className = `notification ${type === 'error' ? 'error' : ''}`;
+                    notif.textContent = message;
+                    document.body.appendChild(notif);
+
+                    setTimeout(() => {
+                        notif.style.opacity = '0';
+                        setTimeout(() => notif.remove(), 300);
+                    }, 3000);
+                };
+
+                onMounted(() => {
+                    loadData();
+                    window.addEventListener('storage', loadData);
+                });
+
+                return {
+                    activeTab,
+                    newsTab,
+                    allNews,
+                    bookmarks,
+                    isDarkMode,
+                    readerOpen,
+                    currentNews,
+                    newsForm,
+                    isEditing,
+                    bookmarkedNews,
+                    historyNews,
+                    saveNews,
+                    deleteNews,
+                    editNews,
+                    cancelEdit,
+                    openReader,
+                    closeReader,
+                    toggleBookmark,
+                    toggleTheme,
+                    formatDate
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
