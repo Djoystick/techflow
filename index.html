@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechFlow - Новости о технологиях</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -170,24 +172,6 @@
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
         }
 
-        /* ERROR BUTTON */
-        .btn-error {
-            background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-error:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-
-        /* SMALL BUTTON */
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
         /* Container */
         .container {
             max-width: 1200px;
@@ -257,6 +241,9 @@
             font-size: 13px;
             font-weight: 500;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         body.dark-mode .category-btn {
@@ -322,7 +309,9 @@
         }
 
         .news-category {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
             background: rgba(0, 136, 204, 0.1);
             color: var(--primary);
             padding: 4px 10px;
@@ -526,13 +515,6 @@
             margin-bottom: 12px;
         }
 
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            opacity: 0.6;
-        }
-
         /* Share Buttons */
         .share-buttons {
             display: flex;
@@ -550,6 +532,10 @@
             font-size: 12px;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         body.dark-mode .share-btn {
@@ -586,14 +572,16 @@
         <header>
             <div class="header-container">
                 <div class="header-logo">
-                    🚀 TechFlow
+                    <i class="fas fa-rocket"></i>
+                    TechFlow
                 </div>
                 <div class="header-controls">
                     <button class="btn btn-icon" @click="toggleDarkMode" title="Тёмный режим">
-                        {{ isDarkMode ? '☀️' : '🌙' }}
+                        <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                     </button>
                     <button class="btn btn-secondary btn-sm" @click="goToAdmin" title="Админ-панель">
-                        ⚙️ Админ
+                        <i class="fas fa-cog"></i>
+                        Админ
                     </button>
                 </div>
             </div>
@@ -611,19 +599,21 @@
                         v-model="searchQuery"
                     >
                     <button class="btn btn-primary btn-sm" @click="resetFilters">
-                        ✨ Очистить фильтры
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        Очистить фильтры
                     </button>
                 </div>
 
                 <div style="margin-top: 16px;">
-                    <p style="font-size: 12px; opacity: 0.6; margin-bottom: 8px;">Категории:</p>
+                    <p style="font-size: 12px; opacity: 0.6; margin-bottom: 8px;"><i class="fas fa-filter"></i> Категории:</p>
                     <div class="category-filter">
                         <button 
                             class="category-btn" 
                             :class="{ active: selectedCategory === null }" 
                             @click="selectedCategory = null"
                         >
-                            📂 Все категории
+                            <i class="fas fa-folder"></i>
+                            Все категории
                         </button>
                         <button 
                             v-for="cat in categories" 
@@ -632,7 +622,8 @@
                             :class="{ active: selectedCategory === cat }" 
                             @click="selectedCategory = cat"
                         >
-                            {{ getCategoryEmoji(cat) }} {{ cat }}
+                            <i :class="getCategoryIcon(cat)"></i>
+                            {{ cat }}
                         </button>
                     </div>
                 </div>
@@ -653,19 +644,24 @@
                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22%3E%3Crect fill=%22%23ddd%22 width=%22400%22 height=%22200%22/%3E%3C/svg%3E'"
                     >
                     <div class="news-content">
-                        <span class="news-category">{{ item.category }}</span>
+                        <span class="news-category">
+                            <i :class="getCategoryIcon(item.category)"></i>
+                            {{ item.category }}
+                        </span>
                         <h3 class="news-title">{{ item.title }}</h3>
                         <p class="news-preview">{{ item.preview }}</p>
                         <div class="news-meta">
-                            <span>{{ item.author }}</span>
-                            <span>📅 {{ formatDate(item.date) }}</span>
+                            <span><i class="fas fa-user"></i> {{ item.author }}</span>
+                            <span><i class="fas fa-calendar"></i> {{ formatDate(item.date) }}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div v-else class="empty-state">
-                <div class="empty-icon">📭</div>
+                <div class="empty-icon">
+                    <i class="fas fa-inbox"></i>
+                </div>
                 <p>Новости не найдены</p>
             </div>
         </div>
@@ -675,7 +671,9 @@
             <div class="modal" v-if="selectedNewsItem">
                 <div class="modal-header">
                     <h2 style="font-size: 20px;">{{ selectedNewsItem.title }}</h2>
-                    <button class="modal-close" @click="selectedNewsItem = null">✕</button>
+                    <button class="modal-close" @click="selectedNewsItem = null">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <img 
@@ -685,9 +683,18 @@
                     >
 
                     <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
-                        <span class="news-category">{{ selectedNewsItem.category }}</span>
-                        <span style="font-size: 12px; opacity: 0.6;">✍️ {{ selectedNewsItem.author }}</span>
-                        <span style="font-size: 12px; opacity: 0.6;">📅 {{ formatDate(selectedNewsItem.date) }}</span>
+                        <span class="news-category">
+                            <i :class="getCategoryIcon(selectedNewsItem.category)"></i>
+                            {{ selectedNewsItem.category }}
+                        </span>
+                        <span style="font-size: 12px; opacity: 0.6;">
+                            <i class="fas fa-pen"></i>
+                            {{ selectedNewsItem.author }}
+                        </span>
+                        <span style="font-size: 12px; opacity: 0.6;">
+                            <i class="fas fa-calendar"></i>
+                            {{ formatDate(selectedNewsItem.date) }}
+                        </span>
                     </div>
 
                     <div style="line-height: 1.7; margin-bottom: 20px; font-size: 15px;">
@@ -696,20 +703,33 @@
 
                     <div v-if="selectedNewsItem.source" style="padding: 12px; background: var(--border-light); border-radius: 6px; margin-bottom: 20px;">
                         <a :href="selectedNewsItem.source" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                            🔗 Открыть источник
+                            <i class="fas fa-external-link-alt"></i>
+                            Открыть источник
                         </a>
                     </div>
 
                     <!-- Share Buttons -->
                     <div class="share-buttons">
-                        <button class="share-btn" @click="shareToTelegram">📱 Telegram</button>
-                        <button class="share-btn" @click="shareToTwitter">𝕏 Twitter</button>
-                        <button class="share-btn" @click="copyToClipboard">📋 Копировать</button>
+                        <button class="share-btn" @click="shareToTelegram">
+                            <i class="fab fa-telegram"></i>
+                            Telegram
+                        </button>
+                        <button class="share-btn" @click="shareToTwitter">
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </button>
+                        <button class="share-btn" @click="copyToClipboard">
+                            <i class="fas fa-copy"></i>
+                            Копировать
+                        </button>
                     </div>
 
                     <!-- Comments -->
                     <div class="comments-section">
-                        <h3 style="margin-bottom: 16px;">💬 Комментарии</h3>
+                        <h3 style="margin-bottom: 16px;">
+                            <i class="fas fa-comments"></i>
+                            Комментарии
+                        </h3>
 
                         <div class="comment-form">
                             <input 
@@ -724,18 +744,26 @@
                                 class="comment-input"
                             ></textarea>
                             <button class="btn btn-success" @click="addComment" style="width: 100%;">
-                                ✅ Оставить комментарий
+                                <i class="fas fa-paper-plane"></i>
+                                Оставить комментарий
                             </button>
                         </div>
 
                         <div v-if="newsComments.length > 0" class="comments-list">
                             <div v-for="comment in newsComments" :key="comment.id" class="comment">
-                                <div class="comment-author">{{ comment.author }}</div>
+                                <div class="comment-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    {{ comment.author }}
+                                </div>
                                 <div class="comment-text">{{ comment.text }}</div>
-                                <div class="comment-date">{{ formatDate(comment.date) }}</div>
+                                <div class="comment-date">
+                                    <i class="fas fa-clock"></i>
+                                    {{ formatDate(comment.date) }}
+                                </div>
                             </div>
                         </div>
                         <div v-else style="text-align: center; opacity: 0.5; padding: 20px;">
+                            <i class="fas fa-comment-slash"></i>
                             Пока нет комментариев
                         </div>
                     </div>
@@ -745,7 +773,10 @@
 
         <!-- Footer -->
         <footer>
-            <p>🚀 TechFlow © 2025 | Социальные новости о технологиях</p>
+            <p>
+                <i class="fas fa-rocket"></i>
+                TechFlow © 2025 | Социальные новости о технологиях
+            </p>
         </footer>
     </div>
 
@@ -801,17 +832,17 @@
                     return new Date(date).toLocaleDateString('ru-RU');
                 };
 
-                const getCategoryEmoji = (cat) => {
-                    const emojis = {
-                        'AI': '🤖',
-                        'Разработка': '💻',
-                        'Мобильные': '📱',
-                        'Кибербезопасность': '🔒',
-                        'Облако': '☁️',
-                        'Железо': '🖥️',
-                        'Стартапы': '🚀'
+                const getCategoryIcon = (cat) => {
+                    const icons = {
+                        'AI': 'fas fa-brain',
+                        'Разработка': 'fas fa-code',
+                        'Мобильные': 'fas fa-mobile-alt',
+                        'Кибербезопасность': 'fas fa-shield-alt',
+                        'Облако': 'fas fa-cloud',
+                        'Железо': 'fas fa-server',
+                        'Стартапы': 'fas fa-rocket'
                     };
-                    return emojis[cat] || '📌';
+                    return icons[cat] || 'fas fa-bookmark';
                 };
 
                 const selectNews = (item) => {
@@ -887,7 +918,7 @@
                     filteredNews,
                     newsComments,
                     formatDate,
-                    getCategoryEmoji,
+                    getCategoryIcon,
                     selectNews,
                     resetFilters,
                     addComment,
