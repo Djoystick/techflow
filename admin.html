@@ -14,6 +14,7 @@
 
         :root {
             --primary: #0088cc;
+            --primary-dark: #0066aa;
             --secondary: #1c1c1c;
             --bg-light: #ffffff;
             --bg-dark: #0f0f0f;
@@ -23,6 +24,9 @@
             --border-dark: #2a2a2a;
             --success: #22c55e;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --divider: #f0f0f0;
         }
 
         body {
@@ -41,50 +45,172 @@
             padding-bottom: 20px;
         }
 
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        body.dark-mode .login-box {
+            background: var(--secondary);
+        }
+
+        .login-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .login-title {
+            color: var(--text-dark);
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            opacity: 0.6;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .login-input {
+            padding: 12px 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .login-input {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+            color: var(--text-dark);
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
+        }
+
+        .login-btn {
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            color: var(--error);
+            font-size: 14px;
+            padding: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 6px;
+            border: 1px solid var(--error);
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* Main Container */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
         /* Header */
         .header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 20px;
-            margin: -20px -20px 20px -20px;
+            padding: 24px;
+            margin: -20px -20px 30px -20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 700;
         }
 
-        .header-actions {
+        .header-controls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: center;
         }
 
+        /* Buttons */
         .btn {
             padding: 10px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:focus {
+            outline: none;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
+            box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
         }
 
         .btn-secondary {
@@ -97,14 +223,30 @@
             color: var(--text-dark);
         }
 
+        .btn-secondary:hover {
+            opacity: 0.8;
+        }
+
         .btn-success {
-            background: var(--success);
+            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
             color: white;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
         }
 
         .btn-error {
-            background: var(--error);
+            background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
             color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-error:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
 
         .btn-small {
@@ -112,12 +254,18 @@
             font-size: 12px;
         }
 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* Tabs */
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 0;
+            margin-bottom: 30px;
             border-bottom: 2px solid var(--border-light);
+            overflow-x: auto;
         }
 
         body.dark-mode .tabs {
@@ -125,19 +273,24 @@
         }
 
         .tab-btn {
-            padding: 12px 16px;
+            padding: 16px 24px;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-light);
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         body.dark-mode .tab-btn {
             color: var(--text-dark);
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
         }
 
         .tab-btn.active {
@@ -145,16 +298,16 @@
             border-bottom-color: var(--primary);
         }
 
-        /* Form */
+        /* Forms */
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .form-label {
             display: block;
             font-weight: 600;
             font-size: 14px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--text-light);
         }
 
@@ -166,13 +319,14 @@
         .form-textarea,
         .form-select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 11px 14px;
             border: 1px solid var(--border-light);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
             background: var(--bg-light);
             color: var(--text-light);
             font-family: inherit;
+            transition: all 0.3s;
         }
 
         body.dark-mode .form-input,
@@ -181,6 +335,14 @@
             background: var(--secondary);
             border-color: var(--border-dark);
             color: var(--text-dark);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
         }
 
         .form-textarea {
@@ -200,41 +362,59 @@
             }
         }
 
-        /* News Form */
-        .news-form {
+        /* Card */
+        .card {
             background: var(--bg-light);
             border: 1px solid var(--border-light);
             border-radius: 12px;
-            padding: 20px;
+            padding: 24px;
             margin-bottom: 20px;
+            transition: all 0.3s;
         }
 
-        body.dark-mode .news-form {
+        body.dark-mode .card {
             background: var(--secondary);
             border-color: var(--border-dark);
         }
 
-        .form-title {
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--divider);
+            margin: 20px 0;
+        }
+
+        body.dark-mode .card-divider {
+            background: var(--border-dark);
         }
 
         /* News List */
-        .news-list {
+        .news-grid {
             display: grid;
-            gap: 12px;
+            gap: 16px;
         }
 
         .news-item {
             display: grid;
             grid-template-columns: 80px 1fr auto;
-            gap: 12px;
+            gap: 16px;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
             background: var(--bg-light);
             border: 1px solid var(--border-light);
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s;
         }
 
@@ -244,33 +424,78 @@
         }
 
         .news-item:hover {
-            transform: translateX(4px);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
 
-        .news-item-image {
+        .news-image {
             width: 80px;
             height: 80px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
         }
 
-        .news-item-content h3 {
-            font-size: 14px;
+        .news-content h3 {
+            font-size: 15px;
             margin-bottom: 6px;
             line-height: 1.3;
         }
 
-        .news-item-meta {
+        .news-meta {
             font-size: 12px;
             opacity: 0.6;
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .news-item-actions {
+        .news-actions {
             display: flex;
             gap: 6px;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--border-light) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .stat-card {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--border-dark) 100%);
+            border-color: var(--border-dark);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.6;
+            font-weight: 500;
         }
 
         /* Table */
@@ -278,7 +503,7 @@
             width: 100%;
             border-collapse: collapse;
             background: var(--bg-light);
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             border: 1px solid var(--border-light);
         }
@@ -291,6 +516,7 @@
         .table thead {
             background: var(--border-light);
             font-weight: 600;
+            font-size: 13px;
         }
 
         body.dark-mode .table thead {
@@ -299,10 +525,9 @@
 
         .table th,
         .table td {
-            padding: 12px;
+            padding: 14px 16px;
             text-align: left;
             border-bottom: 1px solid var(--border-light);
-            font-size: 14px;
         }
 
         body.dark-mode .table td {
@@ -317,37 +542,35 @@
             background: var(--border-dark);
         }
 
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: var(--bg-light);
-            border: 1px solid var(--border-light);
+        /* Alerts */
+        .alert {
+            padding: 14px 16px;
             border-radius: 8px;
-            padding: 16px;
-            text-align: center;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
         }
 
-        body.dark-mode .stat-card {
-            background: var(--secondary);
-            border-color: var(--border-dark);
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
         }
 
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.6;
-            margin-top: 6px;
+        .close-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 18px;
         }
 
         /* Modal */
@@ -376,6 +599,7 @@
             max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         body.dark-mode .modal {
@@ -383,133 +607,381 @@
         }
 
         .modal-header {
-            padding: 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-light);
+            z-index: 10;
         }
 
         body.dark-mode .modal-header {
+            background: var(--secondary);
             border-color: var(--border-dark);
         }
 
         .modal-body {
-            padding: 20px;
+            padding: 24px;
         }
 
         .modal-footer {
-            padding: 16px 20px;
+            padding: 16px 24px;
             border-top: 1px solid var(--border-light);
             display: flex;
             gap: 10px;
             justify-content: flex-end;
+            background: var(--bg-light);
+            sticky: bottom;
         }
 
         body.dark-mode .modal-footer {
+            background: var(--secondary);
             border-color: var(--border-dark);
         }
 
-        /* Alert */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 1px solid var(--error);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Empty state */
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             opacity: 0.5;
         }
 
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* Badge */
         .badge {
             display: inline-block;
-            padding: 4px 8px;
-            background: var(--primary);
-            color: white;
+            padding: 4px 10px;
+            background: var(--border-light);
             border-radius: 4px;
             font-size: 11px;
             font-weight: 600;
+        }
+
+        body.dark-mode .badge {
+            background: var(--border-dark);
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .badge-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        /* Search */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <div class="header">
-            <h1>⚙️ TechFlow - Админ Панель</h1>
-            <div class="header-actions">
-                <button class="btn btn-secondary btn-small" @click="toggleDarkMode">
-                    {{ isDarkMode ? '☀️' : '🌙' }}
-                </button>
-                <button class="btn btn-secondary btn-small" @click="goToMain">
-                    👁️ Просмотр
-                </button>
+        <!-- Login Screen -->
+        <div v-if="!isAuthenticated" class="login-container">
+            <div class="login-box">
+                <div class="login-logo">⚙️</div>
+                <h1 class="login-title">TechFlow Admin</h1>
+                <p class="login-subtitle">Защищённый доступ к админ-панели</p>
+                
+                <div class="login-error" :class="{ show: loginError }">
+                    {{ loginError }}
+                </div>
+
+                <form class="login-form" @submit.prevent="login">
+                    <input 
+                        type="password" 
+                        class="login-input"
+                        placeholder="Введите пароль администратора"
+                        v-model="adminPassword"
+                        @keyup.enter="login"
+                    >
+                    <button type="submit" class="login-btn">
+                        🔓 Войти в админ-панель
+                    </button>
+                </form>
+
+                <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
+                    <p>Стандартный пароль: <strong>admin123</strong></p>
+                </div>
             </div>
         </div>
 
-        <div class="container">
-            <!-- Alerts -->
-            <div v-if="successMessage" class="alert alert-success">
-                {{ successMessage }}
-                <button class="close-btn" @click="successMessage = ''">✕</button>
-            </div>
-            <div v-if="errorMessage" class="alert alert-error">
-                {{ errorMessage }}
-                <button class="close-btn" @click="errorMessage = ''">✕</button>
-            </div>
-
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab-btn" :class="{ active: activeTab === 'add' }" @click="activeTab = 'add'">
-                    ➕ Добавить новость
-                </button>
-                <button class="tab-btn" :class="{ active: activeTab === 'edit' }" @click="activeTab = 'edit'">
-                    ✏️ Управление
-                </button>
-                <button class="tab-btn" :class="{ active: activeTab === 'stats' }" @click="activeTab = 'stats'">
-                    📊 Статистика
-                </button>
+        <!-- Admin Panel -->
+        <div v-else>
+            <div class="header">
+                <h1>⚙️ TechFlow - Админ Панель</h1>
+                <div class="header-controls">
+                    <button class="btn btn-secondary btn-small" @click="toggleDarkMode">
+                        {{ isDarkMode ? '☀️' : '🌙' }}
+                    </button>
+                    <button class="btn btn-secondary btn-small" @click="goToMain">
+                        👁️ Просмотр
+                    </button>
+                    <button class="btn btn-secondary btn-small" @click="logout">
+                        🔒 Выход
+                    </button>
+                </div>
             </div>
 
-            <!-- Add News Tab -->
-            <div v-if="activeTab === 'add'">
-                <div class="news-form">
-                    <h2 class="form-title">📝 Добавить новую новость</h2>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Заголовок *</label>
-                        <input type="text" class="form-input" v-model="form.title" placeholder="Введите заголовок новости">
+            <div class="container">
+                <!-- Alerts -->
+                <div v-if="successMessage" class="alert alert-success">
+                    {{ successMessage }}
+                    <button class="close-btn" @click="successMessage = ''">✕</button>
+                </div>
+                <div v-if="errorMessage" class="alert alert-error">
+                    {{ errorMessage }}
+                    <button class="close-btn" @click="errorMessage = ''">✕</button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button 
+                        class="tab-btn" 
+                        :class="{ active: activeTab === 'add' }" 
+                        @click="activeTab = 'add'"
+                    >
+                        ➕ Добавить новость
+                    </button>
+                    <button 
+                        class="tab-btn" 
+                        :class="{ active: activeTab === 'manage' }" 
+                        @click="activeTab = 'manage'"
+                    >
+                        ✏️ Управление
+                    </button>
+                    <button 
+                        class="tab-btn" 
+                        :class="{ active: activeTab === 'stats' }" 
+                        @click="activeTab = 'stats'"
+                    >
+                        📊 Статистика
+                    </button>
+                </div>
+
+                <!-- TAB 1: Add News -->
+                <div v-if="activeTab === 'add'">
+                    <div class="card">
+                        <h2 class="card-title">📝 Добавить новую новость</h2>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Заголовок *</label>
+                            <input type="text" class="form-input" v-model="form.title" placeholder="Введите заголовок новости">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Категория *</label>
+                                <select class="form-select" v-model="form.category">
+                                    <option>AI</option>
+                                    <option>Разработка</option>
+                                    <option>Мобильные</option>
+                                    <option>Кибербезопасность</option>
+                                    <option>Облако</option>
+                                    <option>Железо</option>
+                                    <option>Стартапы</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Автор *</label>
+                                <input type="text" class="form-input" v-model="form.author" placeholder="Ваше имя">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">URL изображения</label>
+                            <input type="url" class="form-input" v-model="form.image" placeholder="https://example.com/image.jpg">
+                            <small style="opacity: 0.6;">Рекомендуемый размер: 400x200px</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Краткое описание * (макс 150 символов)</label>
+                            <input type="text" class="form-input" v-model="form.preview" placeholder="Краткое описание" maxlength="150">
+                            <small style="opacity: 0.6;">{{ form.preview.length }}/150</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Полный текст новости *</label>
+                            <textarea class="form-textarea" v-model="form.content" placeholder="Полное описание новости..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Источник (ссылка)</label>
+                            <input type="url" class="form-input" v-model="form.source" placeholder="https://example.com">
+                        </div>
+
+                        <button class="btn btn-success" @click="addNews" style="width: 100%; padding: 12px;">
+                            ✅ Добавить новость
+                        </button>
                     </div>
 
-                    <div class="form-row">
+                    <div class="card" style="border-color: var(--success); background: rgba(34, 197, 94, 0.05);">
+                        <h3 class="card-title">📋 JSON Шаблон</h3>
+                        <p style="font-size: 12px; opacity: 0.7; margin-bottom: 12px;">Копируйте и редактируйте этот JSON для быстрого добавления:</p>
+                        <pre style="background: var(--border-light); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 11px; line-height: 1.4;">{{ jsonTemplate }}</pre>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Manage News -->
+                <div v-if="activeTab === 'manage'">
+                    <div class="card">
+                        <h2 class="card-title">📰 Управление новостями</h2>
+                        
+                        <div class="search-box">
+                            <input type="text" class="form-input" v-model="searchQuery" placeholder="🔍 Поиск по названию...">
+                        </div>
+
+                        <div v-if="filteredNews.length > 0" class="news-grid">
+                            <div class="news-item" v-for="item in filteredNews" :key="item.id">
+                                <img :src="item.image" :alt="item.title" class="news-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23ddd%22 width=%2280%22 height=%2280%22/%3E%3C/svg%3E'">
+                                <div class="news-content">
+                                    <h3>{{ item.title }}</h3>
+                                    <div class="news-meta">
+                                        <span>{{ item.category }}</span>
+                                        <span>📅 {{ formatDate(item.date) }}</span>
+                                        <span><strong>{{ getCommentCount(item.id) }}</strong> комм.</span>
+                                    </div>
+                                </div>
+                                <div class="news-actions">
+                                    <button class="btn btn-secondary btn-small" @click="editNews(item)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn btn-error btn-small" @click="deleteNews(item.id)">
+                                        🗑️
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="empty-state">
+                            <p>📭 Новости не найдены</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: Statistics -->
+                <div v-if="activeTab === 'stats'">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📰</div>
+                            <div class="stat-value">{{ news.length }}</div>
+                            <div class="stat-label">Всего новостей</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-value">{{ totalComments }}</div>
+                            <div class="stat-label">Комментариев</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🏷️</div>
+                            <div class="stat-value">{{ categories.size }}</div>
+                            <div class="stat-label">Категорий</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">👤</div>
+                            <div class="stat-value">{{ uniqueAuthors.size }}</div>
+                            <div class="stat-label">Авторов</div>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="card">
+                        <h3 class="card-title">🏷️ Категории</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span v-for="cat in Array.from(categories)" :key="cat" class="badge">
+                                {{ cat }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Top Authors -->
+                    <div class="card">
+                        <h3 class="card-title">✍️ Топ авторов</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Автор</th>
+                                    <th>Количество новостей</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(count, author) in authorStats" :key="author">
+                                    <td>{{ author }}</td>
+                                    <td>
+                                        <span class="badge" :class="count > 3 ? 'badge-success' : ''">
+                                            {{ count }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Category Distribution -->
+                    <div class="card">
+                        <h3 class="card-title">📊 Распределение по категориям</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Категория</th>
+                                    <th>Количество</th>
+                                    <th>Процент</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(count, cat) in categoryStats" :key="cat">
+                                    <td>{{ cat }}</td>
+                                    <td>
+                                        <span class="badge">{{ count }}</span>
+                                    </td>
+                                    <td>{{ Math.round(count / news.length * 100) }}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Import/Export -->
+                    <div class="card">
+                        <h3 class="card-title">💾 Экспорт/Импорт</h3>
+                        <button class="btn btn-success" @click="exportData" style="width: 100%; margin-bottom: 10px; padding: 12px;">
+                            💾 Скачать данные JSON
+                        </button>
+                        <button class="btn btn-primary" @click="triggerFileInput" style="width: 100%; padding: 12px;">
+                            📤 Загрузить JSON
+                        </button>
+                        <input type="file" ref="fileInput" @change="importData" accept=".json" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal-overlay" :class="{ active: editingNews }">
+                <div class="modal">
+                    <div class="modal-header" v-if="editingNews">
+                        <h2>✏️ Редактировать новость</h2>
+                        <button class="close-btn" @click="editingNews = null">✕</button>
+                    </div>
+                    <div class="modal-body" v-if="editingNews">
                         <div class="form-group">
-                            <label class="form-label">Категория *</label>
-                            <select class="form-select" v-model="form.category">
+                            <label class="form-label">Заголовок</label>
+                            <input type="text" class="form-input" v-model="editingNews.title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Категория</label>
+                            <select class="form-select" v-model="editingNews.category">
                                 <option>AI</option>
                                 <option>Разработка</option>
                                 <option>Мобильные</option>
@@ -520,156 +992,22 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Автор *</label>
-                            <input type="text" class="form-input" v-model="form.author" placeholder="Ваше имя">
+                            <label class="form-label">Краткое описание</label>
+                            <input type="text" class="form-input" v-model="editingNews.preview" maxlength="150">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Полный текст</label>
+                            <textarea class="form-textarea" v-model="editingNews.content"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Источник</label>
+                            <input type="url" class="form-input" v-model="editingNews.source">
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">URL изображения</label>
-                        <input type="url" class="form-input" v-model="form.image" placeholder="https://example.com/image.jpg">
-                        <small style="opacity: 0.6;">Рекомендуемый размер: 400x200px</small>
+                    <div class="modal-footer" v-if="editingNews">
+                        <button class="btn btn-secondary" @click="editingNews = null">Отмена</button>
+                        <button class="btn btn-success" @click="saveEditedNews">✅ Сохранить</button>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Краткое описание *</label>
-                        <input type="text" class="form-input" v-model="form.preview" placeholder="Максимум 150 символов" maxlength="150">
-                        <small style="opacity: 0.6;">{{ form.preview.length }}/150</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Полный текст новости *</label>
-                        <textarea class="form-textarea" v-model="form.content" placeholder="Полное описание новости..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Источник (ссылка)</label>
-                        <input type="url" class="form-input" v-model="form.source" placeholder="https://example.com">
-                    </div>
-
-                    <button class="btn btn-primary" @click="addNews" style="width: 100%;">
-                        ✅ Добавить новость
-                    </button>
-                </div>
-
-                <div class="news-form" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
-                    <h3 class="form-title">📋 JSON Шаблон</h3>
-                    <p style="font-size: 12px; opacity: 0.7; margin-bottom: 12px;">Копируйте и редактируйте этот JSON для быстрого добавления:</p>
-                    <pre style="background: var(--border-light); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 11px;">{{ jsonTemplate }}</pre>
-                </div>
-            </div>
-
-            <!-- Edit News Tab -->
-            <div v-if="activeTab === 'edit'">
-                <div style="margin-bottom: 16px;">
-                    <input type="text" class="form-input" v-model="searchQuery" placeholder="🔍 Поиск новостей...">
-                </div>
-
-                <div v-if="filteredNews.length > 0" class="news-list">
-                    <div class="news-item" v-for="item in filteredNews" :key="item.id">
-                        <img :src="item.image" :alt="item.title" class="news-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23ddd%22 width=%2280%22 height=%2280%22/%3E%3C/svg%3E'">
-                        <div class="news-item-content">
-                            <h3>{{ item.title }}</h3>
-                            <div class="news-item-meta">
-                                <span>{{ item.category }}</span>
-                                <span>📅 {{ formatDate(item.date) }}</span>
-                                <span><strong>{{ getCommentCount(item.id) }}</strong> комментариев</span>
-                            </div>
-                        </div>
-                        <div class="news-item-actions">
-                            <button class="btn btn-secondary btn-small" @click="editNews(item)">
-                                ✏️
-                            </button>
-                            <button class="btn btn-error btn-small" @click="deleteNews(item.id)">
-                                🗑️
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div v-else class="empty-state">
-                    <p>No news found</p>
-                </div>
-            </div>
-
-            <!-- Stats Tab -->
-            <div v-if="activeTab === 'stats'">
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-value">{{ news.length }}</div>
-                        <div class="stat-label">Всего новостей</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">{{ totalComments }}</div>
-                        <div class="stat-label">Комментариев</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">{{ categories.size }}</div>
-                        <div class="stat-label">Категорий</div>
-                    </div>
-                </div>
-
-                <div class="news-form">
-                    <h3 class="form-title">🏷️ Категории</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <span v-for="cat in Array.from(categories)" :key="cat" class="badge">
-                            {{ cat }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="news-form">
-                    <h3 class="form-title">📥 Экспорт/Импорт</h3>
-                    <button class="btn btn-success" @click="exportData" style="width: 100%; margin-bottom: 10px;">
-                        💾 Скачать данные JSON
-                    </button>
-                    <button class="btn btn-primary" @click="triggerFileInput" style="width: 100%;">
-                        📤 Загрузить JSON
-                    </button>
-                    <input type="file" ref="fileInput" @change="importData" accept=".json" style="display: none;">
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Modal -->
-        <div class="modal-overlay" :class="{ active: editingNews }">
-            <div class="modal">
-                <div class="modal-header" v-if="editingNews">
-                    <h2>✏️ Редактировать новость</h2>
-                    <button class="close-btn" @click="editingNews = null">✕</button>
-                </div>
-                <div class="modal-body" v-if="editingNews">
-                    <div class="form-group">
-                        <label class="form-label">Заголовок</label>
-                        <input type="text" class="form-input" v-model="editingNews.title">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Категория</label>
-                        <select class="form-select" v-model="editingNews.category">
-                            <option>AI</option>
-                            <option>Разработка</option>
-                            <option>Мобильные</option>
-                            <option>Кибербезопасность</option>
-                            <option>Облако</option>
-                            <option>Железо</option>
-                            <option>Стартапы</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Краткое описание</label>
-                        <input type="text" class="form-input" v-model="editingNews.preview" maxlength="150">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Полный текст</label>
-                        <textarea class="form-textarea" v-model="editingNews.content"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Источник</label>
-                        <input type="url" class="form-input" v-model="editingNews.source">
-                    </div>
-                </div>
-                <div class="modal-footer" v-if="editingNews">
-                    <button class="btn btn-secondary" @click="editingNews = null">Отмена</button>
-                    <button class="btn btn-success" @click="saveEditedNews">Сохранить</button>
                 </div>
             </div>
         </div>
@@ -680,16 +1018,42 @@
 
         createApp({
             setup() {
+                // Auth
+                const isAuthenticated = ref(false);
+                const adminPassword = ref('');
+                const loginError = ref('');
+                const correctPassword = 'admin123'; // Пароль по умолчанию
+
+                const login = () => {
+                    if (adminPassword.value === correctPassword) {
+                        isAuthenticated.value = true;
+                        localStorage.setItem('techflow_admin_auth', 'true');
+                        loginError.value = '';
+                    } else {
+                        loginError.value = '❌ Неверный пароль!';
+                    }
+                };
+
+                const logout = () => {
+                    isAuthenticated.value = false;
+                    localStorage.removeItem('techflow_admin_auth');
+                    adminPassword.value = '';
+                };
+
+                // UI
                 const activeTab = ref('add');
-                const news = ref([]);
-                const comments = ref([]);
                 const isDarkMode = ref(false);
-                const searchQuery = ref('');
                 const successMessage = ref('');
                 const errorMessage = ref('');
                 const editingNews = ref(null);
+                const searchQuery = ref('');
                 const fileInput = ref(null);
 
+                // Data
+                const news = ref([]);
+                const comments = ref([]);
+
+                // Form
                 const form = ref({
                     title: '',
                     category: 'AI',
@@ -700,19 +1064,43 @@
                     source: ''
                 });
 
-                const categories = computed(() => {
-                    const cats = new Set(news.value.map(n => n.category));
-                    return cats;
-                });
-
+                // Computed
                 const filteredNews = computed(() => {
                     return news.value.filter(n => 
                         n.title.toLowerCase().includes(searchQuery.value.toLowerCase())
                     ).sort((a, b) => new Date(b.date) - new Date(a.date));
                 });
 
+                const categories = computed(() => {
+                    return new Set(news.value.map(n => n.category));
+                });
+
+                const uniqueAuthors = computed(() => {
+                    return new Set(news.value.map(n => n.author));
+                });
+
                 const totalComments = computed(() => {
                     return comments.value.length;
+                });
+
+                const authorStats = computed(() => {
+                    const stats = {};
+                    news.value.forEach(n => {
+                        stats[n.author] = (stats[n.author] || 0) + 1;
+                    });
+                    return Object.fromEntries(
+                        Object.entries(stats).sort((a, b) => b[1] - a[1])
+                    );
+                });
+
+                const categoryStats = computed(() => {
+                    const stats = {};
+                    news.value.forEach(n => {
+                        stats[n.category] = (stats[n.category] || 0) + 1;
+                    });
+                    return Object.fromEntries(
+                        Object.entries(stats).sort((a, b) => b[1] - a[1])
+                    );
                 });
 
                 const jsonTemplate = computed(() => {
@@ -729,6 +1117,7 @@
                     }, null, 2);
                 });
 
+                // Methods
                 const formatDate = (date) => {
                     return new Date(date).toLocaleDateString('ru-RU');
                 };
@@ -737,10 +1126,10 @@
                     fetch('data/news.json')
                         .then(r => r.json())
                         .then(data => {
-                            news.value = data;
+                            news.value = data.news || data;
                         })
                         .catch(() => {
-                            console.log('news.json не найден - используем пустой массив');
+                            console.log('news.json не найден');
                             news.value = [];
                         });
 
@@ -810,7 +1199,7 @@
                 };
 
                 const deleteNews = (id) => {
-                    if (confirm('Вы уверены?')) {
+                    if (confirm('Вы уверены? Это действие нельзя отменить!')) {
                         news.value = news.value.filter(n => n.id !== id);
                         comments.value = comments.value.filter(c => c.newsId !== id);
                         saveToLocalStorage();
@@ -875,12 +1264,16 @@
                 };
 
                 onMounted(() => {
+                    // Check auth
+                    if (localStorage.getItem('techflow_admin_auth') === 'true') {
+                        isAuthenticated.value = true;
+                    }
+
                     isDarkMode.value = localStorage.getItem('techflow_darkmode') === 'true';
                     document.body.classList.toggle('dark-mode', isDarkMode.value);
                     
                     loadData();
 
-                    // Load from localStorage if available
                     const saved = localStorage.getItem('techflow_news');
                     if (saved) {
                         news.value = JSON.parse(saved);
@@ -892,18 +1285,27 @@
                 });
 
                 return {
+                    isAuthenticated,
+                    adminPassword,
+                    loginError,
+                    login,
+                    logout,
                     activeTab,
-                    news,
-                    form,
                     isDarkMode,
-                    searchQuery,
                     successMessage,
                     errorMessage,
                     editingNews,
+                    searchQuery,
                     fileInput,
-                    categories,
+                    news,
+                    comments,
+                    form,
                     filteredNews,
+                    categories,
+                    uniqueAuthors,
                     totalComments,
+                    authorStats,
+                    categoryStats,
                     jsonTemplate,
                     formatDate,
                     getCommentCount,
