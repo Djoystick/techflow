@@ -887,7 +887,12 @@
         const initNews = () => {
             const stored = localStorage.getItem('techflow_news');
             if (stored) {
-                allNews = JSON.parse(stored);
+                try {
+                    allNews = JSON.parse(stored);
+                } catch (e) {
+                    console.error('Ошибка парсинга JSON:', e);
+                    allNews = [];
+                }
             } else {
                 allNews = [{
                     id: '1',
@@ -1001,10 +1006,10 @@
             const idx = bookmarks.indexOf(id);
             if (idx > -1) {
                 bookmarks.splice(idx, 1);
-                showNotif('❌ Удалено');
+                showNotif('❌ Удалено из закладок');
             } else {
                 bookmarks.push(id);
-                showNotif('✅ Добавлено');
+                showNotif('✅ Добавлено в закладки');
             }
             localStorage.setItem('techflow_bookmarks', JSON.stringify(bookmarks));
             render();
@@ -1062,7 +1067,7 @@
                     allNews[currentModalIndex].rating = parseInt(star.dataset.rating);
                     saveNews();
                     loadRating(allNews[currentModalIndex]);
-                    showNotif(`⭐ ${star.dataset.rating}/5`);
+                    showNotif(`⭐ Оценка: ${star.dataset.rating}/5`);
                 });
             });
         };
@@ -1093,13 +1098,9 @@
             setTimeout(() => notif.remove(), 2500);
         };
 
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'techflow_news') {
-                initNews();
-            }
-        });
-
-        
+        // УДАЛЕНА ПРОБЛЕМНАЯ СТРОКА: window.addEventListener('storage'...)
+        // Это создавало бесконечный цикл синхронизации
+        // Теперь страница загружает данные только при открытии
 
         initNews();
     </script>
