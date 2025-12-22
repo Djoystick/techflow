@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Новости о технологиях</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
-    <!-- Font Awesome для иконок -->
+    <title>TechFlow - Новости о технологиях и AI</title>
+    <meta name="description" content="TechFlow - свежие новости о технологиях, AI, стартапах и разработке">
+    <meta name="keywords" content="новости, технологии, AI, разработка, стартапы">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,342 +17,369 @@
         :root {
             --primary: #0088cc;
             --primary-dark: #0066aa;
-            --secondary: #1c1c1c;
-            --bg-light: #ffffff;
-            --bg-dark: #0f0f0f;
-            --text-light: #000000;
-            --text-dark: #ffffff;
-            --border-light: #e0e0e0;
-            --border-dark: #2a2a2a;
-            --success: #22c55e;
-            --error: #ef4444;
+            --primary-light: #33a1dd;
+            --bg: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text: #000000;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --success: #31a24c;
+            --danger: #e63946;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-light);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-
-        /* Header */
+        /* ============ ШАПКА ============ */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 20px 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
-        .header-logo {
-            font-size: 24px;
-            font-weight: 700;
+        .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
         }
 
-        .header-controls {
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .nav-links {
             display: flex;
-            gap: 12px;
+            gap: 20px;
             align-items: center;
         }
 
-        /* Button Styles - MODERN */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 8px;
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-admin {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .btn:active {
-            transform: scale(0.98);
+        .btn-admin:hover {
+            background: rgba(255,255,255,0.3);
         }
 
-        /* PRIMARY BUTTON */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        /* ============ HERO СЕКЦИЯ ============ */
+        .hero {
+            background: linear-gradient(135deg, #0088cc 0%, #0066aa 50%, #003d66 100%);
             color: white;
-            box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
-        /* SECONDARY BUTTON */
         .btn-secondary {
-            background: var(--border-light);
-            color: var(--text-light);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .btn-secondary {
-            background: var(--border-dark);
-            color: var(--text-dark);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
         }
 
         .btn-secondary:hover {
-            background: var(--border-light);
-            opacity: 0.8;
-            transform: translateY(-1px);
-        }
-
-        body.dark-mode .btn-secondary:hover {
-            background: var(--border-dark);
-        }
-
-        /* OUTLINE BUTTON */
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
+            background: white;
             color: var(--primary);
         }
 
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* ICON BUTTON */
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border-radius: 8px;
-            font-size: 18px;
-            background: var(--border-light);
-        }
-
-        body.dark-mode .btn-icon {
-            background: var(--border-dark);
-        }
-
-        .btn-icon:hover {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* SUCCESS BUTTON */
-        .btn-success {
-            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-        }
-
-        /* Container */
+        /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        /* Search & Filter Section */
-        .search-section {
-            background: var(--bg-light);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        .section {
+            padding: 60px 0;
         }
 
-        body.dark-mode .search-section {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 11px 14px;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            font-size: 14px;
-            background: var(--bg-light);
-            color: var(--text-light);
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .search-input {
-            background: var(--bg-dark);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
-        }
-
-        .category-filter {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .category-btn {
-            padding: 8px 14px;
-            border: 1px solid var(--border-light);
-            background: var(--bg-light);
-            color: var(--text-light);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        body.dark-mode .category-btn {
-            border-color: var(--border-dark);
-            background: var(--secondary);
-            color: var(--text-dark);
-        }
-
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .category-btn:hover {
-            border-color: var(--primary);
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
             color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            display: inline-block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        /* News Grid */
+        /* ============ НОВОСТИ СЕКЦИЯ ============ */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
-        /* News Card */
         .news-card {
-            background: var(--bg-light);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
+            background: white;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-
-        body.dark-mode .news-card {
-            background: var(--secondary);
-            border-color: var(--border-dark);
+            border: 1px solid var(--border);
         }
 
         .news-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .news-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            background: linear-gradient(135deg, var(--border-light), #e0e0e0);
+            background: var(--bg-secondary);
         }
 
         .news-content {
-            padding: 16px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
         }
 
         .news-category {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(0, 136, 204, 0.1);
+            display: inline-block;
+            background: rgba(0,136,204,0.15);
             color: var(--primary);
             padding: 4px 10px;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 8px;
-            width: fit-content;
+            margin-bottom: 10px;
         }
 
         .news-title {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            color: var(--text);
         }
 
-        .news-preview {
-            font-size: 13px;
-            opacity: 0.6;
+        .news-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
             line-height: 1.5;
-            margin-bottom: 12px;
-            flex: 1;
         }
 
         .news-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-light);
             font-size: 12px;
-            opacity: 0.5;
+            color: var(--text-secondary);
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
         }
 
-        body.dark-mode .news-meta {
-            border-color: var(--border-dark);
+        .read-more {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.2s;
         }
 
-        /* Modal */
+        .read-more:hover {
+            gap: 5px;
+            margin-left: 5px;
+        }
+
+        /* ============ ФУНКЦИИ СЕКЦИЯ ============ */
+        .features {
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ============ ПОДПИСКА ============ */
+        .subscribe {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 40px 20px;
+            margin: 60px auto;
+            max-width: 600px;
+        }
+
+        .subscribe h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .subscribe p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .subscribe-input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 250px;
+            background: white;
+            color: var(--text);
+        }
+
+        .subscribe-btn {
+            padding: 12px 28px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .subscribe-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============ МОДАЛЬНОЕ ОКНО ============ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -362,605 +389,535 @@
             bottom: 0;
             background: rgba(0,0,0,0.6);
             z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal {
-            background: var(--bg-light);
-            border-radius: 12px;
-            width: 100%;
+            background: white;
+            border-radius: 10px;
             max-width: 700px;
-            max-height: 90vh;
+            width: 90%;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease-out;
         }
 
-        body.dark-mode .modal {
-            background: var(--secondary);
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-light);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            background: var(--bg-light);
+            border-radius: 10px 10px 0 0;
         }
 
-        body.dark-mode .modal-header {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .modal-body {
-            padding: 24px;
+        .modal-header h2 {
+            font-size: 22px;
+            margin: 0;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 24px;
+            color: white;
+            font-size: 28px;
             cursor: pointer;
-            color: var(--text-light);
-        }
-
-        body.dark-mode .modal-close {
-            color: var(--text-dark);
+            transition: transform 0.2s;
         }
 
         .modal-close:hover {
-            opacity: 0.6;
+            transform: rotate(90deg);
         }
 
-        /* Footer */
-        footer {
-            background: var(--border-light);
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-            font-size: 12px;
-            opacity: 0.6;
+        .modal-body {
+            padding: 30px;
         }
 
-        body.dark-mode footer {
-            background: var(--border-dark);
-        }
-
-        /* Comments Section */
-        .comments-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border-light);
-        }
-
-        body.dark-mode .comments-section {
-            border-color: var(--border-dark);
-        }
-
-        .comment-form {
-            margin-bottom: 20px;
-        }
-
-        .comment-input {
+        .modal-image {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-light);
             border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-            margin-bottom: 10px;
-            resize: vertical;
-            min-height: 80px;
-            background: var(--bg-light);
-            color: var(--text-light);
+            margin-bottom: 20px;
+            max-height: 400px;
+            object-fit: cover;
         }
 
-        body.dark-mode .comment-input {
-            background: var(--bg-dark);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .comments-list {
+        .modal-meta {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .comment {
-            background: var(--border-light);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 13px;
+        .modal-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
         }
 
-        body.dark-mode .comment {
-            background: var(--border-dark);
+        /* ============ ФУТЕР ============ */
+        footer {
+            background: var(--bg-secondary);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
         }
 
-        .comment-author {
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
 
-        .comment-text {
-            opacity: 0.8;
-            line-height: 1.4;
+        .footer-section ul {
+            list-style: none;
         }
 
-        .comment-date {
-            opacity: 0.5;
-            font-size: 11px;
-            margin-top: 6px;
+        .footer-section ul li {
+            margin-bottom: 8px;
         }
 
-        /* Empty State */
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ============ EMPTY STATE ============ */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
             opacity: 0.5;
         }
 
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
+        .empty-state p {
+            font-size: 18px;
         }
 
-        /* Share Buttons */
-        .share-section {
-            margin-top: 20px;
-        }
-
-        .share-title {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .share-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px 16px;
-            border: 1px solid var(--border-light);
-            background: var(--bg-light);
-            color: var(--text-light);
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-weight: 500;
-        }
-
-        body.dark-mode .share-btn {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .share-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
+        /* ============ АДАПТИВНОСТЬ ============ */
         @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
             .news-grid {
                 grid-template-columns: 1fr;
             }
 
-            .header-container {
-                flex-direction: column;
-                gap: 12px;
+            .section-title {
+                font-size: 24px;
             }
 
-            .search-bar {
-                flex-direction: column;
-            }
-
-            .share-buttons {
-                flex-direction: column;
-            }
-
-            .share-btn {
-                min-width: unset;
+            .modal-body {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- Header -->
-        <header>
-            <div class="header-container">
-                <div class="header-logo">
-                    <i class="fas fa-rocket"></i>
-                    TechFlow
-                </div>
-                <div class="header-controls">
-                    <button class="btn btn-icon" @click="toggleDarkMode" title="Тёмный режим">
-                        <i :class="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
-                    </button>
-                    <button class="btn btn-secondary btn-sm" @click="goToAdmin" title="Админ-панель">
-                        <i class="fas fa-cog"></i>
-                        Админ
-                    </button>
-                </div>
-            </div>
-        </header>
+    <!-- ШАПКА -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon" id="header-logo-icon">🚀</span>
+                <span id="header-logo-text">TechFlow</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#news">Новости</a>
+                <a href="#features">Функции</a>
+                <a href="https://t.me/techflow_news_bot" target="_blank">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="miniapp.html" class="btn-admin">
+                    <i class="fas fa-mobile-alt"></i> Mini App
+                </a>
+                <a href="admin.html" class="btn-admin">
+                    <i class="fas fa-lock"></i> Админ
+                </a>
+            </nav>
+        </div>
+    </header>
 
-        <!-- Main Content -->
-        <div class="container">
-            <!-- Search & Filter Section -->
-            <div class="search-section">
-                <div class="search-bar">
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        placeholder="🔍 Поиск новостей..." 
-                        v-model="searchQuery"
-                    >
-                    <button class="btn btn-primary btn-sm" @click="resetFilters">
-                        <i class="fas fa-wand-magic-sparkles"></i>
-                        Очистить фильтры
-                    </button>
-                </div>
-
-                <div style="margin-top: 16px;">
-                    <p style="font-size: 12px; opacity: 0.6; margin-bottom: 8px;"><i class="fas fa-filter"></i> Категории:</p>
-                    <div class="category-filter">
-                        <button 
-                            class="category-btn" 
-                            :class="{ active: selectedCategory === null }" 
-                            @click="selectedCategory = null"
-                        >
-                            <i class="fas fa-folder"></i>
-                            Все категории
-                        </button>
-                        <button 
-                            v-for="cat in categories" 
-                            :key="cat"
-                            class="category-btn" 
-                            :class="{ active: selectedCategory === cat }" 
-                            @click="selectedCategory = cat"
-                        >
-                            <i :class="getCategoryIcon(cat)"></i>
-                            {{ cat }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- News Grid -->
-            <div v-if="filteredNews.length > 0" class="news-grid">
-                <div 
-                    v-for="item in filteredNews" 
-                    :key="item.id" 
-                    class="news-card"
-                    @click="selectNews(item)"
-                >
-                    <img 
-                        :src="item.image" 
-                        :alt="item.title" 
-                        class="news-image"
-                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22%3E%3Crect fill=%22%23ddd%22 width=%22400%22 height=%22200%22/%3E%3C/svg%3E'"
-                    >
-                    <div class="news-content">
-                        <span class="news-category">
-                            <i :class="getCategoryIcon(item.category)"></i>
-                            {{ item.category }}
-                        </span>
-                        <h3 class="news-title">{{ item.title }}</h3>
-                        <p class="news-preview">{{ item.preview }}</p>
-                        <div class="news-meta">
-                            <span><i class="fas fa-user"></i> {{ item.author }}</span>
-                            <span><i class="fas fa-calendar"></i> {{ formatDate(item.date) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div v-else class="empty-state">
-                <div class="empty-icon">
-                    <i class="fas fa-inbox"></i>
-                </div>
-                <p>Новости не найдены</p>
+    <!-- HERO СЕКЦИЯ -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>🚀 TechFlow - Новости технологий в реальном времени</h1>
+            <p>Свежие новости о AI, разработке, стартапах и инновациях каждый день</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/techflow_news_bot" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-telegram"></i> Открыть в Telegram
+                </a>
+                <a href="#news" class="btn btn-secondary">
+                    <i class="fas fa-arrow-down"></i> Читать новости
+                </a>
             </div>
         </div>
+    </section>
 
-        <!-- Modal with Full News -->
-        <div class="modal-overlay" :class="{ active: selectedNewsItem }" @click.self="selectedNewsItem = null">
-            <div class="modal" v-if="selectedNewsItem">
-                <div class="modal-header">
-                    <h2 style="font-size: 20px;">{{ selectedNewsItem.title }}</h2>
-                    <button class="modal-close" @click="selectedNewsItem = null">
-                        <i class="fas fa-times"></i>
-                    </button>
+    <!-- НОВОСТИ СЕКЦИЯ -->
+    <section class="section" id="news">
+        <div class="container">
+            <h2 class="section-title">📰 Последние новости</h2>
+            <div class="news-grid" id="news-container">
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Загрузка новостей...</p>
                 </div>
-                <div class="modal-body">
-                    <img 
-                        :src="selectedNewsItem.image" 
-                        :alt="selectedNewsItem.title" 
-                        style="width: 100%; border-radius: 8px; margin-bottom: 16px; max-height: 300px; object-fit: cover;"
-                    >
+            </div>
+        </div>
+    </section>
 
-                    <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
-                        <span class="news-category">
-                            <i :class="getCategoryIcon(selectedNewsItem.category)"></i>
-                            {{ selectedNewsItem.category }}
-                        </span>
-                        <span style="font-size: 12px; opacity: 0.6;">
-                            <i class="fas fa-pen"></i>
-                            {{ selectedNewsItem.author }}
-                        </span>
-                        <span style="font-size: 12px; opacity: 0.6;">
-                            <i class="fas fa-calendar"></i>
-                            {{ formatDate(selectedNewsItem.date) }}
-                        </span>
-                    </div>
+    <!-- ФУНКЦИИ СЕКЦИЯ -->
+    <section class="section features" id="features">
+        <div class="container">
+            <h2 class="section-title">✨ Основные функции</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📰</div>
+                    <h3>Свежие новости</h3>
+                    <p>Самые актуальные новости о технологиях, AI и стартапах. Обновляется каждый день с новыми материалами.</p>
+                </div>
 
-                    <div style="line-height: 1.7; margin-bottom: 20px; font-size: 15px;">
-                        {{ selectedNewsItem.content }}
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Красивый дизайн</h3>
+                    <p>Современный адаптивный интерфейс, удобный как на компьютере, так и на мобильных устройствах.</p>
+                </div>
 
-                    <div v-if="selectedNewsItem.source" style="padding: 12px; background: var(--border-light); border-radius: 6px; margin-bottom: 20px;">
-                        <a :href="selectedNewsItem.source" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                            <i class="fas fa-external-link-alt"></i>
-                            Открыть источник
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Telegram Mini App</h3>
+                    <p>Полнофункциональное приложение прямо в Telegram. Читайте новости без установки отдельного приложения.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Простое управление</h3>
+                    <p>Интуитивная админ-панель для управления новостями, дизайном и настройками приложения.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Поиск и фильтры</h3>
+                    <p>Быстрый поиск новостей, фильтрация по категориям и легкая навигация по всем материалам.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Безопасное хранение</h3>
+                    <p>Все данные хранятся локально. Резервные копии, импорт и экспорт данных в один клик.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОДПИСКА -->
+    <div class="container">
+        <div class="subscribe">
+            <h2>Не пропустите новости!</h2>
+            <p>Подпишитесь на обновления в Telegram и получайте новости первыми</p>
+            <div class="subscribe-form">
+                <a href="https://t.me/techflow_news_bot" target="_blank" class="subscribe-btn">
+                    <i class="fab fa-telegram"></i> Подписаться
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>О проекте</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 15px;">
+                        TechFlow - это современная платформа для получения актуальных новостей о технологиях, 
+                        AI и инновациях. Доступно в веб-версии и через Telegram Mini App.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Ссылки</h3>
+                    <ul>
+                        <li><a href="#news">Новости</a></li>
+                        <li><a href="admin.html">Админ-панель</a></li>
+                        <li><a href="miniapp.html">Mini App</a></li>
+                        <li><a href="https://t.me/techflow_news_bot" target="_blank">Telegram</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <div class="social-links">
+                        <a href="https://t.me/techflow_news_bot" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://github.com/Djoystick/techflow" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" title="Twitter">
+                            <i class="fab fa-twitter"></i>
                         </a>
                     </div>
-
-                    <!-- Share Buttons with Title -->
-                    <div class="share-section">
-                        <div class="share-title">
-                            <i class="fas fa-share-alt"></i>
-                            Поделиться
-                        </div>
-                        <div class="share-buttons">
-                            <button class="share-btn" @click="shareToTelegram">
-                                <i class="fab fa-telegram"></i>
-                                Telegram
-                            </button>
-                            <button class="share-btn" @click="shareToTwitter">
-                                <i class="fab fa-twitter"></i>
-                                Twitter
-                            </button>
-                            <button class="share-btn" @click="copyToClipboard">
-                                <i class="fas fa-copy"></i>
-                                Копировать
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Comments -->
-                    <div class="comments-section">
-                        <h3 style="margin-bottom: 16px;">
-                            <i class="fas fa-comments"></i>
-                            Комментарии
-                        </h3>
-
-                        <div class="comment-form">
-                            <input 
-                                type="text" 
-                                v-model="commentAuthor" 
-                                placeholder="Ваше имя..."
-                                style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid var(--border-light); border-radius: 6px; background: var(--bg-light); color: var(--text-light);"
-                            >
-                            <textarea 
-                                v-model="commentText" 
-                                placeholder="Ваш комментарий..."
-                                class="comment-input"
-                            ></textarea>
-                            <button class="btn btn-success" @click="addComment" style="width: 100%;">
-                                <i class="fas fa-paper-plane"></i>
-                                Оставить комментарий
-                            </button>
-                        </div>
-
-                        <div v-if="newsComments.length > 0" class="comments-list">
-                            <div v-for="comment in newsComments" :key="comment.id" class="comment">
-                                <div class="comment-author">
-                                    <i class="fas fa-user-circle"></i>
-                                    {{ comment.author }}
-                                </div>
-                                <div class="comment-text">{{ comment.text }}</div>
-                                <div class="comment-date">
-                                    <i class="fas fa-clock"></i>
-                                    {{ formatDate(comment.date) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else style="text-align: center; opacity: 0.5; padding: 20px;">
-                            <i class="fas fa-comment-slash"></i>
-                            Пока нет комментариев
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <footer>
-            <p>
-                <i class="fas fa-rocket"></i>
-                TechFlow © 2025 | Социальные новости о технологиях
-            </p>
-        </footer>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechFlow. Все права защищены. | Сделано с ❤️ для любителей технологий</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО НОВОСТИ -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Новость</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="" class="modal-image">
+                <h2 id="modal-news-title" style="font-size: 22px; margin-bottom: 15px;"></h2>
+                <div class="modal-meta">
+                    <span id="modal-category"></span>
+                    <span id="modal-author"></span>
+                    <span id="modal-date"></span>
+                </div>
+                <div class="modal-text" id="modal-content"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted } = Vue;
+        let allNews = [];
 
-        createApp({
-            setup() {
-                const isDarkMode = ref(false);
-                const searchQuery = ref('');
-                const selectedCategory = ref(null);
-                const selectedNewsItem = ref(null);
-                const news = ref([]);
-                const comments = ref([]);
-                const commentAuthor = ref('');
-                const commentText = ref('');
-
-                const categories = computed(() => {
-                    return [...new Set(news.value.map(n => n.category))];
-                });
-
-                const filteredNews = computed(() => {
-                    return news.value.filter(n => {
-                        const matchSearch = n.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                                          n.preview.toLowerCase().includes(searchQuery.value.toLowerCase());
-                        const matchCategory = selectedCategory.value === null || n.category === selectedCategory.value;
-                        return matchSearch && matchCategory;
-                    });
-                });
-
-                const newsComments = computed(() => {
-                    if (!selectedNewsItem.value) return [];
-                    return comments.value.filter(c => c.newsId === selectedNewsItem.value.id);
-                });
-
-                const loadData = () => {
-                    fetch('data/news.json')
-                        .then(r => r.json())
-                        .then(data => {
-                            news.value = data.news || data;
-                        })
-                        .catch(() => {
-                            news.value = [];
-                        });
-
-                    const saved = localStorage.getItem('techflow_comments');
-                    if (saved) {
-                        comments.value = JSON.parse(saved);
-                    }
-                };
-
-                const formatDate = (date) => {
-                    return new Date(date).toLocaleDateString('ru-RU');
-                };
-
-                const getCategoryIcon = (cat) => {
-                    const icons = {
-                        'AI': 'fas fa-brain',
-                        'Разработка': 'fas fa-code',
-                        'Мобильные': 'fas fa-mobile-alt',
-                        'Кибербезопасность': 'fas fa-shield-alt',
-                        'Облако': 'fas fa-cloud',
-                        'Железо': 'fas fa-server',
-                        'Стартапы': 'fas fa-rocket'
-                    };
-                    return icons[cat] || 'fas fa-bookmark';
-                };
-
-                const selectNews = (item) => {
-                    selectedNewsItem.value = item;
-                };
-
-                const resetFilters = () => {
-                    searchQuery.value = '';
-                    selectedCategory.value = null;
-                };
-
-                const addComment = () => {
-                    if (!commentAuthor.value.trim() || !commentText.value.trim()) {
-                        alert('Заполните имя и текст комментария!');
-                        return;
-                    }
-
-                    comments.value.push({
-                        id: Date.now(),
-                        newsId: selectedNewsItem.value.id,
-                        author: commentAuthor.value,
-                        text: commentText.value,
-                        date: new Date().toISOString()
-                    });
-
-                    localStorage.setItem('techflow_comments', JSON.stringify(comments.value));
-                    commentAuthor.value = '';
-                    commentText.value = '';
-                };
-
-                const shareToTelegram = () => {
-                    const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(selectedNewsItem.value.title)}`;
-                    window.open(url, '_blank');
-                };
-
-                const shareToTwitter = () => {
-                    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedNewsItem.value.title)}&url=${encodeURIComponent(window.location.href)}`;
-                    window.open(url, '_blank');
-                };
-
-                const copyToClipboard = () => {
-                    const text = `${selectedNewsItem.value.title}\n${selectedNewsItem.value.preview}\n${window.location.href}`;
-                    navigator.clipboard.writeText(text);
-                    alert('✅ Скопировано в буфер обмена!');
-                };
-
-                const toggleDarkMode = () => {
-                    isDarkMode.value = !isDarkMode.value;
-                    document.body.classList.toggle('dark-mode', isDarkMode.value);
-                    localStorage.setItem('techflow_darkmode', isDarkMode.value);
-                };
-
-                const goToAdmin = () => {
-                    window.location.href = 'admin.html';
-                };
-
-                onMounted(() => {
-                    isDarkMode.value = localStorage.getItem('techflow_darkmode') === 'true';
-                    document.body.classList.toggle('dark-mode', isDarkMode.value);
-                    loadData();
-                });
-
-                return {
-                    isDarkMode,
-                    searchQuery,
-                    selectedCategory,
-                    selectedNewsItem,
-                    news,
-                    comments,
-                    commentAuthor,
-                    commentText,
-                    categories,
-                    filteredNews,
-                    newsComments,
-                    formatDate,
-                    getCategoryIcon,
-                    selectNews,
-                    resetFilters,
-                    addComment,
-                    shareToTelegram,
-                    shareToTwitter,
-                    copyToClipboard,
-                    toggleDarkMode,
-                    goToAdmin
-                };
+        // Загрузить новости
+        const loadNews = async () => {
+            try {
+                const stored = localStorage.getItem('techflow_news');
+                if (stored) {
+                    allNews = JSON.parse(stored);
+                } else {
+                    const response = await fetch('https://Djoystick.github.io/techflow/data/news.json');
+                    const data = await response.json();
+                    allNews = data.news || data || [];
+                }
+            } catch (err) {
+                console.log('Ошибка загрузки новостей:', err);
+                allNews = [];
             }
-        }).mount('#app');
+
+            // Загрузить дизайн
+            loadDesign();
+
+            // Загрузить брендинг
+            loadBranding();
+
+            // Отобразить новости
+            renderNews();
+        };
+
+        const renderNews = () => {
+            const container = document.getElementById('news-container');
+
+            if (allNews.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-newspaper"></i>
+                        <p>Новости ещё не добавлены. Перейдите в админ-панель и добавьте первую новость!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = allNews.map(news => `
+                <div class="news-card" onclick="openModal(${allNews.indexOf(news)})">
+                    <img src="${news.image || 'https://via.placeholder.com/300x200'}" alt="${news.title}" class="news-image">
+                    <div class="news-content">
+                        <span class="news-category">${news.category || 'Разное'}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-description">${news.preview || news.title}</p>
+                        <div class="news-meta">
+                            <span>${news.author || 'Автор'}</span>
+                            <span>${formatDate(news.date)}</span>
+                        </div>
+                        <a href="#" class="read-more">Читать далее →</a>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        const formatDate = (date) => {
+            return new Date(date).toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+            });
+        };
+
+        const openModal = (index) => {
+            const news = allNews[index];
+            document.getElementById('modal-news-title').textContent = news.title;
+            document.getElementById('modal-image').src = news.image || 'https://via.placeholder.com/700x400';
+            document.getElementById('modal-category').textContent = news.category || 'Разное';
+            document.getElementById('modal-author').textContent = news.author || 'Автор';
+            document.getElementById('modal-date').textContent = formatDate(news.date);
+            document.getElementById('modal-content').textContent = news.content || news.preview;
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = () => {
+            document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal-overlay')) {
+                closeModal();
+            }
+        });
+
+        // Загрузить дизайн
+        const loadDesign = () => {
+            const design = localStorage.getItem('techflow_design');
+            if (design) {
+                const settings = JSON.parse(design);
+                document.documentElement.style.setProperty('--primary', settings.primaryColor);
+                document.documentElement.style.setProperty('--bg', settings.bgColor);
+                document.documentElement.style.setProperty('--text', settings.textColor);
+            }
+        };
+
+        // Загрузить брендинг
+        const loadBranding = () => {
+            const branding = localStorage.getItem('techflow_branding');
+            if (branding) {
+                const settings = JSON.parse(branding);
+                document.getElementById('header-logo-icon').textContent = settings.logoIcon || '🚀';
+                document.getElementById('header-logo-text').textContent = settings.siteName || 'TechFlow';
+                document.title = (settings.siteName || 'TechFlow') + ' - Новости о технологиях и AI';
+            }
+        };
+
+        // Инициализация
+        loadNews();
+
+        // Обновлять при изменении в других вкладках
+        window.addEventListener('storage', () => {
+            loadNews();
+        });
+
+        // Периодически проверять обновления
+        setInterval(() => {
+            const stored = localStorage.getItem('techflow_news');
+            if (stored) {
+                const newNews = JSON.parse(stored);
+                if (JSON.stringify(newNews) !== JSON.stringify(allNews)) {
+                    allNews = newNews;
+                    renderNews();
+                }
+            }
+        }, 2000);
     </script>
 </body>
 </html>
