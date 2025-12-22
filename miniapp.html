@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Telegram Mini App</title>
+    <title>TechFlow - News</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -14,148 +14,176 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #0088cc;
+            --primary-dark: #0066aa;
+            --primary-light: #33a1dd;
+            --bg: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text: #000000;
+            --text-secondary: #666666;
+            --border: #e0e0e0;
+            --success: #31a24c;
+            --danger: #e63946;
+        }
+
+        body.dark-mode {
+            --bg: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: #aaaaaa;
+            --border: #333333;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fff;
-            color: #000;
+            background: var(--bg);
+            color: var(--text);
+            padding-bottom: 20px;
         }
 
-        header {
-            background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%);
-            color: white;
-            padding: 15px 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        /* ============ ПОИСК И ФИЛЬТРЫ ============ */
+        .search-section {
             position: sticky;
             top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-logo {
-            font-size: 20px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        .search-section {
-            background: #f5f5f5;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
+            background: var(--bg);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            z-index: 50;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
             margin-bottom: 10px;
+            background: var(--bg-secondary);
+            color: var(--text);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
         }
 
         .category-filter {
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 0;
+        }
+
+        .category-filter::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .category-filter::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
         }
 
         .category-btn {
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text);
+            border-radius: 20px;
+            font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
         }
 
         .category-btn.active {
-            background: #0088cc;
+            background: var(--primary);
             color: white;
-            border-color: #0088cc;
+            border-color: var(--primary);
+        }
+
+        /* ============ НОВОСТИ (КАРТОЧКИ) ============ */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 8px;
         }
 
         .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px 0;
         }
 
         .news-card {
-            background: white;
-            border: 1px solid #eee;
+            background: var(--bg-secondary);
             border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            padding: 10px;
         }
 
-        .news-card:hover {
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-            transform: translateY(-3px);
+        .news-card:active {
+            transform: scale(0.98);
+            background: var(--border);
         }
 
         .news-image {
-            width: 100%;
-            height: 150px;
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
             object-fit: cover;
-            background: #f0f0f0;
+            border-radius: 6px;
+            background: var(--bg);
         }
 
-        .news-content {
-            padding: 12px;
+        .news-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .news-category {
             display: inline-block;
-            background: rgba(0, 136, 204, 0.1);
-            color: #0088cc;
+            background: rgba(0, 136, 204, 0.15);
+            color: var(--primary);
             padding: 3px 8px;
-            border-radius: 3px;
+            border-radius: 4px;
             font-size: 11px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            width: fit-content;
         }
 
         .news-title {
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.3;
-            margin-bottom: 6px;
-        }
-
-        .news-preview {
-            font-size: 12px;
-            opacity: 0.6;
-            line-height: 1.4;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
+            color: var(--text);
         }
 
         .news-meta {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            opacity: 0.5;
-            padding-top: 8px;
-            border-top: 1px solid #eee;
+            color: var(--text-secondary);
         }
 
+        /* ============ МОДАЛЬНОЕ ОКНО ============ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -163,49 +191,56 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1000;
-            padding: 20px;
             overflow-y: auto;
         }
 
         .modal-overlay.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 40px;
+            display: block;
         }
 
         .modal {
-            background: white;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 600px;
-            max-height: calc(100vh - 80px);
+            background: var(--bg);
+            margin-top: auto;
+            border-radius: 12px 12px 0 0;
+            max-height: 85vh;
             overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
-            padding: 16px;
-            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            background: white;
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
         }
 
         .modal-header h2 {
-            font-size: 18px;
-            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
+            color: var(--text);
         }
 
         .modal-body {
@@ -223,34 +258,36 @@
         .modal-meta {
             display: flex;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
             font-size: 12px;
-            opacity: 0.6;
+            color: var(--text-secondary);
         }
 
         .modal-text {
-            line-height: 1.6;
-            font-size: 13px;
+            line-height: 1.5;
+            font-size: 14px;
             margin-bottom: 16px;
+            color: var(--text);
         }
 
+        /* ============ КНОПКИ ПОДЕЛИТЬСЯ ============ */
         .share-section {
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border);
         }
 
         .share-title {
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 10px;
-            opacity: 0.6;
+            color: var(--text-secondary);
         }
 
         .share-buttons {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -258,89 +295,99 @@
             flex: 1;
             min-width: 100px;
             padding: 10px 12px;
-            border: 1px solid #ddd;
-            background: white;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text);
             border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
+            font-weight: 500;
         }
 
-        .share-btn:hover {
-            background: #0088cc;
+        .share-btn:active {
+            background: var(--primary);
             color: white;
-            border-color: #0088cc;
+            border-color: var(--primary);
+            transform: scale(0.95);
         }
 
-        .footer {
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
             text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            opacity: 0.5;
-            margin-top: 40px;
+            padding: 40px 20px;
+            color: var(--text-secondary);
         }
 
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* ============ АДАПТИВНОСТЬ ============ */
         @media (max-width: 480px) {
-            .news-grid {
-                grid-template-columns: 1fr;
+            .news-card {
+                padding: 8px;
+                gap: 10px;
             }
 
-            .modal-overlay.active {
-                padding: 0;
+            .news-image {
+                width: 70px;
+                height: 70px;
+            }
+
+            .news-title {
+                font-size: 13px;
             }
 
             .modal {
-                border-radius: 0;
-                max-height: 100vh;
+                max-height: 90vh;
             }
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <header>
-            <div class="header-content">
-                <div class="header-logo">
-                    <i class="fas fa-rocket"></i>
-                    TechFlow
-                </div>
-                <div>Telegram App</div>
-            </div>
-        </header>
-
-        <div class="container">
-            <div class="search-section">
-                <input 
-                    v-model="searchQuery" 
-                    type="text" 
-                    class="search-input" 
-                    placeholder="🔍 Поиск новостей..."
+        <!-- ПОИСК И КАТЕГОРИИ (БЕЗ ШАПКИ) -->
+        <div class="search-section">
+            <input 
+                v-model="searchQuery" 
+                type="text" 
+                class="search-input" 
+                placeholder="🔍 Поиск новостей..."
+            >
+            <div class="category-filter">
+                <button 
+                    class="category-btn" 
+                    :class="{ active: selectedCategory === null }" 
+                    @click="selectedCategory = null"
                 >
-                <div class="category-filter">
-                    <button 
-                        class="category-btn" 
-                        :class="{ active: selectedCategory === null }" 
-                        @click="selectedCategory = null"
-                    >
-                        Все
-                    </button>
-                    <button 
-                        v-for="cat in categories" 
-                        :key="cat"
-                        class="category-btn" 
-                        :class="{ active: selectedCategory === cat }" 
-                        @click="selectedCategory = cat"
-                    >
-                        {{ cat }}
-                    </button>
-                </div>
+                    Все
+                </button>
+                <button 
+                    v-for="cat in categories" 
+                    :key="cat"
+                    class="category-btn" 
+                    :class="{ active: selectedCategory === cat }" 
+                    @click="selectedCategory = cat"
+                >
+                    {{ cat }}
+                </button>
             </div>
+        </div>
 
-            <div class="news-grid">
+        <!-- НОВОСТИ -->
+        <div class="container">
+            <div class="news-grid" v-if="filteredNews.length > 0">
                 <div 
                     v-for="item in filteredNews" 
                     :key="item.id" 
@@ -348,10 +395,11 @@
                     @click="openNews(item)"
                 >
                     <img :src="item.image" :alt="item.title" class="news-image">
-                    <div class="news-content">
-                        <div class="news-category">{{ item.category }}</div>
-                        <h3 class="news-title">{{ item.title }}</h3>
-                        <p class="news-preview">{{ item.preview }}</p>
+                    <div class="news-body">
+                        <div>
+                            <div class="news-category">{{ item.category }}</div>
+                            <h3 class="news-title">{{ item.title }}</h3>
+                        </div>
                         <div class="news-meta">
                             <span>{{ item.author }}</span>
                             <span>{{ formatDate(item.date) }}</span>
@@ -359,8 +407,14 @@
                     </div>
                 </div>
             </div>
+
+            <div class="empty-state" v-else>
+                <i class="fas fa-newspaper"></i>
+                <p>Новости не найдены</p>
+            </div>
         </div>
 
+        <!-- МОДАЛЬНОЕ ОКНО -->
         <div class="modal-overlay" :class="{ active: selectedNews }" @click.self="selectedNews = null">
             <div class="modal" v-if="selectedNews">
                 <div class="modal-header">
@@ -371,7 +425,7 @@
                 </div>
                 <div class="modal-body">
                     <img :src="selectedNews.image" :alt="selectedNews.title" class="modal-image">
-                    <h2 style="font-size: 16px; margin-bottom: 10px;">{{ selectedNews.title }}</h2>
+                    <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">{{ selectedNews.title }}</h2>
                     <div class="modal-meta">
                         <span>{{ selectedNews.category }}</span>
                         <span>{{ selectedNews.author }}</span>
@@ -394,10 +448,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="footer">
-            TechFlow © 2025 | Новости о технологиях
         </div>
     </div>
 
@@ -438,7 +488,10 @@
                 });
 
                 const formatDate = (date) => {
-                    return new Date(date).toLocaleDateString('ru-RU');
+                    return new Date(date).toLocaleDateString('ru-RU', { 
+                        day: '2-digit', 
+                        month: '2-digit' 
+                    });
                 };
 
                 const openNews = (item) => {
@@ -448,9 +501,11 @@
                 const shareNews = () => {
                     if (tg && tg.shareToChat) {
                         tg.shareToChat({
-                            url: 'https://t.me/YOUR_BOT_USERNAME',
+                            url: 'https://t.me/techflow_news_bot',
                             text: `Прочитайте: ${selectedNews.value.title}`
                         });
+                    } else {
+                        copyNews();
                     }
                 };
 
