@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFlow - Telegram Mini App</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fff;
+            color: #000;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .search-section {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: #0088cc;
+            color: white;
+            border-color: #0088cc;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .news-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .news-content {
+            padding: 12px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(0, 136, 204, 0.1);
+            color: #0088cc;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .news-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .news-preview {
+            font-size: 12px;
+            opacity: 0.6;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.5;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 40px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .modal-text {
+            line-height: 1.6;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .share-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+        }
+
+        .share-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .share-btn:hover {
+            background: #0088cc;
+            color: white;
+            border-color: #0088cc;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-overlay.active {
+                padding: 0;
+            }
+
+            .modal {
+                border-radius: 0;
+                max-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header-content">
+                <div class="header-logo">
+                    <i class="fas fa-rocket"></i>
+                    TechFlow
+                </div>
+                <div>Telegram App</div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="search-section">
+                <input 
+                    v-model="searchQuery" 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="🔍 Поиск новостей..."
+                >
+                <div class="category-filter">
+                    <button 
+                        class="category-btn" 
+                        :class="{ active: selectedCategory === null }" 
+                        @click="selectedCategory = null"
+                    >
+                        Все
+                    </button>
+                    <button 
+                        v-for="cat in categories" 
+                        :key="cat"
+                        class="category-btn" 
+                        :class="{ active: selectedCategory === cat }" 
+                        @click="selectedCategory = cat"
+                    >
+                        {{ cat }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="news-grid">
+                <div 
+                    v-for="item in filteredNews" 
+                    :key="item.id" 
+                    class="news-card"
+                    @click="openNews(item)"
+                >
+                    <img :src="item.image" :alt="item.title" class="news-image">
+                    <div class="news-content">
+                        <div class="news-category">{{ item.category }}</div>
+                        <h3 class="news-title">{{ item.title }}</h3>
+                        <p class="news-preview">{{ item.preview }}</p>
+                        <div class="news-meta">
+                            <span>{{ item.author }}</span>
+                            <span>{{ formatDate(item.date) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" :class="{ active: selectedNews }" @click.self="selectedNews = null">
+            <div class="modal" v-if="selectedNews">
+                <div class="modal-header">
+                    <h2>Новость</h2>
+                    <button class="modal-close" @click="selectedNews = null">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img :src="selectedNews.image" :alt="selectedNews.title" class="modal-image">
+                    <h2 style="font-size: 16px; margin-bottom: 10px;">{{ selectedNews.title }}</h2>
+                    <div class="modal-meta">
+                        <span>{{ selectedNews.category }}</span>
+                        <span>{{ selectedNews.author }}</span>
+                        <span>{{ formatDate(selectedNews.date) }}</span>
+                    </div>
+                    <div class="modal-text">{{ selectedNews.content }}</div>
+                    
+                    <div class="share-section">
+                        <div class="share-title">📤 Поделиться</div>
+                        <div class="share-buttons">
+                            <button class="share-btn" @click="shareNews">
+                                <i class="fas fa-share"></i>
+                                Отправить
+                            </button>
+                            <button class="share-btn" @click="copyNews">
+                                <i class="fas fa-copy"></i>
+                                Копировать
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            TechFlow © 2025 | Новости о технологиях
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        createApp({
+            setup() {
+                const news = ref([]);
+                const searchQuery = ref('');
+                const selectedCategory = ref(null);
+                const selectedNews = ref(null);
+
+                const loadNews = () => {
+                    fetch('https://Djoystick.github.io/techflow/data/news.json')
+                        .then(r => r.json())
+                        .then(data => {
+                            news.value = data.news || data;
+                        })
+                        .catch(err => {
+                            console.log('Ошибка загрузки:', err);
+                        });
+                };
+
+                const categories = computed(() => {
+                    return [...new Set(news.value.map(n => n.category))];
+                });
+
+                const filteredNews = computed(() => {
+                    return news.value.filter(n => {
+                        const matchSearch = n.title.toLowerCase().includes(searchQuery.value.toLowerCase());
+                        const matchCategory = selectedCategory.value === null || n.category === selectedCategory.value;
+                        return matchSearch && matchCategory;
+                    });
+                });
+
+                const formatDate = (date) => {
+                    return new Date(date).toLocaleDateString('ru-RU');
+                };
+
+                const openNews = (item) => {
+                    selectedNews.value = item;
+                };
+
+                const shareNews = () => {
+                    if (tg && tg.shareToChat) {
+                        tg.shareToChat({
+                            url: 'https://t.me/YOUR_BOT_USERNAME',
+                            text: `Прочитайте: ${selectedNews.value.title}`
+                        });
+                    }
+                };
+
+                const copyNews = () => {
+                    const text = `${selectedNews.value.title}\n${selectedNews.value.preview}`;
+                    navigator.clipboard.writeText(text);
+                    tg.showPopup({
+                        title: 'Скопировано',
+                        message: 'Текст скопирован в буфер обмена',
+                        buttons: [{ type: 'ok' }]
+                    });
+                };
+
+                loadNews();
+
+                return {
+                    news,
+                    searchQuery,
+                    selectedCategory,
+                    selectedNews,
+                    categories,
+                    filteredNews,
+                    formatDate,
+                    openNews,
+                    shareNews,
+                    copyNews
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
