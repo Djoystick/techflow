@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFlow - Админ Панель</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0088cc;
+            --secondary: #1c1c1c;
+            --bg-light: #ffffff;
+            --bg-dark: #0f0f0f;
+            --text-light: #000000;
+            --text-dark: #ffffff;
+            --border-light: #e0e0e0;
+            --border-dark: #2a2a2a;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        #app {
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            margin: -20px -20px 20px -20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--border-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .btn-secondary {
+            background: var(--border-dark);
+            color: var(--text-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-error {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        body.dark-mode .tabs {
+            border-color: var(--border-dark);
+        }
+
+        .tab-btn {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .tab-btn {
+            color: var(--text-dark);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .form-label {
+            color: var(--text-dark);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 14px;
+            background: var(--bg-light);
+            color: var(--text-light);
+            font-family: inherit;
+        }
+
+        body.dark-mode .form-input,
+        body.dark-mode .form-textarea,
+        body.dark-mode .form-select {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+            color: var(--text-dark);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* News Form */
+        .news-form {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode .news-form {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        /* News List */
+        .news-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .news-item {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .news-item {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+        }
+
+        .news-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .news-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .news-item-content h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .news-item-meta {
+            font-size: 12px;
+            opacity: 0.6;
+            display: flex;
+            gap: 8px;
+        }
+
+        .news-item-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        /* Table */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-light);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        body.dark-mode .table {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+        }
+
+        .table thead {
+            background: var(--border-light);
+            font-weight: 600;
+        }
+
+        body.dark-mode .table thead {
+            background: var(--border-dark);
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 14px;
+        }
+
+        body.dark-mode .table td {
+            border-color: var(--border-dark);
+        }
+
+        .table tr:hover {
+            background: var(--border-light);
+        }
+
+        body.dark-mode .table tr:hover {
+            background: var(--border-dark);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        body.dark-mode .stat-card {
+            background: var(--secondary);
+            border-color: var(--border-dark);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 6px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-light);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .modal {
+            background: var(--secondary);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode .modal-header {
+            border-color: var(--border-dark);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        body.dark-mode .modal-footer {
+            border-color: var(--border-dark);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            opacity: 0.5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <h1>⚙️ TechFlow - Админ Панель</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary btn-small" @click="toggleDarkMode">
+                    {{ isDarkMode ? '☀️' : '🌙' }}
+                </button>
+                <button class="btn btn-secondary btn-small" @click="goToMain">
+                    👁️ Просмотр
+                </button>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Alerts -->
+            <div v-if="successMessage" class="alert alert-success">
+                {{ successMessage }}
+                <button class="close-btn" @click="successMessage = ''">✕</button>
+            </div>
+            <div v-if="errorMessage" class="alert alert-error">
+                {{ errorMessage }}
+                <button class="close-btn" @click="errorMessage = ''">✕</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn" :class="{ active: activeTab === 'add' }" @click="activeTab = 'add'">
+                    ➕ Добавить новость
+                </button>
+                <button class="tab-btn" :class="{ active: activeTab === 'edit' }" @click="activeTab = 'edit'">
+                    ✏️ Управление
+                </button>
+                <button class="tab-btn" :class="{ active: activeTab === 'stats' }" @click="activeTab = 'stats'">
+                    📊 Статистика
+                </button>
+            </div>
+
+            <!-- Add News Tab -->
+            <div v-if="activeTab === 'add'">
+                <div class="news-form">
+                    <h2 class="form-title">📝 Добавить новую новость</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Заголовок *</label>
+                        <input type="text" class="form-input" v-model="form.title" placeholder="Введите заголовок новости">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Категория *</label>
+                            <select class="form-select" v-model="form.category">
+                                <option>AI</option>
+                                <option>Разработка</option>
+                                <option>Мобильные</option>
+                                <option>Кибербезопасность</option>
+                                <option>Облако</option>
+                                <option>Железо</option>
+                                <option>Стартапы</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Автор *</label>
+                            <input type="text" class="form-input" v-model="form.author" placeholder="Ваше имя">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">URL изображения</label>
+                        <input type="url" class="form-input" v-model="form.image" placeholder="https://example.com/image.jpg">
+                        <small style="opacity: 0.6;">Рекомендуемый размер: 400x200px</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Краткое описание *</label>
+                        <input type="text" class="form-input" v-model="form.preview" placeholder="Максимум 150 символов" maxlength="150">
+                        <small style="opacity: 0.6;">{{ form.preview.length }}/150</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Полный текст новости *</label>
+                        <textarea class="form-textarea" v-model="form.content" placeholder="Полное описание новости..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Источник (ссылка)</label>
+                        <input type="url" class="form-input" v-model="form.source" placeholder="https://example.com">
+                    </div>
+
+                    <button class="btn btn-primary" @click="addNews" style="width: 100%;">
+                        ✅ Добавить новость
+                    </button>
+                </div>
+
+                <div class="news-form" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                    <h3 class="form-title">📋 JSON Шаблон</h3>
+                    <p style="font-size: 12px; opacity: 0.7; margin-bottom: 12px;">Копируйте и редактируйте этот JSON для быстрого добавления:</p>
+                    <pre style="background: var(--border-light); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 11px;">{{ jsonTemplate }}</pre>
+                </div>
+            </div>
+
+            <!-- Edit News Tab -->
+            <div v-if="activeTab === 'edit'">
+                <div style="margin-bottom: 16px;">
+                    <input type="text" class="form-input" v-model="searchQuery" placeholder="🔍 Поиск новостей...">
+                </div>
+
+                <div v-if="filteredNews.length > 0" class="news-list">
+                    <div class="news-item" v-for="item in filteredNews" :key="item.id">
+                        <img :src="item.image" :alt="item.title" class="news-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23ddd%22 width=%2280%22 height=%2280%22/%3E%3C/svg%3E'">
+                        <div class="news-item-content">
+                            <h3>{{ item.title }}</h3>
+                            <div class="news-item-meta">
+                                <span>{{ item.category }}</span>
+                                <span>📅 {{ formatDate(item.date) }}</span>
+                                <span><strong>{{ getCommentCount(item.id) }}</strong> комментариев</span>
+                            </div>
+                        </div>
+                        <div class="news-item-actions">
+                            <button class="btn btn-secondary btn-small" @click="editNews(item)">
+                                ✏️
+                            </button>
+                            <button class="btn btn-error btn-small" @click="deleteNews(item.id)">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="empty-state">
+                    <p>No news found</p>
+                </div>
+            </div>
+
+            <!-- Stats Tab -->
+            <div v-if="activeTab === 'stats'">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ news.length }}</div>
+                        <div class="stat-label">Всего новостей</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ totalComments }}</div>
+                        <div class="stat-label">Комментариев</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ categories.size }}</div>
+                        <div class="stat-label">Категорий</div>
+                    </div>
+                </div>
+
+                <div class="news-form">
+                    <h3 class="form-title">🏷️ Категории</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span v-for="cat in Array.from(categories)" :key="cat" class="badge">
+                            {{ cat }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="news-form">
+                    <h3 class="form-title">📥 Экспорт/Импорт</h3>
+                    <button class="btn btn-success" @click="exportData" style="width: 100%; margin-bottom: 10px;">
+                        💾 Скачать данные JSON
+                    </button>
+                    <button class="btn btn-primary" @click="triggerFileInput" style="width: 100%;">
+                        📤 Загрузить JSON
+                    </button>
+                    <input type="file" ref="fileInput" @change="importData" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div class="modal-overlay" :class="{ active: editingNews }">
+            <div class="modal">
+                <div class="modal-header" v-if="editingNews">
+                    <h2>✏️ Редактировать новость</h2>
+                    <button class="close-btn" @click="editingNews = null">✕</button>
+                </div>
+                <div class="modal-body" v-if="editingNews">
+                    <div class="form-group">
+                        <label class="form-label">Заголовок</label>
+                        <input type="text" class="form-input" v-model="editingNews.title">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Категория</label>
+                        <select class="form-select" v-model="editingNews.category">
+                            <option>AI</option>
+                            <option>Разработка</option>
+                            <option>Мобильные</option>
+                            <option>Кибербезопасность</option>
+                            <option>Облако</option>
+                            <option>Железо</option>
+                            <option>Стартапы</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Краткое описание</label>
+                        <input type="text" class="form-input" v-model="editingNews.preview" maxlength="150">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Полный текст</label>
+                        <textarea class="form-textarea" v-model="editingNews.content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Источник</label>
+                        <input type="url" class="form-input" v-model="editingNews.source">
+                    </div>
+                </div>
+                <div class="modal-footer" v-if="editingNews">
+                    <button class="btn btn-secondary" @click="editingNews = null">Отмена</button>
+                    <button class="btn btn-success" @click="saveEditedNews">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const activeTab = ref('add');
+                const news = ref([]);
+                const comments = ref([]);
+                const isDarkMode = ref(false);
+                const searchQuery = ref('');
+                const successMessage = ref('');
+                const errorMessage = ref('');
+                const editingNews = ref(null);
+                const fileInput = ref(null);
+
+                const form = ref({
+                    title: '',
+                    category: 'AI',
+                    author: '',
+                    image: 'https://via.placeholder.com/400x200',
+                    preview: '',
+                    content: '',
+                    source: ''
+                });
+
+                const categories = computed(() => {
+                    const cats = new Set(news.value.map(n => n.category));
+                    return cats;
+                });
+
+                const filteredNews = computed(() => {
+                    return news.value.filter(n => 
+                        n.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+                    ).sort((a, b) => new Date(b.date) - new Date(a.date));
+                });
+
+                const totalComments = computed(() => {
+                    return comments.value.length;
+                });
+
+                const jsonTemplate = computed(() => {
+                    return JSON.stringify({
+                        id: "news_" + Date.now(),
+                        title: "Пример заголовка",
+                        category: "AI",
+                        author: "Автор",
+                        date: new Date().toISOString(),
+                        image: "https://via.placeholder.com/400x200",
+                        preview: "Краткое описание...",
+                        content: "Полный текст новости...",
+                        source: "https://example.com"
+                    }, null, 2);
+                });
+
+                const formatDate = (date) => {
+                    return new Date(date).toLocaleDateString('ru-RU');
+                };
+
+                const loadData = () => {
+                    fetch('data/news.json')
+                        .then(r => r.json())
+                        .then(data => {
+                            news.value = data;
+                        })
+                        .catch(() => {
+                            console.log('news.json не найден - используем пустой массив');
+                            news.value = [];
+                        });
+
+                    fetch('data/comments.json')
+                        .then(r => r.json())
+                        .then(data => {
+                            comments.value = data;
+                        })
+                        .catch(() => {
+                            comments.value = [];
+                        });
+                };
+
+                const getCommentCount = (newsId) => {
+                    return comments.value.filter(c => c.newsId === newsId).length;
+                };
+
+                const addNews = () => {
+                    if (!form.value.title || !form.value.preview || !form.value.content || !form.value.author) {
+                        errorMessage.value = '❌ Заполните обязательные поля!';
+                        return;
+                    }
+
+                    const newItem = {
+                        id: 'news_' + Date.now(),
+                        title: form.value.title,
+                        category: form.value.category,
+                        author: form.value.author,
+                        date: new Date().toISOString(),
+                        image: form.value.image,
+                        preview: form.value.preview,
+                        content: form.value.content,
+                        source: form.value.source
+                    };
+
+                    news.value.unshift(newItem);
+                    saveToLocalStorage();
+                    successMessage.value = '✅ Новость добавлена!';
+                    
+                    form.value = {
+                        title: '',
+                        category: 'AI',
+                        author: '',
+                        image: 'https://via.placeholder.com/400x200',
+                        preview: '',
+                        content: '',
+                        source: ''
+                    };
+
+                    setTimeout(() => {
+                        successMessage.value = '';
+                    }, 3000);
+                };
+
+                const editNews = (item) => {
+                    editingNews.value = { ...item };
+                };
+
+                const saveEditedNews = () => {
+                    const index = news.value.findIndex(n => n.id === editingNews.value.id);
+                    if (index !== -1) {
+                        news.value[index] = editingNews.value;
+                        saveToLocalStorage();
+                        successMessage.value = '✅ Новость обновлена!';
+                        editingNews.value = null;
+                    }
+                };
+
+                const deleteNews = (id) => {
+                    if (confirm('Вы уверены?')) {
+                        news.value = news.value.filter(n => n.id !== id);
+                        comments.value = comments.value.filter(c => c.newsId !== id);
+                        saveToLocalStorage();
+                        successMessage.value = '✅ Новость удалена!';
+                    }
+                };
+
+                const saveToLocalStorage = () => {
+                    localStorage.setItem('techflow_news', JSON.stringify(news.value));
+                    localStorage.setItem('techflow_comments', JSON.stringify(comments.value));
+                };
+
+                const exportData = () => {
+                    const data = {
+                        news: news.value,
+                        comments: comments.value,
+                        exported: new Date().toISOString()
+                    };
+
+                    const json = JSON.stringify(data, null, 2);
+                    const blob = new Blob([json], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'techflow-backup-' + Date.now() + '.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                };
+
+                const triggerFileInput = () => {
+                    fileInput.value.click();
+                };
+
+                const importData = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            news.value = data.news || [];
+                            comments.value = data.comments || [];
+                            saveToLocalStorage();
+                            successMessage.value = '✅ Данные загружены!';
+                        } catch (err) {
+                            errorMessage.value = '❌ Ошибка при загрузке JSON!';
+                        }
+                    };
+                    reader.readAsText(file);
+                    e.target.value = '';
+                };
+
+                const toggleDarkMode = () => {
+                    isDarkMode.value = !isDarkMode.value;
+                    document.body.classList.toggle('dark-mode', isDarkMode.value);
+                    localStorage.setItem('techflow_darkmode', isDarkMode.value);
+                };
+
+                const goToMain = () => {
+                    window.location.href = 'index.html';
+                };
+
+                onMounted(() => {
+                    isDarkMode.value = localStorage.getItem('techflow_darkmode') === 'true';
+                    document.body.classList.toggle('dark-mode', isDarkMode.value);
+                    
+                    loadData();
+
+                    // Load from localStorage if available
+                    const saved = localStorage.getItem('techflow_news');
+                    if (saved) {
+                        news.value = JSON.parse(saved);
+                    }
+                    const savedComments = localStorage.getItem('techflow_comments');
+                    if (savedComments) {
+                        comments.value = JSON.parse(savedComments);
+                    }
+                });
+
+                return {
+                    activeTab,
+                    news,
+                    form,
+                    isDarkMode,
+                    searchQuery,
+                    successMessage,
+                    errorMessage,
+                    editingNews,
+                    fileInput,
+                    categories,
+                    filteredNews,
+                    totalComments,
+                    jsonTemplate,
+                    formatDate,
+                    getCommentCount,
+                    addNews,
+                    editNews,
+                    saveEditedNews,
+                    deleteNews,
+                    exportData,
+                    triggerFileInput,
+                    importData,
+                    toggleDarkMode,
+                    goToMain
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
