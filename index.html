@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Новости технологий</title>
+    <title>TechFlow - Новости о технологиях</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <style>
         * {
@@ -14,6 +14,7 @@
 
         :root {
             --primary: #0088cc;
+            --primary-dark: #0066aa;
             --secondary: #1c1c1c;
             --bg-light: #ffffff;
             --bg-dark: #0f0f0f;
@@ -21,14 +22,14 @@
             --text-dark: #ffffff;
             --border-light: #e0e0e0;
             --border-dark: #2a2a2a;
-            --accent: #ff6b35;
+            --success: #22c55e;
+            --error: #ef4444;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-light);
             color: var(--text-light);
-            overflow-x: hidden;
         }
 
         body.dark-mode {
@@ -36,98 +37,263 @@
             color: var(--text-dark);
         }
 
-        #app {
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-
         /* Header */
-        .header {
-            background: var(--primary);
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
-            font-size: 18px;
-            font-weight: 600;
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .header-controls {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             align-items: center;
         }
 
-        .btn-small {
-            background: rgba(255,255,255,0.2);
+        /* Button Styles - MODERN */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
             border: none;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-small:hover {
-            background: rgba(255,255,255,0.3);
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* PRIMARY BUTTON */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+        }
+
+        /* SECONDARY BUTTON */
+        .btn-secondary {
+            background: var(--border-light);
+            color: var(--text-light);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .btn-secondary {
+            background: var(--border-dark);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-light);
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background: var(--border-dark);
+        }
+
+        /* OUTLINE BUTTON */
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ICON BUTTON */
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 8px;
+            font-size: 18px;
+            background: var(--border-light);
+        }
+
+        body.dark-mode .btn-icon {
+            background: var(--border-dark);
+        }
+
+        .btn-icon:hover {
+            background: var(--primary);
+            color: white;
             transform: scale(1.05);
         }
 
-        /* Search */
-        .search-bar {
-            padding: 12px 16px;
-            background: var(--bg-light);
-            border-bottom: 1px solid var(--border-light);
+        /* SUCCESS BUTTON */
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
         }
 
-        body.dark-mode .search-bar {
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        /* ERROR BUTTON */
+        .btn-error {
+            background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-error:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        /* SMALL BUTTON */
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Search & Filter Section */
+        .search-section {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .search-section {
             background: var(--secondary);
             border-color: var(--border-dark);
         }
 
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
         .search-input {
-            width: 100%;
-            padding: 10px 12px;
+            flex: 1;
+            min-width: 200px;
+            padding: 11px 14px;
             border: 1px solid var(--border-light);
             border-radius: 8px;
             font-size: 14px;
             background: var(--bg-light);
             color: var(--text-light);
+            transition: all 0.3s;
         }
 
         body.dark-mode .search-input {
-            background: var(--secondary);
+            background: var(--bg-dark);
             border-color: var(--border-dark);
             color: var(--text-dark);
         }
 
-        /* News Grid */
-        .news-container {
-            padding: 12px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
         }
 
+        .category-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 14px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .category-btn {
+            border-color: var(--border-dark);
+            background: var(--secondary);
+            color: var(--text-dark);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* News Card */
         .news-card {
             background: var(--bg-light);
             border: 1px solid var(--border-light);
             border-radius: 12px;
             overflow: hidden;
-            cursor: pointer;
             transition: all 0.3s;
+            cursor: pointer;
             display: flex;
-            gap: 12px;
-            padding: 12px;
+            flex-direction: column;
         }
 
         body.dark-mode .news-card {
@@ -136,57 +302,65 @@
         }
 
         .news-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border-color: var(--primary);
         }
 
         .news-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
+            width: 100%;
+            height: 200px;
             object-fit: cover;
-            background: var(--border-light);
-            flex-shrink: 0;
-        }
-
-        body.dark-mode .news-image {
-            background: var(--border-dark);
+            background: linear-gradient(135deg, var(--border-light), #e0e0e0);
         }
 
         .news-content {
+            padding: 16px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-width: 0;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(0, 136, 204, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            width: fit-content;
         }
 
         .news-title {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             line-height: 1.4;
-            margin-bottom: 6px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 8px;
+            flex: 1;
         }
 
         .news-preview {
-            font-size: 12px;
+            font-size: 13px;
             opacity: 0.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            flex: 1;
         }
 
         .news-meta {
             display: flex;
-            gap: 8px;
-            font-size: 11px;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-light);
+            font-size: 12px;
             opacity: 0.5;
-            margin-top: 6px;
+        }
+
+        body.dark-mode .news-meta {
+            border-color: var(--border-dark);
         }
 
         /* Modal */
@@ -197,34 +371,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
-            animation: fadeIn 0.3s;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .modal-overlay.active {
             display: flex;
-            align-items: flex-end;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
         }
 
         .modal {
             background: var(--bg-light);
+            border-radius: 12px;
             width: 100%;
+            max-width: 700px;
             max-height: 90vh;
-            border-radius: 16px 16px 0 0;
-            animation: slideUp 0.3s;
             overflow-y: auto;
-            z-index: 1001;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         body.dark-mode .modal {
@@ -232,20 +397,23 @@
         }
 
         .modal-header {
-            padding: 16px;
+            padding: 24px;
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             background: var(--bg-light);
-            z-index: 10;
         }
 
         body.dark-mode .modal-header {
             background: var(--secondary);
             border-color: var(--border-dark);
+        }
+
+        .modal-body {
+            padding: 24px;
         }
 
         .modal-close {
@@ -254,163 +422,76 @@
             font-size: 24px;
             cursor: pointer;
             color: var(--text-light);
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         body.dark-mode .modal-close {
             color: var(--text-dark);
         }
 
-        .modal-body {
-            padding: 16px;
+        .modal-close:hover {
+            opacity: 0.6;
         }
 
-        .modal-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .modal-meta {
-            display: flex;
-            gap: 16px;
+        /* Footer */
+        footer {
+            background: var(--border-light);
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
             font-size: 12px;
             opacity: 0.6;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
         }
 
-        .modal-text {
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .modal-source {
-            padding: 12px;
-            background: var(--border-light);
-            border-radius: 8px;
-            font-size: 12px;
-            margin-bottom: 16px;
-        }
-
-        body.dark-mode .modal-source {
+        body.dark-mode footer {
             background: var(--border-dark);
         }
 
-        .source-link {
-            color: var(--primary);
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        /* Share & Comments */
-        .modal-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .action-btn {
-            padding: 10px;
-            border: 1px solid var(--border-light);
-            background: var(--bg-light);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        body.dark-mode .action-btn {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .action-btn:active {
-            transform: scale(0.95);
-        }
-
-        .action-icon {
-            font-size: 18px;
-        }
-
-        /* Comments */
+        /* Comments Section */
         .comments-section {
-            border-top: 1px solid var(--border-light);
-            padding-top: 16px;
             margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-light);
         }
 
         body.dark-mode .comments-section {
             border-color: var(--border-dark);
         }
 
-        .comments-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
         .comment-form {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .comment-input {
-            flex: 1;
-            padding: 8px 12px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid var(--border-light);
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 80px;
             background: var(--bg-light);
             color: var(--text-light);
         }
 
         body.dark-mode .comment-input {
-            background: var(--secondary);
+            background: var(--bg-dark);
             border-color: var(--border-dark);
             color: var(--text-dark);
         }
 
-        .comment-btn {
-            padding: 8px 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .comment {
-            padding: 10px;
             background: var(--border-light);
+            padding: 12px;
             border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         body.dark-mode .comment {
@@ -419,278 +500,253 @@
 
         .comment-author {
             font-weight: 600;
-            font-size: 11px;
-            opacity: 0.7;
             margin-bottom: 4px;
         }
 
-        .comment-time {
-            font-size: 10px;
-            opacity: 0.5;
-            margin-top: 4px;
+        .comment-text {
+            opacity: 0.8;
+            line-height: 1.4;
         }
 
-        /* Empty state */
+        .comment-date {
+            opacity: 0.5;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             opacity: 0.5;
         }
 
-        .empty-state p {
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 500;
-            transition: all 0.3s;
-        }
-
-        .fab:hover {
-            transform: scale(1.1);
-        }
-
-        .fab:active {
-            transform: scale(0.95);
-        }
-
-        /* Bottom nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-around;
-            padding-bottom: max(0px, env(safe-area-inset-bottom));
-            z-index: 200;
-        }
-
-        body.dark-mode .bottom-nav {
-            background: var(--secondary);
-            border-color: var(--border-dark);
-        }
-
-        .nav-item {
-            flex: 1;
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            background: none;
-            color: var(--text-light);
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .nav-item {
-            color: var(--text-dark);
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            display: block;
-            margin-bottom: 4px;
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
         }
 
         /* Loading */
         .loading {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.6;
+        }
+
+        /* Share Buttons */
+        .share-buttons {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
+            gap: 8px;
+            margin-top: 16px;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border-light);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .share-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        body.dark-mode .spinner {
+        body.dark-mode .share-btn {
+            background: var(--secondary);
             border-color: var(--border-dark);
+            color: var(--text-dark);
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .share-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .modal {
-                max-height: 95vh;
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-bar {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <div class="header">
-            <h1>🚀 TechFlow</h1>
-            <div class="header-controls">
-                <button class="btn-small" @click="toggleDarkMode">
-                    {{ isDarkMode ? '☀️' : '🌙' }}
-                </button>
-                <button class="btn-small" @click="refreshNews">
-                    ↻
-                </button>
+        <!-- Header -->
+        <header>
+            <div class="header-container">
+                <div class="header-logo">
+                    🚀 TechFlow
+                </div>
+                <div class="header-controls">
+                    <button class="btn btn-icon" @click="toggleDarkMode" title="Тёмный режим">
+                        {{ isDarkMode ? '☀️' : '🌙' }}
+                    </button>
+                    <button class="btn btn-secondary btn-sm" @click="goToAdmin" title="Админ-панель">
+                        ⚙️ Админ
+                    </button>
+                </div>
             </div>
-        </div>
+        </header>
 
-        <div class="search-bar">
-            <input 
-                type="text" 
-                class="search-input" 
-                placeholder="🔍 Поиск новостей..."
-                v-model="searchQuery"
-            >
-        </div>
+        <!-- Main Content -->
+        <div class="container">
+            <!-- Search & Filter Section -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="🔍 Поиск новостей..." 
+                        v-model="searchQuery"
+                    >
+                    <button class="btn btn-primary btn-sm" @click="resetFilters">
+                        ✨ Очистить фильтры
+                    </button>
+                </div>
 
-        <div class="news-container" v-if="filteredNews.length > 0">
-            <div 
-                class="news-card" 
-                v-for="news in filteredNews" 
-                :key="news.id"
-                @click="openModal(news)"
-            >
-                <img :src="news.image" :alt="news.title" class="news-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'">
-                <div class="news-content">
-                    <div>
-                        <div class="news-title">{{ news.title }}</div>
-                        <div class="news-preview">{{ news.preview }}</div>
-                    </div>
-                    <div class="news-meta">
-                        <span>{{ formatDate(news.date) }}</span>
-                        <span>💬 {{ getCommentCount(news.id) }}</span>
+                <div style="margin-top: 16px;">
+                    <p style="font-size: 12px; opacity: 0.6; margin-bottom: 8px;">Категории:</p>
+                    <div class="category-filter">
+                        <button 
+                            class="category-btn" 
+                            :class="{ active: selectedCategory === null }" 
+                            @click="selectedCategory = null"
+                        >
+                            📂 Все категории
+                        </button>
+                        <button 
+                            v-for="cat in categories" 
+                            :key="cat"
+                            class="category-btn" 
+                            :class="{ active: selectedCategory === cat }" 
+                            @click="selectedCategory = cat"
+                        >
+                            {{ getCategoryEmoji(cat) }} {{ cat }}
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="empty-state" v-else>
-            <p v-if="news.length === 0">📭 Нет новостей</p>
-            <p v-else>🔍 Новости не найдены</p>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal-overlay" :class="{ active: selectedNews }" @click="closeModal">
-            <div class="modal" @click.stop>
-                <div class="modal-header" v-if="selectedNews">
-                    <div>{{ selectedNews.category }}</div>
-                    <button class="modal-close" @click="closeModal">✕</button>
+            <!-- News Grid -->
+            <div v-if="filteredNews.length > 0" class="news-grid">
+                <div 
+                    v-for="item in filteredNews" 
+                    :key="item.id" 
+                    class="news-card"
+                    @click="selectNews(item)"
+                >
+                    <img 
+                        :src="item.image" 
+                        :alt="item.title" 
+                        class="news-image"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22%3E%3Crect fill=%22%23ddd%22 width=%22400%22 height=%22200%22/%3E%3C/svg%3E'"
+                    >
+                    <div class="news-content">
+                        <span class="news-category">{{ item.category }}</span>
+                        <h3 class="news-title">{{ item.title }}</h3>
+                        <p class="news-preview">{{ item.preview }}</p>
+                        <div class="news-meta">
+                            <span>{{ item.author }}</span>
+                            <span>📅 {{ formatDate(item.date) }}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="modal-body" v-if="selectedNews">
-                    <img :src="selectedNews.image" :alt="selectedNews.title" class="modal-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22%3E%3Crect fill=%22%23ddd%22 width=%22400%22 height=%22200%22/%3E%3C/svg%3E'">
-                    
-                    <h2 class="modal-title">{{ selectedNews.title }}</h2>
-                    
-                    <div class="modal-meta">
-                        <span>📅 {{ formatDate(selectedNews.date) }}</span>
-                        <span>✍️ {{ selectedNews.author }}</span>
-                        <span>🏷️ {{ selectedNews.category }}</span>
+            <div v-else class="empty-state">
+                <div class="empty-icon">📭</div>
+                <p>Новости не найдены</p>
+            </div>
+        </div>
+
+        <!-- Modal with Full News -->
+        <div class="modal-overlay" :class="{ active: selectedNewsItem }" @click.self="selectedNewsItem = null">
+            <div class="modal" v-if="selectedNewsItem">
+                <div class="modal-header">
+                    <h2 style="font-size: 20px;">{{ selectedNewsItem.title }}</h2>
+                    <button class="modal-close" @click="selectedNewsItem = null">✕</button>
+                </div>
+                <div class="modal-body">
+                    <img 
+                        :src="selectedNewsItem.image" 
+                        :alt="selectedNewsItem.title" 
+                        style="width: 100%; border-radius: 8px; margin-bottom: 16px; max-height: 300px; object-fit: cover;"
+                    >
+
+                    <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+                        <span class="news-category">{{ selectedNewsItem.category }}</span>
+                        <span style="font-size: 12px; opacity: 0.6;">✍️ {{ selectedNewsItem.author }}</span>
+                        <span style="font-size: 12px; opacity: 0.6;">📅 {{ formatDate(selectedNewsItem.date) }}</span>
                     </div>
 
-                    <div class="modal-text">{{ selectedNews.content }}</div>
-
-                    <div class="modal-source" v-if="selectedNews.source">
-                        <strong>📌 Источник:</strong><br>
-                        <a :href="selectedNews.source" target="_blank" class="source-link">{{ selectedNews.source }}</a>
+                    <div style="line-height: 1.7; margin-bottom: 20px; font-size: 15px;">
+                        {{ selectedNewsItem.content }}
                     </div>
 
-                    <div class="modal-actions">
-                        <button class="action-btn" @click="shareToTelegram(selectedNews)">
-                            <span class="action-icon">✈️</span>
-                            <span>Телеграм</span>
-                        </button>
-                        <button class="action-btn" @click="shareToTwitter(selectedNews)">
-                            <span class="action-icon">𝕏</span>
-                            <span>Twitter</span>
-                        </button>
-                        <button class="action-btn" @click="copyLink(selectedNews)">
-                            <span class="action-icon">🔗</span>
-                            <span>Скопировать</span>
-                        </button>
+                    <div v-if="selectedNewsItem.source" style="padding: 12px; background: var(--border-light); border-radius: 6px; margin-bottom: 20px;">
+                        <a :href="selectedNewsItem.source" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            🔗 Открыть источник
+                        </a>
+                    </div>
+
+                    <!-- Share Buttons -->
+                    <div class="share-buttons">
+                        <button class="share-btn" @click="shareToTelegram">📱 Telegram</button>
+                        <button class="share-btn" @click="shareToTwitter">𝕏 Twitter</button>
+                        <button class="share-btn" @click="copyToClipboard">📋 Копировать</button>
                     </div>
 
                     <!-- Comments -->
                     <div class="comments-section">
-                        <h3 class="comments-title">💬 Комментарии ({{ getCommentCount(selectedNews.id) }})</h3>
-                        
+                        <h3 style="margin-bottom: 16px;">💬 Комментарии</h3>
+
                         <div class="comment-form">
                             <input 
                                 type="text" 
-                                class="comment-input" 
-                                placeholder="Ваш комментарий..."
-                                v-model="newComment"
-                                @keyup.enter="addComment(selectedNews.id)"
+                                v-model="commentAuthor" 
+                                placeholder="Ваше имя..."
+                                style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid var(--border-light); border-radius: 6px; background: var(--bg-light); color: var(--text-light);"
                             >
-                            <button class="comment-btn" @click="addComment(selectedNews.id)">
-                                📤
+                            <textarea 
+                                v-model="commentText" 
+                                placeholder="Ваш комментарий..."
+                                class="comment-input"
+                            ></textarea>
+                            <button class="btn btn-success" @click="addComment" style="width: 100%;">
+                                ✅ Оставить комментарий
                             </button>
                         </div>
 
-                        <div v-if="getComments(selectedNews.id).length > 0">
-                            <div class="comment" v-for="comment in getComments(selectedNews.id)" :key="comment.id">
-                                <div class="comment-author">{{ comment.author || 'Аноним' }}</div>
-                                <div>{{ comment.text }}</div>
-                                <div class="comment-time">{{ formatDate(comment.date) }}</div>
+                        <div v-if="newsComments.length > 0" class="comments-list">
+                            <div v-for="comment in newsComments" :key="comment.id" class="comment">
+                                <div class="comment-author">{{ comment.author }}</div>
+                                <div class="comment-text">{{ comment.text }}</div>
+                                <div class="comment-date">{{ formatDate(comment.date) }}</div>
                             </div>
                         </div>
-                        <div v-else class="empty-state" style="padding: 20px;">
-                            <p>Нет комментариев. Будьте первым!</p>
+                        <div v-else style="text-align: center; opacity: 0.5; padding: 20px;">
+                            Пока нет комментариев
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <button class="nav-item" :class="{ active: currentView === 'news' }" @click="currentView = 'news'">
-                <span class="nav-icon">📰</span>
-                <span>Новости</span>
-            </button>
-            <button class="nav-item" :class="{ active: currentView === 'trending' }" @click="currentView = 'trending'">
-                <span class="nav-icon">🔥</span>
-                <span>Тренд</span>
-            </button>
-            <button class="nav-item" :class="{ active: currentView === 'saved' }" @click="currentView = 'saved'">
-                <span class="nav-icon">❤️</span>
-                <span>Сохранено</span>
-            </button>
-            <button class="nav-item" :class="{ active: currentView === 'admin' }" @click="goToAdmin">
-                <span class="nav-icon">⚙️</span>
-                <span>Админ</span>
-            </button>
-        </div>
+        <!-- Footer -->
+        <footer>
+            <p>🚀 TechFlow © 2025 | Социальные новости о технологиях</p>
+        </footer>
     </div>
 
     <script>
@@ -698,104 +754,108 @@
 
         createApp({
             setup() {
+                const isDarkMode = ref(false);
+                const searchQuery = ref('');
+                const selectedCategory = ref(null);
+                const selectedNewsItem = ref(null);
                 const news = ref([]);
                 const comments = ref([]);
-                const selectedNews = ref(null);
-                const searchQuery = ref('');
-                const isDarkMode = ref(false);
-                const currentView = ref('news');
-                const newComment = ref('');
+                const commentAuthor = ref('');
+                const commentText = ref('');
 
-                const filteredNews = computed(() => {
-                    return news.value.filter(n => 
-                        n.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                        n.preview.toLowerCase().includes(searchQuery.value.toLowerCase())
-                    );
+                const categories = computed(() => {
+                    return [...new Set(news.value.map(n => n.category))];
                 });
 
-                const formatDate = (date) => {
-                    const d = new Date(date);
-                    const now = new Date();
-                    const diff = now - d;
-                    
-                    const minutes = Math.floor(diff / 60000);
-                    const hours = Math.floor(diff / 3600000);
-                    const days = Math.floor(diff / 86400000);
+                const filteredNews = computed(() => {
+                    return news.value.filter(n => {
+                        const matchSearch = n.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+                                          n.preview.toLowerCase().includes(searchQuery.value.toLowerCase());
+                        const matchCategory = selectedCategory.value === null || n.category === selectedCategory.value;
+                        return matchSearch && matchCategory;
+                    });
+                });
 
-                    if (minutes < 60) return `${minutes}м назад`;
-                    if (hours < 24) return `${hours}ч назад`;
-                    if (days < 7) return `${days}д назад`;
-                    
-                    return d.toLocaleDateString('ru-RU');
-                };
+                const newsComments = computed(() => {
+                    if (!selectedNewsItem.value) return [];
+                    return comments.value.filter(c => c.newsId === selectedNewsItem.value.id);
+                });
 
                 const loadData = () => {
                     fetch('data/news.json')
                         .then(r => r.json())
                         .then(data => {
-                            news.value = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                            news.value = data.news || data;
                         })
                         .catch(() => {
                             news.value = [];
                         });
 
-                    fetch('data/comments.json')
-                        .then(r => r.json())
-                        .then(data => {
-                            comments.value = data;
-                        })
-                        .catch(() => {
-                            comments.value = [];
-                        });
+                    const saved = localStorage.getItem('techflow_comments');
+                    if (saved) {
+                        comments.value = JSON.parse(saved);
+                    }
                 };
 
-                const getComments = (newsId) => {
-                    return comments.value.filter(c => c.newsId === newsId).slice(-5);
+                const formatDate = (date) => {
+                    return new Date(date).toLocaleDateString('ru-RU');
                 };
 
-                const getCommentCount = (newsId) => {
-                    return comments.value.filter(c => c.newsId === newsId).length;
-                };
-
-                const addComment = (newsId) => {
-                    if (!newComment.value.trim()) return;
-
-                    const comment = {
-                        id: Date.now(),
-                        newsId,
-                        text: newComment.value,
-                        author: 'Пользователь',
-                        date: new Date().toISOString()
+                const getCategoryEmoji = (cat) => {
+                    const emojis = {
+                        'AI': '🤖',
+                        'Разработка': '💻',
+                        'Мобильные': '📱',
+                        'Кибербезопасность': '🔒',
+                        'Облако': '☁️',
+                        'Железо': '🖥️',
+                        'Стартапы': '🚀'
                     };
+                    return emojis[cat] || '📌';
+                };
 
-                    comments.value.push(comment);
+                const selectNews = (item) => {
+                    selectedNewsItem.value = item;
+                };
+
+                const resetFilters = () => {
+                    searchQuery.value = '';
+                    selectedCategory.value = null;
+                };
+
+                const addComment = () => {
+                    if (!commentAuthor.value.trim() || !commentText.value.trim()) {
+                        alert('Заполните имя и текст комментария!');
+                        return;
+                    }
+
+                    comments.value.push({
+                        id: Date.now(),
+                        newsId: selectedNewsItem.value.id,
+                        author: commentAuthor.value,
+                        text: commentText.value,
+                        date: new Date().toISOString()
+                    });
+
                     localStorage.setItem('techflow_comments', JSON.stringify(comments.value));
-                    newComment.value = '';
+                    commentAuthor.value = '';
+                    commentText.value = '';
                 };
 
-                const openModal = (n) => {
-                    selectedNews.value = n;
-                    document.body.style.overflow = 'hidden';
+                const shareToTelegram = () => {
+                    const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(selectedNewsItem.value.title)}`;
+                    window.open(url, '_blank');
                 };
 
-                const closeModal = () => {
-                    selectedNews.value = null;
-                    document.body.style.overflow = 'auto';
+                const shareToTwitter = () => {
+                    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedNewsItem.value.title)}&url=${encodeURIComponent(window.location.href)}`;
+                    window.open(url, '_blank');
                 };
 
-                const shareToTelegram = (n) => {
-                    const text = encodeURIComponent(`📰 ${n.title}\n\n${n.preview}\n\n🔗 Читать полностью`);
-                    window.open(`https://t.me/share/url?url=${window.location.href}&text=${text}`);
-                };
-
-                const shareToTwitter = (n) => {
-                    const text = encodeURIComponent(`📰 ${n.title} #TechFlow #Технологии`);
-                    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${window.location.href}`);
-                };
-
-                const copyLink = () => {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('✅ Ссылка скопирована!');
+                const copyToClipboard = () => {
+                    const text = `${selectedNewsItem.value.title}\n${selectedNewsItem.value.preview}\n${window.location.href}`;
+                    navigator.clipboard.writeText(text);
+                    alert('✅ Скопировано в буфер обмена!');
                 };
 
                 const toggleDarkMode = () => {
@@ -804,46 +864,37 @@
                     localStorage.setItem('techflow_darkmode', isDarkMode.value);
                 };
 
-                const refreshNews = () => {
-                    loadData();
-                };
-
                 const goToAdmin = () => {
                     window.location.href = 'admin.html';
                 };
 
                 onMounted(() => {
-                    loadData();
                     isDarkMode.value = localStorage.getItem('techflow_darkmode') === 'true';
                     document.body.classList.toggle('dark-mode', isDarkMode.value);
-
-                    // Load comments from localStorage
-                    const saved = localStorage.getItem('techflow_comments');
-                    if (saved) {
-                        comments.value = JSON.parse(saved);
-                    }
+                    loadData();
                 });
 
                 return {
+                    isDarkMode,
+                    searchQuery,
+                    selectedCategory,
+                    selectedNewsItem,
                     news,
                     comments,
-                    selectedNews,
-                    searchQuery,
-                    isDarkMode,
-                    currentView,
-                    newComment,
+                    commentAuthor,
+                    commentText,
+                    categories,
                     filteredNews,
+                    newsComments,
                     formatDate,
-                    getComments,
-                    getCommentCount,
+                    getCategoryEmoji,
+                    selectNews,
+                    resetFilters,
                     addComment,
-                    openModal,
-                    closeModal,
                     shareToTelegram,
                     shareToTwitter,
-                    copyLink,
+                    copyToClipboard,
                     toggleDarkMode,
-                    refreshNews,
                     goToAdmin
                 };
             }
