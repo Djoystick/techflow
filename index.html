@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Новости о технологиях и AI</title>
-    <meta name="description" content="TechFlow - свежие новости о технологиях, AI, стартапах и разработке">
-    <meta name="keywords" content="новости, технологии, AI, разработка, стартапы">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>TechFlow - Технологии и AI новости</title>
+    <meta name="description" content="TechFlow - свежие новости о технологиях, AI, разработке">
     <style>
         * {
             margin: 0;
@@ -14,46 +12,22 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #0088cc;
-            --primary-dark: #0066aa;
-            --primary-light: #33a1dd;
-            --bg: #ffffff;
-            --bg-secondary: #f5f5f5;
-            --text: #000000;
-            --text-secondary: #666666;
-            --border: #e0e0e0;
-            --success: #31a24c;
-            --danger: #e63946;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background: #f5f5f5;
+            color: #1a1a1a;
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* ============ ТЕМНЫЙ РЕЖИМ ============ */
-        body.dark-mode {
-            --bg: #1a1a1a;
-            --bg-secondary: #2a2a2a;
-            --text: #ffffff;
-            --text-secondary: #cccccc;
-            --border: #444444;
-            --primary-dark: #0055aa;
-        }
-
-        /* ============ ШАПКА ============ */
+        /* HEADER */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 20px 0;
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 12px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .header-container {
@@ -64,692 +38,348 @@
             justify-content: space-between;
             align-items: center;
             gap: 20px;
-            flex-wrap: wrap;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
+            color: #2979f0;
             text-decoration: none;
-            color: white;
         }
 
-        .logo-icon {
-            font-size: 32px;
+        .logo:hover {
+            color: #1563d8;
         }
 
-        .nav-links {
+        .search-input {
+            flex: 1;
+            max-width: 400px;
+            padding: 8px 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2979f0;
+            box-shadow: 0 0 0 2px rgba(41, 121, 240, 0.1);
+        }
+
+        .header-buttons {
             display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s;
-            font-size: 14px;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        .theme-toggle, .btn-admin {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid white;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .theme-toggle:hover, .btn-admin:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* ============ HERO СЕКЦИЯ ============ */
-        .hero {
-            background: linear-gradient(135deg, #0088cc 0%, #0066aa 50%, #003d66 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        body.dark-mode .hero {
-            background: linear-gradient(135deg, #005588 0%, #003366 100%);
-        }
-
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 18px;
-            opacity: 0.95;
-            margin-bottom: 30px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
             gap: 8px;
         }
 
-        .btn-primary {
-            background: white;
-            color: var(--primary);
+        .btn-header {
+            padding: 6px 12px;
+            background: #fff;
+            border: 1px solid #d8d8d8;
+            color: #1a1a1a;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        .btn-header:hover {
+            background: #f5f5f5;
+            border-color: #2979f0;
+            color: #2979f0;
         }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: var(--primary);
-        }
-
-        /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
+        /* MAIN LAYOUT */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            font-size: 32px;
-            margin-bottom: 40px;
-            text-align: center;
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 15px;
-            display: inline-block;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* ============ СОРТИРОВКА И ФИЛЬТРЫ ============ */
-        .sort-filter-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sort-btn, .filter-btn {
-            padding: 10px 16px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        body.dark-mode .sort-btn,
-        body.dark-mode .filter-btn {
-            background: #2a2a2a;
-            color: #33a1dd;
-        }
-
-        .sort-btn:hover, .filter-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .sort-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .search-box {
-            width: 100%;
-            max-width: 400px;
-            padding: 10px 16px;
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-            color: var(--text);
-            transition: all 0.2s;
-        }
-
-        body.dark-mode .search-box {
-            background: #2a2a2a;
-            color: #ffffff;
-            border-color: #33a1dd;
-        }
-
-        .search-box:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
-        }
-
-        /* ============ НОВОСТИ СЕКЦИЯ ============ */
-        .news-grid {
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: 220px 1fr 280px;
+            gap: 20px;
+        }
+
+        /* SIDEBAR LEFT */
+        .sidebar-left {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-section {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            padding: 8px 10px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: #1a1a1a;
+            text-align: left;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #f0f6ff;
+            border-color: #2979f0;
+            color: #2979f0;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .news-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            border: 1px solid var(--border);
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px;
             cursor: pointer;
-            position: relative;
-        }
-
-        body.dark-mode .news-card {
-            background: #2a2a2a;
+            transition: all 0.2s;
+            display: flex;
+            gap: 12px;
         }
 
         .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .bookmark-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 10;
-            transition: all 0.2s;
-        }
-
-        body.dark-mode .bookmark-btn {
-            background: #3a3a3a;
-            color: #fff;
-        }
-
-        .bookmark-btn:hover {
-            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-color: #2979f0;
         }
 
         .news-image {
-            width: 100%;
-            height: 200px;
+            width: 140px;
+            height: 100px;
+            border-radius: 4px;
             object-fit: cover;
-            background: var(--bg-secondary);
+            background: #f0f0f0;
+            flex-shrink: 0;
         }
 
-        .news-content {
-            padding: 20px;
+        .news-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .news-category {
             display: inline-block;
-            background: rgba(0,136,204,0.15);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
+            padding: 2px 6px;
+            background: #f0f6ff;
+            color: #2979f0;
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 10px;
+            border-radius: 3px;
+            width: fit-content;
         }
 
         .news-title {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 10px;
+            color: #1a1a1a;
             line-height: 1.3;
-            color: var(--text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-card:hover .news-title {
+            color: #2979f0;
         }
 
         .news-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            line-height: 1.5;
+            font-size: 12px;
+            color: #666;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .news-meta {
+            font-size: 11px;
+            color: #999;
             display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-secondary);
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
+            gap: 12px;
+            margin-top: auto;
         }
 
-        .news-views {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .read-more {
-            display: inline-block;
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: all 0.2s;
-        }
-
-        .read-more:hover {
-            margin-left: 5px;
-        }
-
-        /* ============ ФУНКЦИИ СЕКЦИЯ ============ */
-        .features {
-            background: var(--bg-secondary);
-        }
-
-        body.dark-mode .features {
-            background: #2a2a2a;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .feature-card {
-            background: #1a1a1a;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .feature-card h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* ============ ПОДПИСКА ============ */
-        .subscribe {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            text-align: center;
-            border-radius: 10px;
-            padding: 40px 20px;
-            margin: 60px auto;
-            max-width: 600px;
-        }
-
-        body.dark-mode .subscribe {
-            background: linear-gradient(135deg, #005588 0%, #003366 100%);
-        }
-
-        .subscribe h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .subscribe p {
-            font-size: 16px;
-            opacity: 0.95;
-            margin-bottom: 20px;
-        }
-
-        .subscribe-form {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .subscribe-btn {
-            padding: 12px 28px;
-            background: white;
-            color: var(--primary);
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .subscribe-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* ============ МОДАЛЬНОЕ ОКНО ============ */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .modal-overlay.active {
+        .meta-item {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 4px;
         }
 
-        .modal {
-            background: white;
-            border-radius: 10px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        body.dark-mode .modal {
-            background: #2a2a2a;
-            color: white;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .modal-header h2 {
-            font-size: 22px;
-            margin: 0;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .modal-close:hover {
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-image {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            max-height: 400px;
-            object-fit: cover;
-        }
-
-        .modal-meta {
-            display: flex;
-            gap: 20px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
-        }
-
-        .modal-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--text);
-            margin-bottom: 20px;
-        }
-
-        .modal-rating {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-        }
-
-        .rating-stars {
-            display: flex;
-            gap: 5px;
-        }
-
-        .star {
-            font-size: 20px;
-            cursor: pointer;
-            color: #ddd;
-            transition: color 0.2s;
-        }
-
-        .star:hover, .star.active {
-            color: #ffc107;
-        }
-
-        /* ============ ФУТЕР ============ */
-        footer {
-            background: var(--bg-secondary);
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 1px solid var(--border);
-        }
-
-        body.dark-mode footer {
-            background: #1a1a1a;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 8px;
-        }
-
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-section a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.2s;
-            font-size: 18px;
-        }
-
-        body.dark-mode .social-links a {
-            background: #3a3a3a;
-            color: #33a1dd;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        /* ============ EMPTY STATE ============ */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 60px;
-            margin-bottom: 20px;
-            opacity: 0.5;
+            padding: 40px 20px;
+            color: #999;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
         }
 
         .empty-state p {
-            font-size: 18px;
+            font-size: 14px;
         }
 
-        /* ============ УВЕДОМЛЕНИЯ ============ */
+        /* SIDEBAR RIGHT */
+        .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 60px;
+            height: fit-content;
+        }
+
+        .admin-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .admin-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #2979f0;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #d8d8d8;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 12px;
+            color: #1a1a1a;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2979f0;
+            box-shadow: 0 0 0 2px rgba(41, 121, 240, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 8px;
+            background: #2979f0;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1563d8;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 6px;
+            background: #fff;
+            border: 1px solid #d8d8d8;
+            border-radius: 4px;
+            color: #1a1a1a;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 6px;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            border-color: #2979f0;
+            color: #2979f0;
+        }
+
+        /* NOTIFICATION */
         .notification {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #31a24c;
-            color: white;
-            padding: 16px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background: #fff;
+            border: 1px solid #d8d8d8;
+            color: #1a1a1a;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 13px;
             z-index: 2000;
-            animation: slideInRight 0.3s ease-out;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .notification.success {
+            border-color: #3f9142;
+            color: #3f9142;
         }
 
         .notification.error {
-            background: #e63946;
+            border-color: #c53a3a;
+            color: #c53a3a;
         }
 
-        @keyframes slideInRight {
+        @keyframes slideIn {
             from {
                 transform: translateX(400px);
                 opacity: 0;
@@ -760,242 +390,309 @@
             }
         }
 
-        /* ============ АДАПТИВНОСТЬ ============ */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 10px;
-            }
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
 
-            .hero h1 {
-                font-size: 28px;
-            }
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+        .modal {
+            background: #fff;
+            border-radius: 6px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
 
-            .btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
             }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
+        }
 
-            .news-grid {
+        .modal-header {
+            background: #f5f5f5;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #1a1a1a;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .modal-content {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .modal-rating {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .star {
+            font-size: 18px;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffa500;
+        }
+
+        .gh-status {
+            font-size: 11px;
+            color: #999;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .gh-status.ok {
+            color: #3f9142;
+            background: #f0fff0;
+            border: 1px solid #3f9142;
+        }
+
+        .gh-status.error {
+            color: #c53a3a;
+            background: #fff0f0;
+            border: 1px solid #c53a3a;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
+            .container {
                 grid-template-columns: 1fr;
             }
 
-            .section-title {
-                font-size: 24px;
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
             }
 
-            .modal-body {
-                padding: 20px;
+            .news-card {
+                flex-direction: column;
             }
 
-            .sort-filter-container {
-                justify-content: flex-start;
-                overflow-x: auto;
+            .news-image {
+                width: 100%;
+                height: 150px;
             }
+        }
+
+        @media (max-width: 600px) {
+            .header-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-input {
+                max-width: 100%;
+            }
+
+            .news-card {
+                flex-direction: column;
+            }
+
+            .news-image {
+                width: 100%;
+            }
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- ШАПКА -->
+    <!-- HEADER -->
     <header>
         <div class="header-container">
-            <a href="/" class="logo">
-                <span class="logo-icon" id="header-logo-icon">🚀</span>
-                <span id="header-logo-text">TechFlow</span>
-            </a>
-            <nav class="nav-links">
-                <a href="#news">Новости</a>
-                <a href="#features">Функции</a>
-                <a href="https://t.me/TechFlowNewsBot" target="_blank">
-                    <i class="fab fa-telegram"></i> Telegram
-                </a>
-                <button class="theme-toggle" id="theme-toggle" title="Переключить режим">
-                    🌙
-                </button>
-                <a href="miniapp.html" class="btn-admin">
-                    <i class="fas fa-mobile-alt"></i> Mini App
-                </a>
-                <a href="admin.html" class="btn-admin">
-                    <i class="fas fa-lock"></i> Админ
-                </a>
-            </nav>
+            <a href="/" class="logo">TechFlow</a>
+            <input type="text" id="search-box" class="search-input" placeholder="Поиск новостей...">
+            <div class="header-buttons">
+                <button class="btn-header" id="toggle-admin">Админ</button>
+            </div>
         </div>
     </header>
 
-    <!-- HERO СЕКЦИЯ -->
-    <section class="hero">
-        <div class="hero-container">
-            <h1>🚀 TechFlow - Новости технологий в реальном времени</h1>
-            <p>Свежие новости о AI, разработке, стартапах и инновациях каждый день</p>
-            <div class="hero-buttons">
-                <a href="https://t.me/TechFlowNewsBot" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-telegram"></i> Открыть в Telegram
-                </a>
-                <a href="#news" class="btn btn-secondary">
-                    <i class="fas fa-arrow-down"></i> Читать новости
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- НОВОСТИ СЕКЦИЯ -->
-    <section class="section" id="news">
-        <div class="container">
-            <h2 class="section-title">📰 Последние новости</h2>
-            
-            <!-- ПОИСК И ФИЛЬТРЫ -->
-            <div class="sort-filter-container">
-                <input type="text" id="search-box" class="search-box" placeholder="🔍 Поиск новостей...">
-                <button class="sort-btn active" data-sort="date">📅 Новые первыми</button>
-                <button class="sort-btn" data-sort="views">👁️ Популярные</button>
-                <button class="sort-btn" data-sort="title">🔤 По названию</button>
-                <button class="sort-btn" data-sort="rating">⭐ По рейтингу</button>
-                <button class="filter-btn" id="bookmarks-btn">📌 Закладки</button>
+    <!-- MAIN -->
+    <div class="container">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar-left">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Фильтры</div>
+                <button class="filter-btn active" data-sort="date">Новые</button>
+                <button class="filter-btn" data-sort="views">Популярные</button>
+                <button class="filter-btn" data-sort="rating">Лучшие</button>
+                <button class="filter-btn" id="bookmarks-btn">Закладки</button>
             </div>
 
-            <div class="news-grid" id="news-container">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Категории</div>
+                <div id="categories-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+            </div>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="main-content">
+            <div class="news-list" id="news-container">
                 <div class="empty-state">
-                    <i class="fas fa-spinner fa-spin"></i>
                     <p>Загрузка новостей...</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </main>
 
-    <!-- ФУНКЦИИ СЕКЦИЯ -->
-    <section class="section features" id="features">
-        <div class="container">
-            <h2 class="section-title">✨ Основные функции</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📰</div>
-                    <h3>Свежие новости</h3>
-                    <p>Самые актуальные новости о технологиях, AI и стартапах. Обновляется каждый день с новыми материалами.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Темный режим</h3>
-                    <p>Удобное переключение между светлым и тёмным режимом. Сохраняется ваш выбор автоматически.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Telegram Mini App</h3>
-                    <p>Полнофункциональное приложение прямо в Telegram. Читайте новости без установки отдельного приложения.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>Простое управление</h3>
-                    <p>Интуитивная админ-панель для управления новостями, дизайном и настройками приложения.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Поиск и фильтры</h3>
-                    <p>Быстрый поиск новостей, сортировка по дате, популярности и рейтингу. Легкая навигация по всем материалам.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📌</div>
-                    <h3>Закладки</h3>
-                    <p>Сохраняйте интересующие вас новости в закладках и читайте их позже. Синхронизируется между вкладками.</p>
-                </div>
+        <!-- RIGHT SIDEBAR -->
+        <aside class="sidebar-right" id="admin-panel" style="display: none;">
+            <div class="admin-card">
+                <div class="admin-title">GitHub</div>
+                <div class="gh-status" id="gh-status">Не подключено</div>
+                <button class="btn-secondary" id="gh-load-btn">Загрузить</button>
+                <button class="btn-secondary" id="gh-publish-btn">Опубликовать</button>
             </div>
-        </div>
-    </section>
 
-    <!-- ПОДПИСКА -->
-    <div class="container">
-        <div class="subscribe">
-            <h2>Не пропустите новости!</h2>
-            <p>Подпишитесь на обновления в Telegram и получайте новости первыми</p>
-            <div class="subscribe-form">
-                <a href="https://t.me/TechFlowNewsBot" target="_blank" class="subscribe-btn">
-                    <i class="fab fa-telegram"></i> Подписаться
-                </a>
+            <div class="admin-card">
+                <div class="admin-title">Добавить новость</div>
+                
+                <div class="form-group">
+                    <label>Заголовок *</label>
+                    <input type="text" id="news-title" placeholder="Заголовок">
+                </div>
+
+                <div class="form-group">
+                    <label>Категория *</label>
+                    <select id="news-category"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Описание</label>
+                    <input type="text" id="news-preview" placeholder="Краткое описание">
+                </div>
+
+                <div class="form-group">
+                    <label>Полный текст</label>
+                    <textarea id="news-content" placeholder="Полный текст"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Автор</label>
+                    <input type="text" id="news-author" placeholder="Автор">
+                </div>
+
+                <div class="form-group">
+                    <label>Изображение URL</label>
+                    <input type="text" id="news-image" placeholder="https://...">
+                </div>
+
+                <button class="btn-primary" id="add-news-btn">Добавить</button>
+                <button class="btn-primary" id="cancel-btn" style="display: none; background: #999;">Отмена</button>
             </div>
-        </div>
+
+            <div class="admin-card">
+                <div class="admin-title">Категории</div>
+                
+                <div class="form-group" style="margin-bottom: 6px;">
+                    <input type="text" id="new-category" placeholder="Новая категория" style="margin-bottom: 6px;">
+                    <button class="btn-secondary" id="add-category-btn">Добавить</button>
+                </div>
+
+                <div id="categories-admin" style="display: flex; flex-direction: column; gap: 6px;"></div>
+            </div>
+        </aside>
     </div>
 
-    <!-- ФУТЕР -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>О проекте</h3>
-                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 15px;">
-                        TechFlow - это современная платформа для получения актуальных новостей о технологиях, 
-                        AI и инновациях. Доступно в веб-версии и через Telegram Mini App.
-                    </p>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Ссылки</h3>
-                    <ul>
-                        <li><a href="#news">Новости</a></li>
-                        <li><a href="admin.html">Админ-панель</a></li>
-                        <li><a href="miniapp.html">Mini App</a></li>
-                        <li><a href="https://t.me/TechFlowNewsBot" target="_blank">Telegram</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Социальные сети</h3>
-                    <div class="social-links">
-                        <a href="https://t.me/TechFlowNewsBot" target="_blank" title="Telegram">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                        <a href="https://github.com/Djoystick/techflow" target="_blank" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" title="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 TechFlow. Все права защищены. | Сделано с ❤️ для любителей технологий | v1.2</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- МОДАЛЬНОЕ ОКНО НОВОСТИ -->
+    <!-- READER MODAL -->
     <div class="modal-overlay" id="modal-overlay">
-        <div class="modal" id="modal">
+        <div class="modal">
             <div class="modal-header">
                 <h2 id="modal-title">Новость</h2>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <img id="modal-image" src="" alt="" class="modal-image">
-                <h2 id="modal-news-title" style="font-size: 22px; margin-bottom: 15px;"></h2>
                 <div class="modal-meta">
                     <span id="modal-category"></span>
                     <span id="modal-author"></span>
                     <span id="modal-date"></span>
-                    <span id="modal-views" class="news-views"></span>
+                    <span id="modal-views"></span>
                 </div>
-                <div class="modal-text" id="modal-content"></div>
-                
-                <!-- РЕЙТИНГ -->
+                <div class="modal-content" id="modal-content"></div>
                 <div class="modal-rating">
-                    <span>Оцените новость:</span>
+                    <span>Оценка:</span>
                     <div class="rating-stars" id="rating-stars">
                         <span class="star" data-rating="1">★</span>
                         <span class="star" data-rating="2">★</span>
@@ -1009,70 +706,252 @@
     </div>
 
     <script>
-        // ============ ПЕРЕМЕННЫЕ И СОСТОЯНИЕ ============
         let allNews = [];
+        let categories = [];
         let currentSort = 'date';
         let filterByBookmarks = false;
         let currentModalIndex = -1;
+        let editingId = null;
 
-        // ============ ИНИЦИАЛИЗАЦИЯ ============
-        const loadNews = async () => {
-            try {
-                const stored = localStorage.getItem('techflow_news');
-                if (stored) {
-                    allNews = JSON.parse(stored);
-                    // Добавить ID если нет
-                    allNews = allNews.map((item, idx) => ({
-                        ...item,
-                        id: item.id || `news-${idx}`,
-                        views: item.views || 0,
-                        rating: item.rating || 0
-                    }));
-                } else {
-                    const response = await fetch('https://Djoystick.github.io/techflow/data/news.json');
-                    const data = await response.json();
-                    allNews = (data.news || data || []).map((item, idx) => ({
-                        ...item,
-                        id: item.id || `news-${idx}`,
-                        views: item.views || 0,
-                        rating: item.rating || 0
-                    }));
-                }
-            } catch (err) {
-                console.log('Ошибка загрузки новостей:', err);
-                allNews = [];
-            }
-
-            // Загрузить дизайн
-            loadDesign();
-
-            // Загрузить брендинг
-            loadBranding();
-
-            // Загрузить тему
-            loadTheme();
-
-            // Отобразить новости
-            renderNews();
-
-            // Привязать обработчики сортировки
-            attachSortHandlers();
-            attachSearchHandler();
-            attachBookmarksHandler();
+        // GitHub config
+        const GH_CONFIG = {
+            owner: 'Djoystick',
+            repo: 'techflow',
+            branch: 'main',
+            dataPath: 'data/news.json',
+            token: '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'
         };
 
-        // ============ СОРТИРОВКА ============
-        const attachSortHandlers = () => {
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentSort = btn.dataset.sort;
-                    filterByBookmarks = false;
-                    document.getElementById('bookmarks-btn').classList.remove('active');
-                    renderNews();
-                });
-            });
+        let ghStatus = 'unknown';
+
+        // ===== INIT =====
+        const init = async () => {
+            loadNews();
+            loadCategories();
+            renderAll();
+            attachHandlers();
+            await checkGitHubStatus();
+        };
+
+        // ===== LOAD/SAVE =====
+        const loadNews = () => {
+            const stored = localStorage.getItem('techflow_news');
+            if (stored) {
+                try {
+                    allNews = JSON.parse(stored);
+                } catch (e) {
+                    allNews = [];
+                }
+            } else {
+                allNews = [{
+                    id: '1',
+                    title: 'Первая новость TechFlow',
+                    preview: 'Добро пожаловать в TechFlow - портал о технологиях и AI',
+                    content: 'TechFlow - новостной портал, где собираются самые интересные новости о технологиях, разработке, искусственном интеллекте и стартапах.',
+                    category: 'Новости',
+                    author: 'TechFlow',
+                    date: new Date().toISOString(),
+                    image: 'https://via.placeholder.com/300x200?text=TechFlow',
+                    views: 100,
+                    rating: 5
+                }];
+                saveNews();
+            }
+        };
+
+        const loadCategories = () => {
+            const stored = localStorage.getItem('techflow_categories');
+            categories = stored ? JSON.parse(stored) : ['Новости', 'AI', 'Разработка', 'Стартапы'];
+            updateCategorySelect();
+        };
+
+        const saveNews = () => {
+            localStorage.setItem('techflow_news', JSON.stringify(allNews));
+        };
+
+        const saveCategories = () => {
+            localStorage.setItem('techflow_categories', JSON.stringify(categories));
+        };
+
+        // ===== GITHUB =====
+        const checkGitHubStatus = async () => {
+            if (!GH_CONFIG.token || GH_CONFIG.token === 'ВАШЕ_GITHUB_TOKEN') {
+                updateGhStatus('error');
+                return;
+            }
+            try {
+                const resp = await fetch(
+                    `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.dataPath}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${GH_CONFIG.token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    }
+                );
+                if (resp.ok) {
+                    ghStatus = 'ok';
+                } else {
+                    ghStatus = 'error';
+                }
+            } catch (e) {
+                ghStatus = 'error';
+            }
+            updateGhStatus(ghStatus);
+        };
+
+        const updateGhStatus = (status) => {
+            const el = document.getElementById('gh-status');
+            if (status === 'ok') {
+                el.textContent = '✓ Подключено';
+                el.className = 'gh-status ok';
+            } else if (status === 'error') {
+                el.textContent = '✗ Ошибка/не подключено';
+                el.className = 'gh-status error';
+            } else {
+                el.textContent = '? Неизвестно';
+                el.className = 'gh-status';
+            }
+        };
+
+        const loadFromGitHub = async () => {
+            try {
+                if (!GH_CONFIG.token || GH_CONFIG.token === 'ВАШЕ_GITHUB_TOKEN') {
+                    showNotif('Ошибка: GitHub токен не настроен', 'error');
+                    return;
+                }
+
+                const resp = await fetch(
+                    `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.dataPath}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${GH_CONFIG.token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    }
+                );
+
+                if (!resp.ok) {
+                    showNotif('Ошибка загрузки с GitHub', 'error');
+                    return;
+                }
+
+                const data = await resp.json();
+                const decoded = atob(data.content);
+                const news = JSON.parse(decoded);
+                allNews = news;
+                saveNews();
+                renderAll();
+                showNotif('Загружено с GitHub', 'success');
+                await checkGitHubStatus();
+            } catch (e) {
+                console.error(e);
+                showNotif('Ошибка при загрузке', 'error');
+            }
+        };
+
+        const publishToGitHub = async () => {
+            try {
+                if (!GH_CONFIG.token || GH_CONFIG.token === 'ВАШЕ_GITHUB_TOKEN') {
+                    showNotif('Ошибка: GitHub токен не настроен', 'error');
+                    return;
+                }
+
+                const content = btoa(unescape(encodeURIComponent(JSON.stringify(allNews, null, 2))));
+
+                // Get current file SHA
+                const getResp = await fetch(
+                    `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.dataPath}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${GH_CONFIG.token}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    }
+                );
+
+                let sha = null;
+                if (getResp.ok) {
+                    const data = await getResp.json();
+                    sha = data.sha;
+                }
+
+                const body = {
+                    message: 'Update news via TechFlow UI',
+                    content: content,
+                    branch: GH_CONFIG.branch
+                };
+
+                if (sha) {
+                    body.sha = sha;
+                }
+
+                const putResp = await fetch(
+                    `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.dataPath}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${GH_CONFIG.token}`,
+                            'Accept': 'application/vnd.github+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    }
+                );
+
+                if (putResp.ok) {
+                    showNotif('Опубликовано на GitHub', 'success');
+                    await checkGitHubStatus();
+                } else {
+                    showNotif('Ошибка при публикации', 'error');
+                }
+            } catch (e) {
+                console.error(e);
+                showNotif('Ошибка при публикации', 'error');
+            }
+        };
+
+        // ===== RENDER =====
+        const renderAll = () => {
+            renderNews();
+            updateCategoryDisplay();
+        };
+
+        const renderNews = () => {
+            const bookmarks = JSON.parse(localStorage.getItem('techflow_bookmarks') || '[]');
+            let filtered = filterByBookmarks 
+                ? allNews.filter(n => bookmarks.includes(n.id))
+                : allNews;
+
+            const sorted = sortNews(filtered);
+            const container = document.getElementById('news-container');
+
+            if (sorted.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>Нет новостей</p></div>';
+                return;
+            }
+
+            container.innerHTML = sorted.map((news, idx) => {
+                const realIdx = allNews.findIndex(n => n.id === news.id);
+                const isBookmarked = bookmarks.includes(news.id);
+                return `
+                    <div class="news-card" onclick="openModal(${realIdx})">
+                        <img src="${news.image}" alt="" class="news-image" onerror="this.src='https://via.placeholder.com/140x100?text=News'">
+                        <div class="news-body">
+                            <span class="news-category">${news.category}</span>
+                            <h3 class="news-title">${news.title}</h3>
+                            <p class="news-description">${news.preview}</p>
+                            <div class="news-meta">
+                                <span>${news.author}</span>
+                                <span>${formatDate(news.date)}</span>
+                                <span>👁 ${news.views || 0}</span>
+                                <span>⭐ ${news.rating || 0}</span>
+                                <button onclick="event.stopPropagation(); toggleBookmark('${news.id}')" style="border: none; background: none; cursor: pointer; color: ${isBookmarked ? '#ffa500' : '#ccc'}; font-size: 14px;">★</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         };
 
         const sortNews = (arr) => {
@@ -1081,144 +960,84 @@
                 copy.sort((a, b) => new Date(b.date) - new Date(a.date));
             } else if (currentSort === 'views') {
                 copy.sort((a, b) => (b.views || 0) - (a.views || 0));
-            } else if (currentSort === 'title') {
-                copy.sort((a, b) => a.title.localeCompare(b.title, 'ru'));
             } else if (currentSort === 'rating') {
                 copy.sort((a, b) => (b.rating || 0) - (a.rating || 0));
             }
             return copy;
         };
 
-        // ============ ПОИСК ============
-        const attachSearchHandler = () => {
-            const searchBox = document.getElementById('search-box');
-            searchBox.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const filtered = query ? allNews.filter(news => 
-                    news.title.toLowerCase().includes(query) ||
-                    news.preview.toLowerCase().includes(query) ||
-                    (news.content && news.content.toLowerCase().includes(query))
-                ) : allNews;
-                
-                const sorted = sortNews(filtered);
-                displayNews(sorted);
-            });
+        const updateCategoryDisplay = () => {
+            const list = document.getElementById('categories-list');
+            const adminList = document.getElementById('categories-admin');
+
+            const html = categories.map(c => `<button class="filter-btn" onclick="filterByCategory('${c}')">${c}</button>`).join('');
+            list.innerHTML = html;
+
+            const adminHtml = categories.map(c => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px; background: #f5f5f5; border-radius: 4px;">
+                    <span style="font-size: 12px;">${c}</span>
+                    <button onclick="deleteCategory('${c}')" style="border: none; background: none; cursor: pointer; color: #999;">✕</button>
+                </div>
+            `).join('');
+            adminList.innerHTML = adminHtml;
         };
 
-        // ============ ЗАКЛАДКИ ============
-        const attachBookmarksHandler = () => {
-            const btn = document.getElementById('bookmarks-btn');
-            btn.addEventListener('click', () => {
-                filterByBookmarks = !filterByBookmarks;
-                btn.classList.toggle('active');
-                
-                if (filterByBookmarks) {
-                    const bookmarks = getBookmarks();
-                    const bookmarkedNews = allNews.filter(n => bookmarks.includes(n.id));
-                    const sorted = sortNews(bookmarkedNews);
-                    displayNews(sorted);
-                    showNotification('📌 Закладки загружены');
-                } else {
-                    renderNews();
-                }
-            });
+        const updateCategorySelect = () => {
+            const select = document.getElementById('news-category');
+            const opts = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            select.innerHTML = '<option value="">Выберите</option>' + opts;
         };
 
-        const getBookmarks = () => {
-            const stored = localStorage.getItem('techflow_bookmarks');
-            return stored ? JSON.parse(stored) : [];
-        };
-
-        const toggleBookmark = (newsId) => {
-            const bookmarks = getBookmarks();
-            const idx = bookmarks.indexOf(newsId);
-            
-            if (idx > -1) {
-                bookmarks.splice(idx, 1);
-                showNotification('❌ Удалено из закладок');
-            } else {
-                bookmarks.push(newsId);
-                showNotification('✅ Добавлено в закладки');
-            }
-            
-            localStorage.setItem('techflow_bookmarks', JSON.stringify(bookmarks));
-            renderNews();
-        };
-
-        // ============ РЕНДЕРИНГ НОВОСТЕЙ ============
-        const renderNews = () => {
-            const sorted = sortNews(allNews);
-            displayNews(sorted);
-        };
-
-        const displayNews = (newsArray) => {
+        const filterByCategory = (cat) => {
+            const filtered = allNews.filter(n => n.category === cat);
+            const sorted = sortNews(filtered);
             const container = document.getElementById('news-container');
+            const bookmarks = JSON.parse(localStorage.getItem('techflow_bookmarks') || '[]');
 
-            if (newsArray.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-newspaper"></i>
-                        <p>Новости не найдены. Попробуйте изменить поиск или фильтры.</p>
-                    </div>
-                `;
+            if (sorted.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>Нет новостей</p></div>';
                 return;
             }
 
-            const bookmarks = getBookmarks();
-            container.innerHTML = newsArray.map((news, idx) => {
+            container.innerHTML = sorted.map((news) => {
+                const realIdx = allNews.findIndex(n => n.id === news.id);
                 const isBookmarked = bookmarks.includes(news.id);
-                const newsIdx = allNews.findIndex(n => n.id === news.id);
                 return `
-                    <div class="news-card" onclick="openModal(${newsIdx})">
-                        <img src="${news.image || 'https://via.placeholder.com/300x200'}" alt="${news.title}" class="news-image">
-                        <button class="bookmark-btn" onclick="event.stopPropagation(); toggleBookmark('${news.id}')" title="Добавить в закладки">
-                            ${isBookmarked ? '⭐' : '☆'}
-                        </button>
-                        <div class="news-content">
-                            <span class="news-category">${news.category || 'Разное'}</span>
+                    <div class="news-card" onclick="openModal(${realIdx})">
+                        <img src="${news.image}" alt="" class="news-image" onerror="this.src='https://via.placeholder.com/140x100?text=News'">
+                        <div class="news-body">
+                            <span class="news-category">${news.category}</span>
                             <h3 class="news-title">${news.title}</h3>
-                            <p class="news-description">${news.preview || news.title}</p>
+                            <p class="news-description">${news.preview}</p>
                             <div class="news-meta">
-                                <span>${news.author || 'Автор'}</span>
+                                <span>${news.author}</span>
                                 <span>${formatDate(news.date)}</span>
+                                <span>👁 ${news.views || 0}</span>
+                                <span>⭐ ${news.rating || 0}</span>
+                                <button onclick="event.stopPropagation(); toggleBookmark('${news.id}')" style="border: none; background: none; cursor: pointer; color: ${isBookmarked ? '#ffa500' : '#ccc'}; font-size: 14px;">★</button>
                             </div>
-                            <span class="news-views">👁️ ${news.views || 0} просмотров</span>
-                            <a href="#" class="read-more">Читать далее →</a>
                         </div>
                     </div>
                 `;
             }).join('');
         };
 
-        const formatDate = (date) => {
-            return new Date(date).toLocaleDateString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: '2-digit'
-            });
-        };
+        // ===== MODAL =====
+        const openModal = (idx) => {
+            const news = allNews[idx];
+            currentModalIndex = idx;
+            news.views = (news.views || 0) + 1;
+            saveNews();
 
-        // ============ МОДАЛЬНОЕ ОКНО ============
-        const openModal = (index) => {
-            const news = allNews[index];
-            currentModalIndex = index;
-
-            // Увеличить просмотры
-            if (!news.views) news.views = 0;
-            news.views++;
-            localStorage.setItem('techflow_news', JSON.stringify(allNews));
-
-            document.getElementById('modal-news-title').textContent = news.title;
-            document.getElementById('modal-image').src = news.image || 'https://via.placeholder.com/700x400';
-            document.getElementById('modal-category').textContent = news.category || 'Разное';
-            document.getElementById('modal-author').textContent = news.author || 'Автор';
+            document.getElementById('modal-title').textContent = news.title;
+            document.getElementById('modal-image').src = news.image;
+            document.getElementById('modal-category').textContent = news.category;
+            document.getElementById('modal-author').textContent = news.author;
             document.getElementById('modal-date').textContent = formatDate(news.date);
-            document.getElementById('modal-views').textContent = `👁️ ${news.views} просмотров`;
+            document.getElementById('modal-views').textContent = `Просмотров: ${news.views}`;
             document.getElementById('modal-content').textContent = news.content || news.preview;
 
-            // Загрузить рейтинг
             loadRating(news);
-
             document.getElementById('modal-overlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         };
@@ -1229,130 +1048,193 @@
             renderNews();
         };
 
-        document.getElementById('modal-overlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modal-overlay')) {
-                closeModal();
-            }
-        });
-
-        // ============ РЕЙТИНГ ============
         const loadRating = (news) => {
             const rating = news.rating || 0;
-            document.querySelectorAll('.rating-stars .star').forEach((star, idx) => {
-                if (idx < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-
-                star.addEventListener('click', (e) => {
+            document.querySelectorAll('.star').forEach((star, idx) => {
+                star.classList.toggle('active', idx < rating);
+                star.onclick = (e) => {
                     e.stopPropagation();
-                    const newRating = parseInt(star.dataset.rating);
-                    allNews[currentModalIndex].rating = newRating;
-                    localStorage.setItem('techflow_news', JSON.stringify(allNews));
+                    allNews[currentModalIndex].rating = parseInt(star.dataset.rating);
+                    saveNews();
                     loadRating(allNews[currentModalIndex]);
-                    showNotification(`⭐ Спасибо за оценку: ${newRating}/5`);
-                });
+                    renderNews();
+                    showNotif(`Оценка: ${star.dataset.rating}/5`, 'success');
+                };
             });
         };
 
-        // ============ ДИЗАЙН И БРЕНДИНГ ============
-        const loadDesign = () => {
-            const design = localStorage.getItem('techflow_design');
-            if (design) {
-                const settings = JSON.parse(design);
-                document.documentElement.style.setProperty('--primary', settings.primaryColor);
-                document.documentElement.style.setProperty('--bg', settings.bgColor);
-                document.documentElement.style.setProperty('--text', settings.textColor);
+        // ===== NEWS MANAGEMENT =====
+        const addNews = () => {
+            const title = document.getElementById('news-title').value.trim();
+            const category = document.getElementById('news-category').value.trim();
+
+            if (!title || !category) {
+                showNotif('Заполните обязательные поля', 'error');
+                return;
             }
-        };
 
-        const loadBranding = () => {
-            const branding = localStorage.getItem('techflow_branding');
-            if (branding) {
-                const settings = JSON.parse(branding);
-                document.getElementById('header-logo-icon').textContent = settings.logoIcon || '🚀';
-                document.getElementById('header-logo-text').textContent = settings.siteName || 'TechFlow';
-                document.title = (settings.siteName || 'TechFlow') + ' - Новости о технологиях и AI';
+            const news = {
+                id: editingId || `news-${Date.now()}`,
+                title,
+                category,
+                preview: document.getElementById('news-preview').value.trim() || title,
+                content: document.getElementById('news-content').value.trim() || title,
+                author: document.getElementById('news-author').value.trim() || 'TechFlow',
+                image: document.getElementById('news-image').value.trim() || 'https://via.placeholder.com/140x100?text=News',
+                date: editingId ? allNews.find(n => n.id === editingId).date : new Date().toISOString(),
+                views: editingId ? allNews.find(n => n.id === editingId).views || 0 : 0,
+                rating: editingId ? allNews.find(n => n.id === editingId).rating || 0 : 0
+            };
+
+            if (editingId) {
+                const idx = allNews.findIndex(n => n.id === editingId);
+                allNews[idx] = news;
+                editingId = null;
+            } else {
+                allNews.unshift(news);
             }
+
+            saveNews();
+            clearForm();
+            renderAll();
+            showNotif('Новость добавлена', 'success');
         };
 
-        // ============ ТЕМНЫЙ РЕЖИМ ============
-        const toggleDarkMode = () => {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('techflow_dark_mode', isDark ? '1' : '0');
-            updateThemeButton();
+        const clearForm = () => {
+            document.getElementById('news-title').value = '';
+            document.getElementById('news-category').value = '';
+            document.getElementById('news-preview').value = '';
+            document.getElementById('news-content').value = '';
+            document.getElementById('news-author').value = '';
+            document.getElementById('news-image').value = '';
+            document.getElementById('add-news-btn').textContent = 'Добавить';
+            document.getElementById('cancel-btn').style.display = 'none';
+            editingId = null;
         };
 
-        const updateThemeButton = () => {
-            const btn = document.getElementById('theme-toggle');
-            const isDark = document.body.classList.contains('dark-mode');
-            btn.textContent = isDark ? '☀️' : '🌙';
-        };
-
-        const loadTheme = () => {
-            const isDark = localStorage.getItem('techflow_dark_mode') === '1';
-            if (isDark) {
-                document.body.classList.add('dark-mode');
+        const toggleBookmark = (id) => {
+            const bookmarks = JSON.parse(localStorage.getItem('techflow_bookmarks') || '[]');
+            const idx = bookmarks.indexOf(id);
+            if (idx > -1) {
+                bookmarks.splice(idx, 1);
+            } else {
+                bookmarks.push(id);
             }
-            updateThemeButton();
+            localStorage.setItem('techflow_bookmarks', JSON.stringify(bookmarks));
+            renderNews();
         };
 
-        document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
+        const addCategory = () => {
+            const newCat = document.getElementById('new-category').value.trim();
+            if (!newCat || categories.includes(newCat)) {
+                showNotif('Неверная категория', 'error');
+                return;
+            }
+            categories.push(newCat);
+            saveCategories();
+            document.getElementById('new-category').value = '';
+            updateCategoryDisplay();
+            updateCategorySelect();
+            showNotif('Категория добавлена', 'success');
+        };
 
-        // ============ УВЕДОМЛЕНИЯ ============
-        const showNotification = (message, type = 'success') => {
+        const deleteCategory = (cat) => {
+            if (!confirm(`Удалить "${cat}"?`)) return;
+            categories = categories.filter(c => c !== cat);
+            saveCategories();
+            updateCategoryDisplay();
+            updateCategorySelect();
+            showNotif('Категория удалена', 'success');
+        };
+
+        // ===== UTILITIES =====
+        const formatDate = (date) => {
+            return new Date(date).toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+            });
+        };
+
+        const showNotif = (msg, type = 'success') => {
             const notif = document.createElement('div');
-            notif.className = `notification ${type === 'error' ? 'error' : ''}`;
-            notif.textContent = message;
+            notif.className = `notification ${type}`;
+            notif.textContent = msg;
             document.body.appendChild(notif);
-
-            setTimeout(() => {
-                notif.style.opacity = '0';
-                setTimeout(() => notif.remove(), 300);
-            }, 3000);
+            setTimeout(() => notif.remove(), 2500);
         };
 
-        // ============ ИНИЦИАЛИЗАЦИЯ ============
-        loadNews();
-
-        // Обновлять при изменении в других вкладках
-        window.addEventListener('storage', () => {
-            loadNews();
-        });
-
-        // Периодически проверять обновления
-        setInterval(() => {
-            const stored = localStorage.getItem('techflow_news');
-            if (stored) {
-                const newNews = JSON.parse(stored);
-                if (JSON.stringify(newNews) !== JSON.stringify(allNews)) {
-                    allNews = newNews.map((item, idx) => ({
-                        ...item,
-                        id: item.id || `news-${idx}`,
-                        views: item.views || 0,
-                        rating: item.rating || 0
-                    }));
-                    renderNews();
+        // ===== HANDLERS =====
+        const attachHandlers = () => {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.sort) {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentSort = btn.dataset.sort;
+                        filterByBookmarks = false;
+                        renderNews();
+                    });
                 }
-            }
-        }, 2000);
+            });
 
-        // Service Worker для оффлайна
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(reg => console.log('✅ Service Worker зарегистрирован'))
-                .catch(err => console.log('⚠️ Service Worker ошибка:', err));
-        }
+            document.getElementById('bookmarks-btn').addEventListener('click', () => {
+                filterByBookmarks = !filterByBookmarks;
+                document.getElementById('bookmarks-btn').classList.toggle('active');
+                renderNews();
+            });
 
-        // Обработка оффлайна/онлайна
-        window.addEventListener('offline', () => {
-            showNotification('📴 Вы оффлайн. Доступны кэшированные новости.', 'warning');
-        });
+            document.getElementById('toggle-admin').addEventListener('click', () => {
+                document.getElementById('admin-panel').style.display = 
+                    document.getElementById('admin-panel').style.display === 'none' ? 'flex' : 'none';
+            });
 
-        window.addEventListener('online', () => {
-            showNotification('📡 Вы онлайн!', 'success');
-        });
+            document.getElementById('add-news-btn').addEventListener('click', addNews);
+            document.getElementById('cancel-btn').addEventListener('click', clearForm);
+            document.getElementById('add-category-btn').addEventListener('click', addCategory);
+            document.getElementById('gh-load-btn').addEventListener('click', loadFromGitHub);
+            document.getElementById('gh-publish-btn').addEventListener('click', publishToGitHub);
+
+            document.getElementById('search-box').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const filtered = allNews.filter(n =>
+                    n.title.toLowerCase().includes(query) ||
+                    n.preview.toLowerCase().includes(query)
+                );
+                const sorted = sortNews(filtered);
+                const container = document.getElementById('news-container');
+
+                if (sorted.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>Не найдено</p></div>';
+                    return;
+                }
+
+                container.innerHTML = sorted.map((news) => {
+                    const realIdx = allNews.findIndex(n => n.id === news.id);
+                    return `
+                        <div class="news-card" onclick="openModal(${realIdx})">
+                            <img src="${news.image}" alt="" class="news-image" onerror="this.src='https://via.placeholder.com/140x100?text=News'">
+                            <div class="news-body">
+                                <span class="news-category">${news.category}</span>
+                                <h3 class="news-title">${news.title}</h3>
+                                <p class="news-description">${news.preview}</p>
+                                <div class="news-meta">
+                                    <span>${news.author}</span>
+                                    <span>${formatDate(news.date)}</span>
+                                    <span>👁 ${news.views || 0}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
+
+            document.getElementById('modal-overlay').addEventListener('click', (e) => {
+                if (e.target.id === 'modal-overlay') closeModal();
+            });
+        };
+
+        init();
     </script>
 </body>
 </html>
